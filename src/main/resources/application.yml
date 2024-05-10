@@ -39,6 +39,9 @@ springdoc:
     display-query-params-without-oauth2: true
     doc-expansion: none
 
+logging:
+  config: classpath:log4j2.xml
+
 #    version: springdoc 라이브러리의 버전을 설정한다.
 #
 #    api-docs: API 문서가 제공될 경로를 /api-docs로 설정한다.
