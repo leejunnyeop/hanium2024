@@ -17,4 +17,8 @@ public class HelloController {
         log.error("hello world");
         return "Hello World";
     }
+    @GetMapping("/")
+    public String HelloWorld2(){
+        return "Hello World2";
+    }
 }

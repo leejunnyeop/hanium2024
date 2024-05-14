@@ -40,3 +40,8 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+//빌드 시 -plain.jar파일 안만들어지게
+jar {
+    enabled = false
+}
