@@ -122,3 +122,5 @@ gradle-app.setting
 
 /logs
 # End of https://www.toptal.com/developers/gitignore/api/gradle,java,maven,intellij
+
+/src/main/resources/application-private.yml

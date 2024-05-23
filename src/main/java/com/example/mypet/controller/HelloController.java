@@ -1,13 +1,20 @@
 package com.example.mypet.controller;
 
 
+import com.example.mypet.repository.PetRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Log4j2
 @RestController
+@RequiredArgsConstructor
 public class HelloController {
+
+    private final PetRepository petRepository;
+
+
     @GetMapping("/mypet/v1")
     public String HelloWorld(){
         log.info("hello world");
@@ -18,6 +25,7 @@ public class HelloController {
     }
     @GetMapping("/")
     public String HelloWorld2(){
+        petRepository.findAll().forEach(System.out::println);
         return "Hello World!!!!";
     }
 }
