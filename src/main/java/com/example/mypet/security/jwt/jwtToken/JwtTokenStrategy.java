@@ -1,4 +1,4 @@
-package com.example.mypet.security.jwt;
+package com.example.mypet.security.jwt.jwtToken;
 
 public interface JwtTokenStrategy {
 
