@@ -1,6 +1,7 @@
-package com.example.mypet.security.jwt;
+package com.example.mypet.security.jwt.refresh;
 
-import com.example.mypet.security.domain.RefreshToken;
+import com.example.mypet.security.domain.refresh.RefreshToken;
+import com.example.mypet.security.jwt.refresh.RefreshTokenStoreStrategy;
 import com.example.mypet.security.repository.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

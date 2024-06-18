@@ -1,6 +1,6 @@
-package com.example.mypet.security.service;
+package com.example.mypet.security.service.custom;
 
-import com.example.mypet.security.domain.Users;
+import com.example.mypet.security.domain.users.Users;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
