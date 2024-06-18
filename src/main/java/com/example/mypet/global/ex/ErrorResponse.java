@@ -1,4 +1,4 @@
-package com.example.mypet.global.handler;
+package com.example.mypet.global.ex;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

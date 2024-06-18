@@ -1,6 +1,8 @@
-package com.example.mypet.security.handler;
+package com.example.mypet.security.ex;
 
-public class CustomAuthenticationException extends AuthenticationException{
+import org.springframework.security.core.AuthenticationException;
+
+public class CustomAuthenticationException extends AuthenticationException {
     public CustomAuthenticationException(String message) {
         super(message);
     }

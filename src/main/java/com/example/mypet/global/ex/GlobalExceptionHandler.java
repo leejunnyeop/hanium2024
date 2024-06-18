@@ -1,4 +1,4 @@
-package com.example.mypet.global.handler;
+package com.example.mypet.global.ex;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
