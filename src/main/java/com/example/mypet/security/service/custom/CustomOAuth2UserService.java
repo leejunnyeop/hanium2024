@@ -1,10 +1,11 @@
-package com.example.mypet.security.service;
+package com.example.mypet.security.service.custom;
 
-import com.example.mypet.security.domain.OAuth2UserInfo;
-import com.example.mypet.security.domain.Users;
-import com.example.mypet.security.jwt.JwtTokenStrategy;
-import com.example.mypet.security.jwt.RefreshTokenStoreStrategy;
+import com.example.mypet.security.domain.oauth.OAuth2UserInfo;
+import com.example.mypet.security.domain.users.Users;
+import com.example.mypet.security.jwt.jwtToken.JwtTokenStrategy;
+import com.example.mypet.security.jwt.refresh.RefreshTokenStoreStrategy;
 import com.example.mypet.security.repository.UsersRepository;
+import com.example.mypet.security.service.oauthSerivce.OAuth2UserInfoServiceProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
