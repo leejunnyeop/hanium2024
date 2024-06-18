@@ -1,4 +1,4 @@
-package com.example.mypet.security.domain;
+package com.example.mypet.security.domain.users;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
