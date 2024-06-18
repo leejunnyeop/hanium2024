@@ -1,7 +1,7 @@
-package com.example.mypet.security.service;
+package com.example.mypet.security.service.oauthSerivce;
 
-import com.example.mypet.security.domain.NaverUserInfo;
-import com.example.mypet.security.domain.OAuth2UserInfo;
+import com.example.mypet.security.domain.oauth.NaverUserInfo;
+import com.example.mypet.security.domain.oauth.OAuth2UserInfo;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 

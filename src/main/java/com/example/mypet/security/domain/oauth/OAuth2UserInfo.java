@@ -1,4 +1,4 @@
-package com.example.mypet.security.domain;
+package com.example.mypet.security.domain.oauth;
 
 public interface OAuth2UserInfo  {
 

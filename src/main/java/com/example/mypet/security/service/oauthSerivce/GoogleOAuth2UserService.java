@@ -1,14 +1,14 @@
-package com.example.mypet.security.service;
+package com.example.mypet.security.service.oauthSerivce;
 
-import com.example.mypet.security.domain.GoogleUserInfo;
-import com.example.mypet.security.domain.OAuth2UserInfo;
+import com.example.mypet.security.domain.oauth.GoogleUserInfo;
+import com.example.mypet.security.domain.oauth.OAuth2UserInfo;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
 @Service
-public class GoogleOAuth2UserService implements OAuth2UserInfoService{
+public class GoogleOAuth2UserService implements OAuth2UserInfoService {
 
 
     @Override

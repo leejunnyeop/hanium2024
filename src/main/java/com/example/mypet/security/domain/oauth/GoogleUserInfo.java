@@ -1,8 +1,8 @@
-package com.example.mypet.security.domain;
+package com.example.mypet.security.domain.oauth;
 
 import java.util.Map;
 
-public class GoogleUserInfo implements OAuth2UserInfo{
+public class GoogleUserInfo implements OAuth2UserInfo {
     private final Map<String, Object> attributes;
 
     public GoogleUserInfo(Map<String, Object> attributes) {
