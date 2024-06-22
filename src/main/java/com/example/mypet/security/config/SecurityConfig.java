@@ -10,8 +10,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.registration.ClientRegistrations;
+import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.AuthenticatedPrincipalOAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -59,4 +63,38 @@ public class SecurityConfig {
         return (web) -> web.ignoring().requestMatchers("/ignore1", "/ignore2");
     }
 
+    @Bean
+    public ClientRegistrationRepository clientRegistrationRepository() {
+        return new InMemoryClientRegistrationRepository(this.googleClientRegistration(), this.naverClientRegistration());
+    }
+
+    private ClientRegistration googleClientRegistration() {
+        return ClientRegistrations.fromIssuerLocation("https://accounts.google.com")
+                .registrationId("google")
+                .clientId("YOUR_GOOGLE_CLIENT_ID")
+                .clientSecret("YOUR_GOOGLE_CLIENT_SECRET")
+                .scope("openid", "profile", "email")
+                .redirectUri("{baseUrl}/login/oauth2/code/google")
+                .build();
+    }
+
+    private ClientRegistration naverClientRegistration() {
+        return ClientRegistrations.fromIssuerLocation("https://nid.naver.com")
+                .registrationId("naver")
+                .clientId("YOUR_NAVER_CLIENT_ID")
+                .clientSecret("YOUR_NAVER_CLIENT_SECRET")
+                .scope("name", "email")
+                .redirectUri("{baseUrl}/login/oauth2/code/naver")
+                .build();
+    }
+
+    @Bean
+    public OAuth2AuthorizedClientService authorizedClientService(ClientRegistrationRepository clientRegistrationRepository) {
+        return new DefaultOAuth2AuthorizedClientService(clientRegistrationRepository);
+    }
+
+    @Bean
+    public OAuth2AuthorizedClientRepository authorizedClientRepository(OAuth2AuthorizedClientService authorizedClientService) {
+        return new AuthenticatedPrincipalOAuth2AuthorizedClientRepository(authorizedClientService);
+    }
 }
