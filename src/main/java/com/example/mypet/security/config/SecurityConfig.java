@@ -19,6 +19,11 @@ import org.springframework.security.oauth2.client.web.AuthenticatedPrincipalOAut
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.web3j.crypto.Credentials;
+import org.web3j.crypto.MnemonicUtils;
+import org.web3j.crypto.WalletUtils;
+
+import java.security.SecureRandom;
 
 @Configuration
 @EnableWebSecurity
@@ -96,5 +101,29 @@ public class SecurityConfig {
     @Bean
     public OAuth2AuthorizedClientRepository authorizedClientRepository(OAuth2AuthorizedClientService authorizedClientService) {
         return new AuthenticatedPrincipalOAuth2AuthorizedClientRepository(authorizedClientService);
+    }
+
+
+    // todo 지갑 생성 -> db 저장 로직 완성 되면 수정
+    private void createEthereumWallet(String email) {
+        // 지갑 생성 로직
+        try {
+            byte[] initialEntropy = new byte[16];
+            new SecureRandom().nextBytes(initialEntropy);
+            String mnemonic = MnemonicUtils.generateMnemonic(initialEntropy);
+
+            Credentials credentials = WalletUtils.loadBip39Credentials("", mnemonic);
+            String address = credentials.getAddress();
+            String privateKey = credentials.getEcKeyPair().getPrivateKey().toString(16);
+
+            // 생성된 지갑 정보를 데이터베이스에 저장하거나 기타 로직 추가
+            System.out.println("Ethereum Wallet Created for " + email);
+            System.out.println("Address: " + address);
+            System.out.println("Mnemonic: " + mnemonic);
+            System.out.println("Private Key: " + privateKey);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

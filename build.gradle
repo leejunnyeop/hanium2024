@@ -45,6 +45,12 @@ dependencies {
 
     // database
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
+    // https://mvnrepository.com/artifact/org.web3j/web3j-gradle-plugin
+    implementation 'org.web3j:core:4.8.7'
+
+
+
 }
 
 tasks.named('test') {
