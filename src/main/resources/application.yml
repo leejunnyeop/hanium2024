@@ -4,6 +4,9 @@ server:
 spring:
   profiles:
     include: private
+  config:
+    import: application-oauth.yml
+
 
 springdoc:
   version: '@project.version@'
