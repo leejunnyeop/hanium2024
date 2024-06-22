@@ -1,10 +1,18 @@
 package com.example.mypet.global.ex;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@AllArgsConstructor
+import java.time.LocalDateTime;
+
 @Getter
 public class ErrorResponse {
-    private String message;
+    private final LocalDateTime timestamp;
+    private final String message;
+
+    public ErrorResponse(LocalDateTime timestamp, String message) {
+        this.timestamp = timestamp;
+        this.message = message;
+
+    }
+
 }
