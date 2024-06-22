@@ -17,6 +17,3 @@ spring:
         provider:
           naver:
             issuer-uri: https://nid.naver.com
-
-
-
