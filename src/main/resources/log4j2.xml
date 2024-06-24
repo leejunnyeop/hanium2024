@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
-
     <!-- 해당 설정파일에서 사용하는 프로퍼티-->
     <Properties>
         <property name="LOGS_PATH">./logs</property>
@@ -45,6 +44,23 @@
             <AppenderRef ref="console" />
             <AppenderRef ref="RollingFile" />
         </logger>
+
+        <!-- OAuth2 관련 로그 설정 -->
+        <logger name="org.springframework.security.oauth2.client" level="DEBUG" additivity="false">
+            <AppenderRef ref="console" />
+            <AppenderRef ref="RollingFile" />
+        </logger>
+
+        <logger name="org.springframework.security.oauth2.core" level="DEBUG" additivity="false">
+            <AppenderRef ref="console" />
+            <AppenderRef ref="RollingFile" />
+        </logger>
+
+        <logger name="org.springframework.security.web.authentication" level="DEBUG" additivity="false">
+            <AppenderRef ref="console" />
+            <AppenderRef ref="RollingFile" />
+        </logger>
+
         <!-- FATAL, ERROR, WARN, INFO, DEBUG, TRACE -->
         <Root level="INFO">
             <AppenderRef ref="console" />
