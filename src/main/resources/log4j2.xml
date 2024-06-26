@@ -61,6 +61,12 @@
             <AppenderRef ref="RollingFile" />
         </logger>
 
+        <!-- Spring Security 필터 체인 로그 설정 -->
+        <logger name="org.springframework.security.web.FilterChainProxy" level="DEBUG" additivity="false">
+            <AppenderRef ref="console" />
+            <AppenderRef ref="RollingFile" />
+        </logger>
+
         <!-- FATAL, ERROR, WARN, INFO, DEBUG, TRACE -->
         <Root level="INFO">
             <AppenderRef ref="console" />
