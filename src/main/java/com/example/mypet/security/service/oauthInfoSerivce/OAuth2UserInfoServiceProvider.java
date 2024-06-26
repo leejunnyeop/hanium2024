@@ -1,6 +1,5 @@
-package com.example.mypet.security.service.oauthSerivce;
+package com.example.mypet.security.service.oauthInfoSerivce;
 
-import com.example.mypet.security.service.oauthSerivce.OAuth2UserInfoService;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

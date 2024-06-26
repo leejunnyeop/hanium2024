@@ -4,13 +4,12 @@ spring:
       client:
         registration:
           google:
-            client-id: YOUR_GOOGLE_CLIENT_ID
-            client-secret: YOUR_GOOGLE_CLIENT_SECRET
+            client-id: 54570271712-a2ct0tbftq1gdrnf7p9pk6m8kfs4sbsl.apps.googleusercontent.com
             scope: openid, profile, email
-            redirect-uri: "{baseUrl}/login/oauth2/code/google"
+            redirect-uri: "com.mypet:/oauth2redirect/google"
           naver:
-            client-id: YOUR_NAVER_CLIENT_ID
-            client-secret: YOUR_NAVER_CLIENT_SECRET
+            client-id: aRtsZ5tiPboW41G3a8iO
+            client-secret: UKEFaAtLbo
             scope: name, email
             redirect-uri: "{baseUrl}/login/oauth2/code/naver"
         provider:
@@ -18,3 +17,6 @@ spring:
             issuer-uri: https://accounts.google.com
           naver:
             issuer-uri: https://nid.naver.com
+
+
+

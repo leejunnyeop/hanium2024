@@ -3,9 +3,8 @@ package com.example.mypet.security.config;
 import com.example.mypet.security.filter.JwtRequestFilter;
 import com.example.mypet.security.ex.JwtAuthenticationEntryPoint;
 import com.example.mypet.security.service.custom.CustomOAuth2UserService;
-import com.example.mypet.security.service.oauthSerivce.MongoOAuth2AuthorizedClientService;
+import com.example.mypet.security.service.oauthInfoSerivce.MongoOAuth2AuthorizedClientService;
 import com.example.mypet.security.repository.OAuth2AuthorizedClientRepository;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,7 +41,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/login**", "/oauth2/**", "/token/refresh", "/token/generate").permitAll()
+                        .requestMatchers("/auth/social/**", "/oauth2/**", "/token/refresh", "/token/generate", "/mypet/**", "/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2 -> oauth2

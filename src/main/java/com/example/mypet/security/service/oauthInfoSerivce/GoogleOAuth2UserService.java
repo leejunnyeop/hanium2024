@@ -1,4 +1,4 @@
-package com.example.mypet.security.service.oauthSerivce;
+package com.example.mypet.security.service.oauthInfoSerivce;
 
 import com.example.mypet.security.domain.oauth.GoogleUserInfo;
 import com.example.mypet.security.domain.oauth.OAuth2UserInfo;

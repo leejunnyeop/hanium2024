@@ -11,18 +11,20 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.Base64;
 
 @Component
 public class DefaultJwtTokenStrategy implements JwtTokenStrategy {
 
-    private static final String SECRETKEY = "petkey" ;
+    // 더 긴 비밀 키 (256비트 이상)
+    private static final String SECRETKEY = "eBpZmH7jMx8hJcR3kVnTp0w9yXGz1cR7UjXx3tZ2uLs5vN5oWpQ4kYtSz8bFhNkS";
 
     private static final long ACCESS_TOKEN_VALIDITY_SECONDS = 15 * 60; // 15분
     private static final long REFRESH_TOKEN_VALIDITY_SECONDS = 30 * 24 * 60 * 60; // 30일
 
     // 비밀 키를 SecretKey 객체로 변환하는 메소드
     private SecretKey getSigningKey() {
-        byte[] keyBytes = SECRETKEY.getBytes();
+        byte[] keyBytes = Base64.getDecoder().decode(SECRETKEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
