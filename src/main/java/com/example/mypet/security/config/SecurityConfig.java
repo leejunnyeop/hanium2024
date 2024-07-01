@@ -41,7 +41,9 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/auth/social/**", "/oauth2/**", "/token/refresh", "/token/generate", "/mypet/**", "/**").permitAll()
+
+                        .requestMatchers("/auth/social/**", "/oauth2/**", "/token/refresh", "/token/generate",
+                                "/mypet/**", "/**", "/swagger-ui/index.html").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2 -> oauth2
