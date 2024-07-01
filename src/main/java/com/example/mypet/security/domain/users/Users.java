@@ -19,12 +19,19 @@ public class Users {
     private String name;
     private String provider;
     private String refreshToken;
+    private String address;
+    private String publicKey;
+    private String encryptedPrivateKey;
 
-    public static Users createUser(String email, String name, String provider) {
+    public static Users createUser(String email, String name, String provider, String address,
+                                   String publicKey, String encryptedPrivateKey) {
         return Users.builder()
                 .email(email)
                 .name(name)
                 .provider(provider)
+                .address(address)
+                .publicKey(publicKey)
+                .encryptedPrivateKey(encryptedPrivateKey)
                 .build();
     }
 

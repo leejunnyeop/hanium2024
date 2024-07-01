@@ -6,6 +6,8 @@ import com.example.mypet.security.domain.users.Users;
 import com.example.mypet.security.domain.users.UsersDto;
 import com.example.mypet.security.repository.UsersRepository;
 import com.example.mypet.security.service.oauthInfoSerivce.OAuth2UserInfoServiceProvider;
+import com.example.mypet.service.KmsService;
+import com.example.mypet.service.WalletService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -23,12 +25,26 @@ import java.util.Optional;
 public class DefaultUserService implements UserService{
     private final UsersRepository usersRepository;
     private final OAuth2UserInfoServiceProvider userInfoServiceProvider;
+    private final KmsService kmsService;
+    private final WalletService walletService;
 
     @Override
     public UsersDto processUser(OAuth2UserInfo userInfo, String provider) {
         String email = userInfo.getEmail();
         Optional<Users> optionalUser = usersRepository.findByEmail(email);
-        Users user = optionalUser.orElseGet(() -> Users.createUser(email, userInfo.getName(), provider));
+
+        // 지갑 생성
+        WalletService.Wallet wallet = null;
+        try {
+            wallet = walletService.createWallet();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        // kms 를 통한 암호화
+        String encryptedPrivateKey = kmsService.encrypt(wallet.getPrivateKey());
+
+        WalletService.Wallet finalWallet = wallet;
+        Users user = optionalUser.orElseGet(() -> Users.createUser(email, userInfo.getName(), provider, finalWallet.getAddress(), finalWallet.getPublicKey(), encryptedPrivateKey));
         if (optionalUser.isEmpty()) {
             usersRepository.save(user);
         }
