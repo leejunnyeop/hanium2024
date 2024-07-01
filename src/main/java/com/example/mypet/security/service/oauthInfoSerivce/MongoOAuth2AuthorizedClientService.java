@@ -31,7 +31,7 @@ public class MongoOAuth2AuthorizedClientService implements OAuth2AuthorizedClien
     @Override
     public <T extends OAuth2AuthorizedClient> T loadAuthorizedClient(String clientRegistrationId, String principalName) {
         // MongoDB에서 클라이언트 정보를 검색
-        Optional<OAuth2AuthorizedClientEntity> clientEntity = Optional.ofNullable(authorizedClientRepository.findByClientRegistrationIdAndPrincipalName(clientRegistrationId, principalName));
+        Optional<OAuth2AuthorizedClientEntity> clientEntity = authorizedClientRepository.findByClientRegistrationIdAndPrincipalName(clientRegistrationId, principalName);
         if (clientEntity.isPresent()) {
             OAuth2AuthorizedClientEntity entity = clientEntity.get();
             // 클라이언트 등록 정보를 로드
