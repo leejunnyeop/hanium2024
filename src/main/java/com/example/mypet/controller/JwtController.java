@@ -5,10 +5,7 @@ import com.example.mypet.security.domain.refresh.RefreshTokenRequest;
 import com.example.mypet.security.service.authService.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -24,4 +21,9 @@ public class JwtController {
         OAuth2AccessTokenResponse response = authService.refreshAccessToken(request.getRefreshToken());
         return ResponseEntity.ok(response);
     }
+    @GetMapping("/success")
+    public String home(){
+        return "home";
+    }
+
 }

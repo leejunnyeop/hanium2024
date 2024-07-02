@@ -3,9 +3,8 @@ server:
 
 spring:
   profiles:
-    include: private
-  config:
-    import: application-oauth.yml
+    include: private, oauth
+
 
 
 springdoc:

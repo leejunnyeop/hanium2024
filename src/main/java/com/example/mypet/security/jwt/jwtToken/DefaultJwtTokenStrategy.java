@@ -84,4 +84,12 @@ public class DefaultJwtTokenStrategy implements JwtTokenStrategy {
         return extractExpiration(token).before(new Date());
     }
 
+
+    public long getAccessTokenValiditySeconds() {
+        return ACCESS_TOKEN_VALIDITY_SECONDS;
+    }
+
+    public long getRefreshTokenValiditySeconds() {
+        return REFRESH_TOKEN_VALIDITY_SECONDS;
+    }
 }

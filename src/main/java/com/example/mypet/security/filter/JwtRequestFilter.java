@@ -32,6 +32,14 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         log.info("OncePerRequestFilter 시작");
+
+        // 소셜 로그인 경로를 무시
+        String path = request.getServletPath();
+        if (path.startsWith("/login/oauth2") || path.startsWith("/oauth2")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
         final String requestTokenHeader = request.getHeader("Authorization");
 
         String username = null;
@@ -52,8 +60,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 return;
             }
         } else {
-            handleException(response, HttpServletResponse.SC_BAD_REQUEST, "JWT 토큰이 Bearer 문자열로 시작하지 않습니다.");
-            return;
+            log.info("JWT 토큰이 Bearer 문자열로 시작하지 않습니다.");
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -73,5 +80,4 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private void handleException(HttpServletResponse response, int statusCode, String message) throws IOException {
         response.sendError(statusCode, message);
     }
-
 }
