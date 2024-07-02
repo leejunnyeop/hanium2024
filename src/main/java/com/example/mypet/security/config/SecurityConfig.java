@@ -26,7 +26,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity(debug = true)
 @RequiredArgsConstructor
-@ComponentScan("controllers")
 public class SecurityConfig {
 
     private final CustomOAuth2UserService customOAuth2UserService;
@@ -56,7 +55,7 @@ public class SecurityConfig {
                         .requestMatchers(
                                 new AntPathRequestMatcher("/"),
                                 new AntPathRequestMatcher("/token"),
-                                new AntPathRequestMatcher("/auth/success/**"))
+                                new AntPathRequestMatcher("/auth/**"))
                                 .permitAll()
                         .anyRequest().authenticated()
                 )
@@ -83,6 +82,6 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers( "/error", "/favicon.ico");
+        return (web) -> web.ignoring().requestMatchers( "/error/**", "/favicon.ico");
     }
 }
