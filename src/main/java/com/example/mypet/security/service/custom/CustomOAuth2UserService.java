@@ -7,8 +7,6 @@ import com.example.mypet.security.jwt.jwtToken.JwtTokenStrategy;
 import com.example.mypet.security.repository.OAuth2AuthorizedClientRepository;
 import com.example.mypet.security.repository.UsersRepository;
 import com.example.mypet.security.service.oauthInfoSerivce.OAuth2UserInfoServiceProvider;
-import com.example.mypet.service.KmsService;
-import com.example.mypet.service.WalletService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,8 +30,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private final OAuth2AuthorizedClientRepository authorizedClientRepository;
     private final UsersRepository usersRepository;
     private final OAuth2UserInfoServiceProvider userInfoServiceProvider;
-    private final WalletService walletService;
-    private final KmsService kmsService;
 
     @Override
     @Transactional
@@ -42,12 +38,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         String provider = userRequest.getClientRegistration().getRegistrationId();
         OAuth2UserInfo oAuth2UserInfo = userInfoServiceProvider.getOAuth2UserInfoService(provider).loadUserInfo(oAuth2User);
 
-        Users user = null;
-        try {
-            user = processUserRegistration(oAuth2UserInfo, provider);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        Users user = processUserRegistration(oAuth2UserInfo, provider);
 
         String accessToken = jwtTokenStrategy.generateAccessToken(user.getEmail());
         String refreshToken = jwtTokenStrategy.generateRefreshToken(user.getEmail());
@@ -78,19 +69,12 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         return defaultOAuth2User;
     }
 
-    private Users processUserRegistration(OAuth2UserInfo oAuth2UserInfo, String provider) throws Exception {
+    private Users processUserRegistration(OAuth2UserInfo oAuth2UserInfo, String provider) {
         String email = oAuth2UserInfo.getEmail();
         String name = oAuth2UserInfo.getName();
 
-        // 지갑 생성
-        WalletService.Wallet wallet = walletService.createWallet();
-        // kms 를 통한 암호화
-        String encryptedPrivateKey = kmsService.encrypt(wallet.getPrivateKey());
-
         Optional<Users> optionalUser = usersRepository.findByEmail(email);
-
-        Users user = optionalUser.orElseGet(() -> Users.createUser(email, name, provider,
-                wallet.getAddress(), wallet.getPublicKey(), encryptedPrivateKey));
+        Users user = optionalUser.orElseGet(() -> Users.createUser(email, name, provider));
         if (optionalUser.isEmpty()) {
             usersRepository.save(user);
         }
