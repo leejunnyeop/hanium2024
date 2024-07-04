@@ -25,6 +25,7 @@ public class HelloController {
     }
     @GetMapping("/")
     public String HelloWorld2(){
+        System.out.println("hello world2");
         petRepository.findAll().forEach(System.out::println);
         return "Hello World!!!!";
     }
