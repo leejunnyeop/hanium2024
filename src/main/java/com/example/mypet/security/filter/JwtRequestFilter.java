@@ -51,10 +51,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 handleException(response, HttpServletResponse.SC_BAD_REQUEST, "JWT 형식이 잘못되었습니다.");
                 return;
             }
-        } else {
-            handleException(response, HttpServletResponse.SC_BAD_REQUEST, "JWT 토큰이 Bearer 문자열로 시작하지 않습니다.");
-            return;
         }
+//        else {
+//            handleException(response, HttpServletResponse.SC_BAD_REQUEST, "JWT 토큰이 Bearer 문자열로 시작하지 않습니다.");
+//            return;
+//        }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
