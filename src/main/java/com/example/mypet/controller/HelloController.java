@@ -28,4 +28,9 @@ public class HelloController {
         petRepository.findAll().forEach(System.out::println);
         return "Hello World!!!!";
     }
+
+    @GetMapping("/auth")
+    public String HelloWorld3(){
+        return "test!";
+    }
 }

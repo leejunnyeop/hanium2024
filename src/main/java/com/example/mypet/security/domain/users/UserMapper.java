@@ -23,7 +23,7 @@ public class UserMapper {
                 .name(userDto.getName())
                 .provider(userDto.getProvider())
                 .jwtRefreshToken(userDto.getJwtRefreshToken())
-                .accessToken(userDto.getAccessToken() != null ? new OAuth2AccessToken(OAuth2AccessToken.TokenType.BEARER, userDto.getAccessToken(), null, null) : null)
+                .accessToken(userDto.getAccessToken() != null ? new OAuth2AccessTokenDto(OAuth2AccessToken.TokenType.BEARER, userDto.getAccessToken()) : null)
                 .refreshToken(userDto.getRefreshToken() != null ? new OAuth2RefreshToken(userDto.getRefreshToken(), null) : null)
                 .clientRegistrationId(userDto.getClientRegistrationId())
                 .build();

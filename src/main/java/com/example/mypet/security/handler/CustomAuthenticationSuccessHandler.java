@@ -48,10 +48,12 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
 
         // 토큰 전달을 위한 redirect
+
         String redirectUrl = UriComponentsBuilder.fromUriString(URI)
                 .queryParam("Authorization", "Bearer " + jwtAccessToken)
                 .build().toUriString();
 
         response.sendRedirect(redirectUrl);
+
     }
 }

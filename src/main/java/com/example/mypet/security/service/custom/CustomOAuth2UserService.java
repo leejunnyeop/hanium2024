@@ -1,6 +1,7 @@
 package com.example.mypet.security.service.custom;
 
 import com.example.mypet.security.domain.oauth.OAuth2UserInfo;
+import com.example.mypet.security.domain.users.OAuth2AccessTokenDto;
 import com.example.mypet.security.domain.users.Users;
 import com.example.mypet.security.domain.users.UsersDto;
 import com.example.mypet.security.domain.users.UserMapper;
@@ -59,10 +60,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         if (optionalUser.isPresent()) {
             user = optionalUser.get(); // 기존 사용자 반환
             // 기존 사용자의 OAuth2 토큰 갱신
-            user.updateTokens(userRequest.getAccessToken());
+            user.updateTokens(new OAuth2AccessTokenDto(userRequest.getAccessToken()));
         } else {
             // 새로운 사용자 생성 및 저장
-            user = Users.createUser(email, name, provider, userRequest.getAccessToken(), userRequest.getClientRegistration().getRegistrationId());
+            user = Users.createUser(email, name, provider, new OAuth2AccessTokenDto(userRequest.getAccessToken()), userRequest.getClientRegistration().getRegistrationId());
             usersRepository.save(user);
         }
 
