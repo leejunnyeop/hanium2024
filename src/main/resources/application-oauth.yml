@@ -4,10 +4,10 @@ spring:
       client:
         registration:
           google:
-            client-id: 54570271712-f59ukatoig739fk0evvibotcktb5hlrf.apps.googleusercontent.com
-            client-secret : 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
+            client-id: 54570271712-6cj9qpfet066g5f0tb8le4hlvovr9073.apps.googleusercontent.com
+            client-secret : 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
             scope: openid, profile, email
-            redirect-uri: "{baseUrl}/login/oauth2/code/google"
+            redirect-uri: "https://{baseHost}{basePort}/login/oauth2/code/google"
             #authorization-grant-type: authorization_code
           naver:
             client-id: aRtsZ5tiPboW41G3a8iO
