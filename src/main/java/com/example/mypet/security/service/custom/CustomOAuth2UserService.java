@@ -7,6 +7,8 @@ import com.example.mypet.security.domain.users.UsersDto;
 import com.example.mypet.security.domain.users.UserMapper;
 import com.example.mypet.security.repository.UsersRepository;
 import com.example.mypet.security.service.oauthInfoSerivce.OAuth2UserInfoServiceProvider;
+import com.example.mypet.service.KmsService;
+import com.example.mypet.service.WalletService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -25,6 +27,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private final UsersRepository usersRepository;
     private final OAuth2UserInfoServiceProvider userInfoServiceProvider;
+    private final WalletService walletService;
+    private final KmsService kmsService;
 
     @Override
     @Transactional
@@ -53,6 +57,15 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private UsersDto processUserRegistration(OAuth2UserInfo oAuth2UserInfo, String provider, OAuth2UserRequest userRequest) {
         String email = oAuth2UserInfo.getEmail();
         String name = oAuth2UserInfo.getName();
+        // 지갑 생성
+        WalletService.Wallet wallet = null;
+        try {
+            wallet = walletService.createWallet();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        // kms 를 통한 암호화
+        String encryptedPrivateKey = kmsService.encrypt(wallet.getPrivateKey());
 
         // 이메일로 사용자 검색
         Optional<Users> optionalUser = usersRepository.findByEmail(email);
@@ -64,6 +77,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         } else {
             // 새로운 사용자 생성 및 저장
             user = Users.createUser(email, name, provider, new OAuth2AccessTokenDto(userRequest.getAccessToken()), userRequest.getClientRegistration().getRegistrationId());
+            user.setCryptoWallet(wallet.getAddress(), wallet.getPublicKey(),encryptedPrivateKey);
             usersRepository.save(user);
         }
 
