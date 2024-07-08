@@ -50,6 +50,8 @@ dependencies {
     // https://mvnrepository.com/artifact/org.web3j/web3j-gradle-plugin
     implementation 'org.web3j:core:4.8.7'
 
+    // https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk
+    implementation group: 'com.amazonaws', name: 'aws-java-sdk', version: '1.12.753'
 
 
 }

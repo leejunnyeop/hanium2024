@@ -1,9 +1,6 @@
 package com.example.mypet.security.domain.users;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.oauth2.core.OAuth2RefreshToken;
@@ -25,8 +22,12 @@ public class Users {
     private String provider;
     private String jwtRefreshToken; // JWT 리프레시 토큰
 
-    private OAuth2AccessTokenDto accessToken; // OAuth2 액세스 토큰
+    //
+    private String address;
+    private String publicKey;
+    private String encryptedPrivateKey;
 
+    private OAuth2AccessTokenDto accessToken; // OAuth2 액세스 토큰
     private OAuth2RefreshToken refreshToken; // OAuth2 리프레시 토큰
     private String clientRegistrationId; // 클라이언트 등록 ID (예: google, naver)
 
@@ -41,6 +42,15 @@ public class Users {
                 .accessToken(accessToken)
                 .clientRegistrationId(clientRegistrationId)
                 .build();
+    }
+
+    /**
+    * user 전자지갑 관련 정보 저장
+    **/
+    public void setCryptoWallet(String address, String publicKey, String encryptedPrivateKey){
+        this.address = address;
+        this.publicKey = publicKey;
+        this.encryptedPrivateKey = encryptedPrivateKey;
     }
 
     /**
