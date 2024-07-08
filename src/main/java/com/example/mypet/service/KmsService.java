@@ -2,6 +2,8 @@ package com.example.mypet.service;
 
 import com.amazonaws.services.kms.AWSKMS;
 import com.amazonaws.services.kms.AWSKMSClientBuilder;
+import com.amazonaws.services.kms.model.DecryptRequest;
+import com.amazonaws.services.kms.model.DecryptResult;
 import com.amazonaws.services.kms.model.EncryptRequest;
 import com.amazonaws.services.kms.model.EncryptResult;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,5 +31,15 @@ public class KmsService {
         ByteBuffer ciphertextBuffer = result.getCiphertextBlob();
         return Base64.getEncoder().encodeToString(ciphertextBuffer.array());
     }
-
+    public String decrypt(String ciphertext) {
+        try {
+            ByteBuffer ciphertextBuffer = ByteBuffer.wrap(Base64.getDecoder().decode(ciphertext));
+            DecryptRequest req = new DecryptRequest().withCiphertextBlob(ciphertextBuffer);
+            DecryptResult result = kmsClient.decrypt(req);
+            ByteBuffer plaintextBuffer = result.getPlaintext();
+            return new String(plaintextBuffer.array());
+        } catch (Exception e) {
+            throw new RuntimeException("KMS decryption failed", e);
+        }
+    }
 }
