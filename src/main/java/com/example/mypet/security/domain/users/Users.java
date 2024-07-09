@@ -46,22 +46,6 @@ public class Users {
     }
 
     /**
-    * user 전자지갑 관련 정보 저장
-    **/
-    public void setCryptoWallet(String address, String publicKey, String encryptedPrivateKey){
-        this.address = address;
-        this.publicKey = publicKey;
-        this.encryptedPrivateKey = encryptedPrivateKey;
-    }
-
-    /**
-     * OAuth2 토큰 갱신 메서드
-     */
-    public void updateTokens(OAuth2AccessTokenDto accessToken) {
-        this.accessToken = accessToken;
-    }
-
-    /**
             * JWT 리프레시 토큰 갱신 메서드
      */
     public void updateJwtRefreshToken(String jwtRefreshToken) {

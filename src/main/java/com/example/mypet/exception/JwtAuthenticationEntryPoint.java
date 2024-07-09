@@ -1,4 +1,4 @@
-package com.example.mypet.security.ex;
+package com.example.mypet.exception;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

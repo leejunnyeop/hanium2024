@@ -1,7 +1,7 @@
 package com.example.mypet.security.config;
 
 import com.example.mypet.security.filter.JwtRequestFilter;
-import com.example.mypet.security.ex.JwtAuthenticationEntryPoint;
+import com.example.mypet.exception.JwtAuthenticationEntryPoint;
 import com.example.mypet.security.handler.CustomAuthenticationSuccessHandler;
 
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,6 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AndRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
