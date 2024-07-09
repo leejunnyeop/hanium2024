@@ -3,20 +3,16 @@ package com.example.mypet.security.config;
 import com.example.mypet.security.filter.JwtRequestFilter;
 import com.example.mypet.security.ex.JwtAuthenticationEntryPoint;
 import com.example.mypet.security.handler.CustomAuthenticationSuccessHandler;
-import com.example.mypet.security.service.custom.CustomOAuth2UserService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.oauth2.client.InMemoryOAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
@@ -30,7 +26,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final CustomOAuth2UserService customOAuth2UserService;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtRequestFilter jwtRequestFilter;
     private final OAuth2AuthorizedClientRepository authorizedClientRepository;
@@ -57,6 +52,7 @@ public class SecurityConfig {
                         .requestMatchers(
                                 new AntPathRequestMatcher("/"),
                                 new AntPathRequestMatcher("/token"),
+                                new AntPathRequestMatcher("/auth/login/**"),
                                 new AntPathRequestMatcher("/auth/success/**"))
                                 .permitAll()
                         .anyRequest().authenticated()
@@ -64,8 +60,8 @@ public class SecurityConfig {
                 .oauth2Login(oauth2 -> oauth2
                         .clientRegistrationRepository(clientRegistrationRepository)
                         .authorizedClientService(authorizedClientService)
-                        .userInfoEndpoint(userInfo -> userInfo
-                                .userService(customOAuth2UserService))
+//                        .userInfoEndpoint(userInfo -> userInfo
+//                                .userService(customOAuth2UserService))
                         .successHandler(customAuthenticationSuccessHandler) // 성공 핸들러 설정
                 )
                 .exceptionHandling(exception -> exception
@@ -85,6 +81,6 @@ public class SecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().requestMatchers( "/error/**", "/favicon.ico",
-                "/swagger-ui/**","/api-docs/**");
+                "/swagger-ui/**","/api-docs/**","/auth/login/**");
     }
 }

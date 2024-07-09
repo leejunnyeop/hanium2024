@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -17,7 +18,8 @@ import java.util.Base64;
 public class DefaultJwtTokenStrategy implements JwtTokenStrategy {
 
     // 더 긴 비밀 키 (256비트 이상)
-    private static final String SECRETKEY = "eBpZmH7jMx8hJcR3kVnTp0w9yXGz1cR7UjXx3tZ2uLs5vN5oWpQ4kYtSz8bFhNkS";
+    @Value("${jwt.token.secret-key}")
+    private String SECRETKEY;
 
     private static final long ACCESS_TOKEN_VALIDITY_SECONDS = 15 * 60; // 15분
     private static final long REFRESH_TOKEN_VALIDITY_SECONDS = 30 * 24 * 60 * 60; // 30일

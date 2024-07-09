@@ -20,9 +20,10 @@ public class Users {
     private String email;
     private String name;
     private String provider;
+    private String role;
     private String jwtRefreshToken; // JWT 리프레시 토큰
 
-    //
+    // 전자지갑
     private String address;
     private String publicKey;
     private String encryptedPrivateKey;
