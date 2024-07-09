@@ -1,8 +1,7 @@
 package com.example.mypet.security.handler;
 
 import com.example.mypet.security.domain.users.Users;
-import com.example.mypet.security.jwt.jwtToken.DefaultJwtTokenStrategy;
-import com.example.mypet.security.jwt.jwtToken.JwtTokenStrategy;
+import com.example.mypet.security.jwt.JwtTokenStrategy;
 import com.example.mypet.security.repository.UsersRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

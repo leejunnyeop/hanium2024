@@ -5,7 +5,7 @@ import com.example.mypet.dto.TokenInfo;
 import com.example.mypet.enums.Role;
 
 import com.example.mypet.security.domain.users.Users;
-import com.example.mypet.security.jwt.jwtToken.JwtExpireTime;
+import com.example.mypet.security.jwt.JwtExpireTime;
 import com.example.mypet.security.libs.SocialLoginUtils;
 import com.example.mypet.security.repository.UsersRepository;
 import io.jsonwebtoken.Jwts;

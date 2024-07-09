@@ -1,6 +1,6 @@
 package com.example.mypet.security.filter;
 
-import com.example.mypet.security.jwt.jwtToken.JwtTokenStrategy;
+import com.example.mypet.security.jwt.JwtTokenStrategy;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import jakarta.servlet.FilterChain;
