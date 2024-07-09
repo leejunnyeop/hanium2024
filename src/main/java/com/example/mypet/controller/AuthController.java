@@ -6,7 +6,10 @@ import com.example.mypet.security.domain.refresh.RefreshTokenRequest;
 import com.example.mypet.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
+@Tag(name = "auth", description = "회원가입/로그인 API")
 @RequiredArgsConstructor
 public class AuthController {
 
@@ -34,7 +38,7 @@ public class AuthController {
         return "home";
     }
 
-    @Operation(summary = "소셜 로그인")
+    @Operation(summary = "소셜 로그인", responses = { @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = TokenInfo.class)))})
     @PostMapping("/login/{provider}")
     public ResponseEntity<TokenInfo> socialLogin(@RequestHeader(name = "Authorization") String socialToken, @PathVariable String provider){
         System.out.println("social Token: " + socialToken);
