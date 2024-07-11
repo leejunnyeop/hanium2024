@@ -1,5 +1,6 @@
 package com.example.mypet.security.config;
 
+import com.example.mypet.enums.Role;
 import com.example.mypet.security.filter.JwtRequestFilter;
 import com.example.mypet.exception.JwtAuthenticationEntryPoint;
 
@@ -47,10 +48,9 @@ public class SecurityConfig {
                                 "/api-docs/**",
                                 "/error/**"
                                 ).permitAll()
+                        .requestMatchers("/admin/**").hasRole(Role.ADMIN.name())
                         .anyRequest().authenticated()
                 )
-
-
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 );

@@ -30,7 +30,7 @@ public class UserService {
 
         Users user = Users.builder()
                 .provider(authProvider)
-                .role(Role.ROLE_USER.name())
+                .role(Role.USER.name())
                 .email(json.getString("email"))
                 .name(json.getString("name"))
                 // setting crypto wallet
