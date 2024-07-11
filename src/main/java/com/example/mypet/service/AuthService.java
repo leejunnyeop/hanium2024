@@ -45,9 +45,7 @@ public class AuthService {
     private static final String TYPE_REFRESH = "refresh";
 
     public TokenInfo socialLogin(String socialToken, String provider) {
-        System.out.println(socialToken);
         var jsonValue = getMemberInfoByAccessToken(socialToken, provider);
-        System.out.println("jsonValue");
         if (jsonValue == null) {
             // Todo: Custom Exception 처리
             throw new IllegalArgumentException("잘못된 provider");
@@ -67,6 +65,8 @@ public class AuthService {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         Key key = Keys.hmacShaKeyFor(keyBytes);
 
+        // generate token
+
         String accessToken = Jwts.builder()
                 .setSubject(user.getId())
                 .claim(AUTHORITIES_KEY, authorities)
@@ -78,13 +78,11 @@ public class AuthService {
 
         //Generate RefreshToken
         String refreshToken = Jwts.builder()
-
                 .claim("type", TYPE_REFRESH)
                 .setIssuedAt(now)   //토큰 발행 시간 정보
                 .setExpiration(new Date(now.getTime() + JwtExpireTime.REFRESH_TOKEN_EXPIRE_TIME)) //토큰 만료 시간 설정
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
-
         TokenInfo tokenInfo =  TokenInfo.builder()
                 .grantType(BEARER_TYPE)
                 .accessToken(accessToken)
@@ -93,6 +91,7 @@ public class AuthService {
                 .refreshTokenExpirationTime(JwtExpireTime.REFRESH_TOKEN_EXPIRE_TIME)
                 .build();
 //        user.updateTokens(accessToken);
+
         user.updateJwtRefreshToken(refreshToken);
         usersRepository.save(user);
 
