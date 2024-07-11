@@ -50,14 +50,18 @@ public class AuthService {
             // Todo: Custom Exception 처리
             throw new IllegalArgumentException("잘못된 provider");
         }
-
         // Todo: Exception 처리 좀 더 깔끔하게
         // 회원정보에 없으면 가입처리
         var email = jsonValue.getString("email");
         Users user = usersRepository.findByEmail(email).orElse(null);
+        
+        // 처음 회원가입 여부 -> 온보딩에 필요함
+        var isFirst = false;
         if (user == null) {
+            isFirst = true;
             user = userService.registerMember(jsonValue, provider);
         }
+       
 
         Date now = new Date();
         List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(Role.USER.name()));
@@ -83,13 +87,16 @@ public class AuthService {
                 .setExpiration(new Date(now.getTime() + JwtExpireTime.REFRESH_TOKEN_EXPIRE_TIME)) //토큰 만료 시간 설정
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
-        TokenInfo tokenInfo =  TokenInfo.builder()
+        var tokenInfo =  TokenInfo.builder()
+                .isFirstLogin(true)
                 .grantType(BEARER_TYPE)
                 .accessToken(accessToken)
                 .accessTokenExpirationTime(JwtExpireTime.ACCESS_TOKEN_EXPIRE_TIME)
                 .refreshToken(refreshToken)
                 .refreshTokenExpirationTime(JwtExpireTime.REFRESH_TOKEN_EXPIRE_TIME)
                 .build();
+        if (!isFirst)
+            tokenInfo.setIsFirstLogin(false);
 //        user.updateTokens(accessToken);
 
         user.updateJwtRefreshToken(refreshToken);
