@@ -1,14 +1,11 @@
 package com.example.mypet.controller;
 
 import com.example.mypet.dto.TokenInfo;
-import com.example.mypet.security.domain.refresh.OAuth2AccessTokenResponse;
-import com.example.mypet.security.domain.refresh.RefreshTokenRequest;
 import com.example.mypet.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,8 +24,7 @@ public class AuthController {
 
     // Todo
     @PostMapping("/refresh")
-    public ResponseEntity<String> refreshAccessToken(@RequestBody RefreshTokenRequest request) {
-//        OAuth2AccessTokenResponse response = authService.refreshAccessToken(request.getRefreshToken());
+    public ResponseEntity<String> refreshAccessToken() {
         return ResponseEntity.ok("refresh");
     }
 

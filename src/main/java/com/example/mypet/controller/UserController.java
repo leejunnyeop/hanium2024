@@ -26,7 +26,7 @@ public class UserController {
         return new ResponseEntity<>(userService.getUserInfo(user.getUsername()), HttpStatus.OK) ;
     }
 
-    @PatchMapping
+    @PatchMapping("/agree")
     public ResponseEntity<Users> changeTermsOfServiceAgreement(@AuthenticationPrincipal User user) {
         return new ResponseEntity<>(userService.changeTermsOfServiceAgreement(user.getUsername()), HttpStatus.OK);
     }
