@@ -23,8 +23,11 @@ public class Users {
     private String email;
     @Schema(description = "이름", example = "홍창현")
     private String name;
+    @Schema(description = "provider", example = "google")
     private String provider;
+    @Schema(description = "역할", example = "user")
     private String role;
+    @Schema(description = "refreshToken", example = "user")
     private String jwtRefreshToken; // JWT 리프레시 토큰
 
     // 전자지갑
