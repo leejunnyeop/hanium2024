@@ -1,5 +1,6 @@
 package com.example.mypet.security.domain.users;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -16,33 +17,29 @@ import org.springframework.security.oauth2.core.OAuth2RefreshToken;
 public class Users {
 
     @Id
+    @Schema(description = "id", example = "6691113b6f3f5a4936fe4ec3")
     private String id;
+    @Schema(description = "이메일", example = "alex96320@gmail.com")
     private String email;
+    @Schema(description = "이름", example = "홍창현")
     private String name;
     private String provider;
     private String role;
     private String jwtRefreshToken; // JWT 리프레시 토큰
 
     // 전자지갑
+    @Schema(description = "전자지갑 주소" )
     private String address;
+    @Schema(description = "publicKey" )
     private String publicKey;
+    @Schema(description = "암호화 된 전자지갑 privateKey" )
     private String encryptedPrivateKey;
 
-    private OAuth2AccessTokenDto accessToken; // OAuth2 액세스 토큰
-    private OAuth2RefreshToken refreshToken; // OAuth2 리프레시 토큰
-    private String clientRegistrationId; // 클라이언트 등록 ID (예: google, naver)
+    @Schema(example = "true", description = "이용 약관 동의 여부")
+    private Boolean termsOfServiceAgreement = false;
 
-    /**
-     * 새로운 사용자 생성 메서드
-     */
-    public static Users createUser(String email, String name, String provider, OAuth2AccessTokenDto accessToken, String clientRegistrationId) {
-        return Users.builder()
-                .email(email)
-                .name(name)
-                .provider(provider)
-                .accessToken(accessToken)
-                .clientRegistrationId(clientRegistrationId)
-                .build();
+    public void setTermsOfServiceAgreement(){
+        this.termsOfServiceAgreement = true;
     }
 
     /**

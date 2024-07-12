@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -16,6 +17,9 @@ public class UserService {
     private final UsersRepository usersRepository;
     private final KmsService kmsService;
     private final WalletService walletService;
+
+
+    @Transactional(readOnly = true)
     public Users registerMember(JSONObject json, String authProvider) {
 
         // 지갑 생성
@@ -39,5 +43,26 @@ public class UserService {
                 .encryptedPrivateKey(encryptedPrivateKey)
                 .build();
         return usersRepository.save(user);
+    }
+
+
+
+    @Transactional(readOnly = true)
+    public Users getUserInfo(String userId){
+        // dto 고려
+        var user =  usersRepository.findById(userId).orElseThrow(
+                () -> new RuntimeException("User not found")
+        );
+        return user;
+    }
+
+    @Transactional(readOnly = true)
+    public Users changeTermsOfServiceAgreement(String userId){
+        var user = usersRepository.findById(userId).orElseThrow(
+                () -> new RuntimeException("User not found")
+        );
+        user.setTermsOfServiceAgreement();
+        usersRepository.save(user);
+        return user;
     }
 }
