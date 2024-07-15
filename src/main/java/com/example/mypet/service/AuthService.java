@@ -25,10 +25,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-
-@Service
-@RequiredArgsConstructor
 @Log4j2
+@RequiredArgsConstructor
+@Service
 public class AuthService {
 
     private final SocialLoginUtils socialLoginUtils;
@@ -36,7 +35,7 @@ public class AuthService {
     private final UserService userService;
 
 
-    @Value("${jwt.token.secret-key}")
+    //@Value("${jwt.token.secret-key}")
     private String secretKey;
 
     private static final String AUTHORITIES_KEY = "auth";

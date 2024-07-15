@@ -1,7 +1,7 @@
 package com.example.mypet.controller;
 
 
-import com.example.mypet.repository.PetRepository;
+import com.example.mypet.pet.repository.PetRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.GetMapping;
