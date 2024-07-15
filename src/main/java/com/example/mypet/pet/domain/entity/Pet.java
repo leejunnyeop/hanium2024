@@ -1,6 +1,7 @@
-package com.example.pet.domain.entity;
+package com.example.mypet.pet.domain.entity;
 
-import com.example.pet.domain.Gender;
+import com.example.mypet.pet.domain.Gender;
+import com.example.mypet.pet.domain.dto.PetDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,5 +28,27 @@ public class Pet {
     private String description;
     private boolean neutered;  // 중성화 여부 추가
     private String imageUrl;   // 이미지 URL 추가
+
+    public void updateFromDto(PetDto petDto) {
+        if (petDto.getName() != null) {
+            this.name = petDto.getName();
+        }
+        if (petDto.getGender() != null) {
+            this.gender = petDto.getGender();
+        }
+        if (petDto.getBirthDate() != null) {
+            this.birthDate = petDto.getBirthDate();
+        }
+        if (petDto.getBreed() != null) {
+            this.breed = petDto.getBreed();
+        }
+        if (petDto.getDescription() != null) {
+            this.description = petDto.getDescription();
+        }
+        if (petDto.getImageUrl() != null) {
+            this.imageUrl = petDto.getImageUrl();
+        }
+        this.neutered = petDto.isNeutered();
+    }
 
 }

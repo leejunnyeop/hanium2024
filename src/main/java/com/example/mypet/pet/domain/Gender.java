@@ -1,4 +1,4 @@
-package com.example.pet.domain;
+package com.example.mypet.pet.domain;
 
 public enum Gender {
 

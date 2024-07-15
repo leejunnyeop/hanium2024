@@ -1,7 +1,7 @@
-package com.example.pet.domain.dto;
+package com.example.mypet.pet.domain.dto;
 
-import com.example.pet.domain.Gender;
-import com.example.pet.domain.entity.Pet;
+import com.example.mypet.pet.domain.Gender;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Builder
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class PetDto {
 
     private String name;
