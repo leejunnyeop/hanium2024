@@ -1,5 +1,6 @@
 package com.example.mypet.pet.controller;
 
+import com.amazonaws.services.accessanalyzer.model.ResourceNotFoundException;
 import com.example.mypet.pet.domain.dto.PetDto;
 import com.example.mypet.pet.service.PetService;
 
@@ -37,6 +38,15 @@ public class PetController {
     public ResponseEntity<List<PetDto>> getPetsByUser(@AuthenticationPrincipal Users user) {
         List<PetDto> pets = petService.getPetsByUser(user);
         return ResponseEntity.ok(pets);
+    }
+
+    // ID로 Pet 조회
+    @GetMapping("/{petId}")
+    @Operation(summary = "펫 조회", description = "ID를 사용하여 특정 펫을 조회합니다.")
+    public ResponseEntity<PetDto> getPetById(@AuthenticationPrincipal Users user, @PathVariable String petId) {
+        PetDto pet = petService.getPetById(user, petId)
+                .orElseThrow(() -> new ResourceNotFoundException("ID가 " + petId + "인 펫을 찾을 수 없습니다."));
+        return ResponseEntity.ok(pet);
     }
 
 
