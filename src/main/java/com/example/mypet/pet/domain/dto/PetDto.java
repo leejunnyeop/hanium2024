@@ -20,7 +20,7 @@ public class PetDto {
     private LocalDate birthDate;
     private String breed;
     private String description;
-    private boolean neutered;
+    private Boolean neutered;
     private String imageUrl;
 
 

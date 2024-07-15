@@ -12,7 +12,7 @@ public class PetMapper {
                 .birthDate(petDto.getBirthDate())
                 .breed(petDto.getBreed())
                 .description(petDto.getDescription())
-                .neutered(petDto.isNeutered())
+                .neutered(petDto.getNeutered())
                 .imageUrl(petDto.getImageUrl())
                 .build();
     }
@@ -24,7 +24,7 @@ public class PetMapper {
                 .birthDate(pet.getBirthDate())
                 .breed(pet.getBreed())
                 .description(pet.getDescription())
-                .neutered(pet.isNeutered())
+                .neutered(pet.getNeutered())
                 .imageUrl(pet.getImageUrl())
                 .build();
     }

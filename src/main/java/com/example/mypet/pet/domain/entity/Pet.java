@@ -26,7 +26,7 @@ public class Pet {
     private LocalDate birthDate;
     private String breed;
     private String description;
-    private boolean neutered;  // 중성화 여부 추가
+    private Boolean neutered;  // 중성화 여부 추가
     private String imageUrl;   // 이미지 URL 추가
 
     public void updateFromDto(PetDto petDto) {
@@ -48,7 +48,8 @@ public class Pet {
         if (petDto.getImageUrl() != null) {
             this.imageUrl = petDto.getImageUrl();
         }
-        this.neutered = petDto.isNeutered();
+        this.neutered = petDto.getNeutered();
     }
+
 
 }
