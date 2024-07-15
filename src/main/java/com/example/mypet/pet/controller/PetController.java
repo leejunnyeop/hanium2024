@@ -50,6 +50,14 @@ public class PetController {
     }
 
 
+    // Pet 업데이트
+    @PutMapping("/{petId}")
+    @Operation(summary = "펫 업데이트", description = "ID를 사용하여 특정 펫을 업데이트합니다.")
+    public ResponseEntity<PetDto> updatePet(@AuthenticationPrincipal Users user, @PathVariable String petId, @RequestBody PetDto petDto) {
+        PetDto updatedPet = petService.updatePet(user, petId, petDto);
+        return ResponseEntity.ok(updatedPet);
+    }
+
 
 
 
