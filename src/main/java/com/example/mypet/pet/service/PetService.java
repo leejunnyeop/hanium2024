@@ -1,22 +1,21 @@
 package com.example.mypet.pet.service;
 
 import com.example.mypet.pet.domain.dto.PetDto;
-import com.example.mypet.security.domain.users.Users;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface PetService {
 
-    public PetDto savePet(Users user, PetDto petDto);
+    public PetDto savePet(String userId, PetDto petDto);
 
-    public Optional<PetDto> getPetById(Users user, String petId);
+    public Optional<PetDto> getPetById(String userId, String petId);
 
-    public List<PetDto> getPetsByUser(Users user);
+    public List<PetDto> getPetsByUser(String userId);
 
-    public PetDto updatePet(Users user, String petId, PetDto petDto);
+    public PetDto updatePet(String userId, String petId, PetDto petDto);
 
-    public void deletePet(Users user,String petId);
+    public void deletePet(String userId,String petId);
 
 
 }

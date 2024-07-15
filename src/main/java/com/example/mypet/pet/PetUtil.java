@@ -18,8 +18,8 @@ public class PetUtil {
                 .orElseThrow(() -> new ResourceNotFoundException("ID가 " + userId + "인 사용자를 찾을 수 없습니다."));
     }
 
-    public Pet findPetById(Users user, String petId) {
-        return user.getPets().stream()
+    public Pet findPetById(Users users, String petId) {
+        return users.getPets().stream()
                 .filter(p -> p.getId().equals(petId))
                 .findFirst()
                 .orElseThrow(() -> new ResourceNotFoundException("ID가 " + petId + "인 펫을 찾을 수 없습니다."));
