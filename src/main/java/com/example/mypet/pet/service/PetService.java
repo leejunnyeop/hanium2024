@@ -12,9 +12,11 @@ public interface PetService {
 
     public Optional<PetDto> getPetById(Users user, String petId);
 
-    public List<PetDto> getPetsByUserId(Users user);
+    public List<PetDto> getPetsByUser(Users user);
 
-    public PetDto UpdatePet(Users user, String petId, PetDto petDto);
+    public PetDto updatePet(Users user, String petId, PetDto petDto);
 
     public void deletePet(Users user,String petId);
+
+
 }

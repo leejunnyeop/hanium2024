@@ -58,7 +58,7 @@ public class PetServiceImpl implements PetService {
     // 사용자 ID로 사용자의 모든 PetDto 조회
     @Override
     @Transactional(readOnly = true)
-    public List<PetDto> getPetsByUserId(Users user) {
+    public List<PetDto> getPetsByUser(Users user) {
         try {
             return user.getPets().stream().map(PetMapper::toDto).collect(Collectors.toList());
         } catch (Exception e) {
@@ -68,7 +68,7 @@ public class PetServiceImpl implements PetService {
 
     @Override
     @Transactional
-    public PetDto UpdatePet(Users user, String petId, PetDto petDto) {
+    public PetDto updatePet(Users user, String petId, PetDto petDto) {
         try {
             Pet existingPet = petUtil.findPetById(user, petId);
             existingPet.updateFromDto(petDto);
@@ -93,4 +93,6 @@ public class PetServiceImpl implements PetService {
             throw new ServiceException("펫 삭제 중 오류가 발생했습니다: " + e.getMessage());
         }
     }
+
+
 }

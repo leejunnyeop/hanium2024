@@ -11,10 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -31,6 +30,17 @@ public class PetController {
         PetDto savedPet = petService.savePet(user, petDto);
         return ResponseEntity.ok(savedPet);
     }
+
+    // 사용자의 모든 Pet 조회
+    @GetMapping
+    @Operation(summary = "사용자의 모든 펫 조회", description = "현재 사용자에 속한 모든 펫을 조회합니다.")
+    public ResponseEntity<List<PetDto>> getPetsByUser(@AuthenticationPrincipal Users user) {
+        List<PetDto> pets = petService.getPetsByUser(user);
+        return ResponseEntity.ok(pets);
+    }
+
+
+
 
 
 }
