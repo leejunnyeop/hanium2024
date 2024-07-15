@@ -58,6 +58,14 @@ public class PetController {
         return ResponseEntity.ok(updatedPet);
     }
 
+    // Pet 삭제
+    @DeleteMapping("/{petId}")
+    @Operation(summary = "펫 삭제", description = "ID를 사용하여 특정 펫을 삭제합니다.")
+    public ResponseEntity<Void> deletePet(@AuthenticationPrincipal Users user, @PathVariable String petId) {
+        petService.deletePet(user, petId);
+        return ResponseEntity.ok().build();
+    }
+
 
 
 
