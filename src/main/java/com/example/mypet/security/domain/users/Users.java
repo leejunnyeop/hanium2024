@@ -1,10 +1,13 @@
 package com.example.mypet.security.domain.users;
 
+import com.example.mypet.pet.domain.entity.Pet;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.security.oauth2.core.OAuth2RefreshToken;
+
+import java.util.List;
 
 /**
  * MongoDB에 저장되는 사용자 정보를 담는 엔티티 클래스.
@@ -40,6 +43,10 @@ public class Users {
 
     @Schema(example = "true", description = "이용 약관 동의 여부")
     private Boolean termsOfServiceAgreement = false;
+
+    @DBRef
+    @Schema(example = "강아지 연관관계", description = "강아지 관련 정보")
+    private List<Pet> pets;
 
     public void setTermsOfServiceAgreement(){
         this.termsOfServiceAgreement = true;
