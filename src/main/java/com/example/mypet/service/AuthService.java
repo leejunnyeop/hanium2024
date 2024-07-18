@@ -35,7 +35,7 @@ public class AuthService {
     private final UserService userService;
 
 
-    //@Value("${jwt.token.secret-key}")
+    @Value("${jwt.token.secret-key}")
     private String secretKey;
 
     private static final String AUTHORITIES_KEY = "auth";
