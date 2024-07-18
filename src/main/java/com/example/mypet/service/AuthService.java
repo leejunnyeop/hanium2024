@@ -35,7 +35,7 @@ public class AuthService {
     private final UserService userService;
 
 
-    //@Value("${jwt.token.secret-key}")
+    @Value("${jwt.token.secret-key}")
     private String secretKey;
 
     private static final String AUTHORITIES_KEY = "auth";
@@ -44,10 +44,13 @@ public class AuthService {
     private static final String TYPE_REFRESH = "refresh";
 
     public TokenInfo socialLogin(String socialToken, String provider) {
+        log.info("serivce 시작해 " + socialToken);
+        log.info("provider :  " + provider);
         var jsonValue = getMemberInfoByAccessToken(socialToken, provider);
+        log.info("socialLogin jsonValue : " + jsonValue);
         if (jsonValue == null) {
             // Todo: Custom Exception 처리
-            throw new IllegalArgumentException("잘못된 provider");
+            throw new IllegalArgumentException("잘못된 provider" + provider);
         }
         // Todo: Exception 처리 좀 더 깔끔하게
         // 회원정보에 없으면 가입처리
@@ -105,6 +108,8 @@ public class AuthService {
     }
 
     private JSONObject getMemberInfoByAccessToken(String accessToken, String provider){
+        log.info("getMemberInfoByAccessToken 시작해");
+        log.info(provider);
 
         JSONObject json = null;
         try {
@@ -113,10 +118,14 @@ public class AuthService {
 //                    authProviderId = socialLoginUtils.getNaverInfo(accessToken);
                     break;
                 case "google":
+                    log.info("provider 인식했어");
                     json = socialLoginUtils.getGoogleInfo(accessToken);
+                    log.info("json : " + json);
                     break;
                 default:
-                    throw new IllegalArgumentException("지원하지 않는 provieder");
+                    log.info("인식 못했어");
+                    log.info(provider);
+                    throw new IllegalArgumentException("지원하지 않는 provieder" + provider);
             }
         }catch (Exception e){
             log.error(e.getMessage());
