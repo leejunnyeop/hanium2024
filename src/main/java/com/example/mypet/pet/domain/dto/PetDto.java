@@ -15,6 +15,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class PetDto {
 
+    private String id;
     private String name;
     private Gender gender;
     private LocalDate birthDate;
