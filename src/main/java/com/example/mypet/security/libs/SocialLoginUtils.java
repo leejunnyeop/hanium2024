@@ -1,6 +1,7 @@
 package com.example.mypet.security.libs;
 
 import lombok.RequiredArgsConstructor;
+
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 
+
 @Component
 @RequiredArgsConstructor
 public class SocialLoginUtils {
@@ -18,10 +20,12 @@ public class SocialLoginUtils {
 
     public JSONObject getGoogleInfo(String idToken) throws IOException {
 
+
         var uriBuilder = UriComponentsBuilder.fromHttpUrl(google_apiUrl)
                 .queryParam("id_token", idToken);
-        System.out.println(uriBuilder.toUriString());
+
         ResponseEntity<String> response = restTemplate.getForEntity(uriBuilder.toUriString(), String.class);
+
 
         JSONObject json = null;
 
@@ -31,6 +35,7 @@ public class SocialLoginUtils {
         else {
             throw new IOException(response.getBody());
         }
+
         return json;
 
     }

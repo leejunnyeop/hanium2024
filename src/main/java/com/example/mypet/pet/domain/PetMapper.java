@@ -1,12 +1,13 @@
 package com.example.mypet.pet.domain;
 
 import com.example.mypet.pet.domain.dto.PetDto;
-import com.example.mypet.pet.domain.entity.Pet;
+import com.example.mypet.pet.domain.entity.Pets;
 
 public class PetMapper {
 
-    public static Pet toEntity(PetDto petDto) {
-        return Pet.builder()
+    public static Pets toEntity(PetDto petDto) {
+        return Pets.builder()
+                .id(petDto.getId())
                 .name(petDto.getName())
                 .gender(petDto.getGender())
                 .birthDate(petDto.getBirthDate())
@@ -17,15 +18,16 @@ public class PetMapper {
                 .build();
     }
 
-    public static PetDto toDto(Pet pet) {
+    public static PetDto toDto(Pets pets) {
         return PetDto.builder()
-                .name(pet.getName())
-                .gender(pet.getGender())
-                .birthDate(pet.getBirthDate())
-                .breed(pet.getBreed())
-                .description(pet.getDescription())
-                .neutered(pet.getNeutered())
-                .imageUrl(pet.getImageUrl())
+                .id(pets.getId())
+                .name(pets.getName())
+                .gender(pets.getGender())
+                .birthDate(pets.getBirthDate())
+                .breed(pets.getBreed())
+                .description(pets.getDescription())
+                .neutered(pets.getNeutered())
+                .imageUrl(pets.getImageUrl())
                 .build();
     }
 

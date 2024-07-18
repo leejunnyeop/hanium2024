@@ -13,7 +13,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+
+
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,7 +26,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-@Log4j2
+
 @RequiredArgsConstructor
 @Service
 public class AuthService {
@@ -44,10 +45,12 @@ public class AuthService {
     private static final String TYPE_REFRESH = "refresh";
 
     public TokenInfo socialLogin(String socialToken, String provider) {
+
         var jsonValue = getMemberInfoByAccessToken(socialToken, provider);
+
         if (jsonValue == null) {
             // Todo: Custom Exception 처리
-            throw new IllegalArgumentException("잘못된 provider");
+            throw new IllegalArgumentException("잘못된 provider" + provider);
         }
         // Todo: Exception 처리 좀 더 깔끔하게
         // 회원정보에 없으면 가입처리
@@ -106,6 +109,7 @@ public class AuthService {
 
     private JSONObject getMemberInfoByAccessToken(String accessToken, String provider){
 
+
         JSONObject json = null;
         try {
             switch (provider) {
@@ -113,13 +117,16 @@ public class AuthService {
 //                    authProviderId = socialLoginUtils.getNaverInfo(accessToken);
                     break;
                 case "google":
+
                     json = socialLoginUtils.getGoogleInfo(accessToken);
+
                     break;
                 default:
-                    throw new IllegalArgumentException("지원하지 않는 provieder");
+
+                    throw new IllegalArgumentException("지원하지 않는 provieder" + provider);
             }
         }catch (Exception e){
-            log.error(e.getMessage());
+
         }
 
         return json;

@@ -1,12 +1,13 @@
 package com.example.mypet.security.domain.users;
 
-import com.example.mypet.pet.domain.entity.Pet;
+import com.example.mypet.pet.domain.entity.Pets;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,7 +47,7 @@ public class Users {
 
     @DBRef
     @Schema(example = "강아지 연관관계", description = "강아지 관련 정보")
-    private List<Pet> pets;
+    private List<Pets> pets = new ArrayList<>();
 
     public void setTermsOfServiceAgreement(){
         this.termsOfServiceAgreement = true;

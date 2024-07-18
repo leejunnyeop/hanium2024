@@ -4,17 +4,20 @@ import com.amazonaws.services.directory.model.ServiceException;
 import com.example.mypet.pet.PetUtil;
 import com.example.mypet.pet.domain.PetMapper;
 import com.example.mypet.pet.domain.dto.PetDto;
-import com.example.mypet.pet.domain.entity.Pet;
+import com.example.mypet.pet.domain.entity.Pets;
 import com.example.mypet.pet.repository.PetRepository;
 import com.example.mypet.security.domain.users.Users;
 import com.example.mypet.security.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+
 
 @Service
 @RequiredArgsConstructor
@@ -30,12 +33,19 @@ public class PetServiceImpl implements PetService {
     @Override
     public PetDto savePet(String userId, PetDto petDto) {
         try {
-            Pet pet = PetMapper.toEntity(petDto);
-            Pet savedPet = petRepository.save(pet);
+            Pets pets = PetMapper.toEntity(petDto);
+            Pets savedPets = petRepository.save(pets);
 
             Users userById = petUtil.findUserById(userId);
+
+
+            // 사용자의 펫 리스트에 새로 저장된 펫 추가
+             userById.getPets().add(savedPets);
+
+
+
             petUtil.saveUser(userById);
-            return PetMapper.toDto(savedPet);
+            return PetMapper.toDto(savedPets);
         } catch (Exception e) {
             throw new ServiceException("펫 저장 중 오류가 발생했습니다: " + e.getMessage());
         }
@@ -47,8 +57,8 @@ public class PetServiceImpl implements PetService {
     public Optional<PetDto> getPetById(String userId, String petId) {
         try {
             Users userById = petUtil.findUserById(userId);
-            Pet pet = petUtil.findPetById(userById, petId);
-            return Optional.of(PetMapper.toDto(pet));
+            Pets pets = petUtil.findPetById(userById, petId);
+            return Optional.of(PetMapper.toDto(pets));
         } catch (Exception e) {
             throw new ServiceException("펫 조회 중 오류가 발생했습니다: " + e.getMessage());
         }
@@ -60,6 +70,7 @@ public class PetServiceImpl implements PetService {
     public List<PetDto> getPetsByUser(String userId) {
         try {
             Users userById = petUtil.findUserById(userId);
+
             return userById.getPets().stream().map(PetMapper::toDto).collect(Collectors.toList());
         } catch (Exception e) {
             throw new ServiceException("사용자의 펫 조회 중 오류가 발생했습니다: " + e.getMessage());
@@ -71,26 +82,26 @@ public class PetServiceImpl implements PetService {
     public PetDto updatePet(String userId, String petId, PetDto petDto) {
         try {
             Users userById = petUtil.findUserById(userId);
-            Pet existingPet = petUtil.findPetById(userById, petId);
-            existingPet.updateFromDto(petDto);
-            Pet updatedPet = petRepository.save(existingPet);
-            return PetMapper.toDto(updatedPet);
+            Pets existingPets = petUtil.findPetById(userById, petId);
+            existingPets.updateFromDto(petDto);
+            Pets updatedPets = petRepository.save(existingPets);
+            return PetMapper.toDto(updatedPets);
         } catch (Exception e) {
             throw new ServiceException("펫 업데이트 중 오류가 발생했습니다: " + e.getMessage());
         }
     }
 
 
-    // Pet 삭제
+    // Pets 삭제
     @Override
     @Transactional
     public void deletePet(String userId, String petId) {
         try {
             Users userById = petUtil.findUserById(userId);
-            Pet pet = petUtil.findPetById(userById, petId);
-            userById.getPets().remove(pet);
+            Pets pets = petUtil.findPetById(userById, petId);
+            userById.getPets().remove(pets);
             petUtil.saveUser(userById);
-            petRepository.delete(pet);
+            petRepository.delete(pets);
         } catch (Exception e) {
             throw new ServiceException("펫 삭제 중 오류가 발생했습니다: " + e.getMessage());
         }

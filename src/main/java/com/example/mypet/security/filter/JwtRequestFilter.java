@@ -8,7 +8,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +21,7 @@ import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
-@Log4j2
+
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     private final JwtTokenStrategy jwtTokenStrategy;
@@ -43,10 +43,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 username = jwtTokenStrategy.getUsernameFromToken(jwtToken);
             } catch (IllegalArgumentException e) {
                 handleException(response, HttpServletResponse.SC_BAD_REQUEST, "잘못된 JWT 토큰입니다.");
-                log.warn("Unable to get JWT Token");
+
             } catch (ExpiredJwtException e) {
                 handleException(response, HttpServletResponse.SC_UNAUTHORIZED, "JWT 토큰이 만료되었습니다.");
-                log.warn("JWT Token has expired");
+
             }
             catch (MalformedJwtException e) {
                 handleException(response, HttpServletResponse.SC_BAD_REQUEST, "JWT 형식이 잘못되었습니다.");
