@@ -11,12 +11,12 @@ import java.util.Optional;
 
 public interface StatusRepository extends MongoRepository<HealthStatus, String> {
 
- Optional<HealthStatus> findByUsersIdAndPetIdAndDate(String userId, String petId, LocalDate date);
+ Optional<HealthStatus> findByUsersIdAndPetsIdAndDate(String userId, String petId, LocalDate date);
 
  Optional<HealthStatus> findByUsersIdAndDate(String userId, LocalDate date);
 
 
 
 
-    List<HealthStatus> findByUsersIdAndPetIdAndDateBetween(String userId, String petId, LocalDate startOfWeek, LocalDate endOfWeek);
+    List<HealthStatus> findByUsersIdAndPetsIdAndDateBetween(String userId, String petId, LocalDate startOfWeek, LocalDate endOfWeek);
 }

@@ -10,7 +10,7 @@ public class StatusMapper {
     public static HealthStatus toHealthStatus(HealthStatusDto healthStatusDto, String userId) {
 
         return HealthStatus.builder()
-                .petId(healthStatusDto.getPetId())
+                .petsId(healthStatusDto.getPetsId())
                 .usersId(userId) // userId를 매개변수로 받아서 설정
                 .date(healthStatusDto.getDate())
                 .symptoms(healthStatusDto.getSymptoms())
@@ -23,7 +23,7 @@ public class StatusMapper {
     // 엔티티를 DTO로 변환하는 메서드
     public static HealthStatusDto toHealthStatusDto(HealthStatus healthStatus) {
         return HealthStatusDto.builder()
-                .petId(healthStatus.getPetId())
+                .petsId(healthStatus.getPetsId())
                 .date(healthStatus.getDate())
                 .symptoms(healthStatus.getSymptoms())
                 .comment(healthStatus.getComment())

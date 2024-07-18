@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDate;
 import java.util.List;
 
-@Document(collation = "health_status")
+@Document(collection = "health_status")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,7 +21,7 @@ public class HealthStatus {
     private String id;
 
     private String usersId;
-    private String petId;
+    private String petsId;
 
     private LocalDate date;
     private List<Symptom> symptoms; //증상리스트

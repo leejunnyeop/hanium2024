@@ -16,7 +16,7 @@ import java.util.List;
 public class HealthStatusDto {
 
 
-    private String petId;
+    private String petsId;
 
     private LocalDate date;
     private List<Symptom> symptoms; //증상리스트
