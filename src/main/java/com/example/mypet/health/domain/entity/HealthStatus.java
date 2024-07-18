@@ -20,13 +20,14 @@ public class HealthStatus {
     @Id
     private String id;
 
-    private String petId;
     private String usersId;
+    private String petId;
 
     private LocalDate date;
     private List<Symptom> symptoms; //증상리스트
     private String comment; // 증상 코메트
     private String status;
+    private String color; // 증상 개수에 따른 색상
 
 
 
