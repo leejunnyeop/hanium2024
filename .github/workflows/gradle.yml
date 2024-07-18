@@ -1,10 +1,3 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
-
 name: Java Spring CI with Gradle
 
 env:
@@ -27,7 +20,7 @@ jobs:
     name: Deploy
 
     runs-on: ubuntu-latest
-    #기본 체크아웃
+    if: github.ref == 'refs/heads/main'  # Only deploy if the push is to the main branch
     steps:
       - uses: actions/checkout@v3
 

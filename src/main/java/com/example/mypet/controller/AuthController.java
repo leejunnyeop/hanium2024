@@ -39,8 +39,6 @@ public class AuthController {
     @Operation(summary = "소셜 로그인", responses = { @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = TokenInfo.class)))})
     @PostMapping("/login/{provider}")
     public ResponseEntity<TokenInfo> socialLogin(@RequestHeader(name = "Authorization") String socialToken, @PathVariable(name = "provider") String provider){
-
-
         TokenInfo tokenInfo = authService.socialLogin(socialToken, provider);
         return new ResponseEntity<>(tokenInfo, HttpStatus.OK) ;
     }
