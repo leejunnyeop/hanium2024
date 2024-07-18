@@ -8,13 +8,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-@Log4j2
+
 @RestController
 @RequestMapping("/auth")
 @Tag(name = "auth", description = "회원가입/로그인 API")
@@ -40,7 +40,7 @@ public class AuthController {
     @PostMapping("/login/{provider}")
     public ResponseEntity<TokenInfo> socialLogin(@RequestHeader(name = "Authorization") String socialToken, @PathVariable(name = "provider") String provider){
 
-        log.info("social Token: " + socialToken);
+
         TokenInfo tokenInfo = authService.socialLogin(socialToken, provider);
         return new ResponseEntity<>(tokenInfo, HttpStatus.OK) ;
     }

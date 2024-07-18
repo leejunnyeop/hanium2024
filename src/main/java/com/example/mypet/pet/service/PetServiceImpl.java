@@ -9,7 +9,7 @@ import com.example.mypet.pet.repository.PetRepository;
 import com.example.mypet.security.domain.users.Users;
 import com.example.mypet.security.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 
-@Log4j2
+
 @Service
 @RequiredArgsConstructor
 public class PetServiceImpl implements PetService {
@@ -37,13 +37,12 @@ public class PetServiceImpl implements PetService {
             Pets savedPets = petRepository.save(pets);
 
             Users userById = petUtil.findUserById(userId);
-            log.info("유저 : " + userById.getEmail());
-            log.info("유저 " + userById.getPets());
+
 
             // 사용자의 펫 리스트에 새로 저장된 펫 추가
              userById.getPets().add(savedPets);
 
-             log.info("사용자 펫 리스트에 새로 추가 userById : " + userById.getPets());
+
 
             petUtil.saveUser(userById);
             return PetMapper.toDto(savedPets);
@@ -71,7 +70,7 @@ public class PetServiceImpl implements PetService {
     public List<PetDto> getPetsByUser(String userId) {
         try {
             Users userById = petUtil.findUserById(userId);
-            log.info("전체 조회 하기 : " + userById.getPets());
+
             return userById.getPets().stream().map(PetMapper::toDto).collect(Collectors.toList());
         } catch (Exception e) {
             throw new ServiceException("사용자의 펫 조회 중 오류가 발생했습니다: " + e.getMessage());

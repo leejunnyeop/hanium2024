@@ -13,7 +13,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+
+
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,7 +26,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-@Log4j2
+
 @RequiredArgsConstructor
 @Service
 public class AuthService {
@@ -44,10 +45,9 @@ public class AuthService {
     private static final String TYPE_REFRESH = "refresh";
 
     public TokenInfo socialLogin(String socialToken, String provider) {
-        log.info("serivce 시작해 " + socialToken);
-        log.info("provider :  " + provider);
+
         var jsonValue = getMemberInfoByAccessToken(socialToken, provider);
-        log.info("socialLogin jsonValue : " + jsonValue);
+
         if (jsonValue == null) {
             // Todo: Custom Exception 처리
             throw new IllegalArgumentException("잘못된 provider" + provider);
@@ -108,8 +108,7 @@ public class AuthService {
     }
 
     private JSONObject getMemberInfoByAccessToken(String accessToken, String provider){
-        log.info("getMemberInfoByAccessToken 시작해");
-        log.info(provider);
+
 
         JSONObject json = null;
         try {
@@ -118,17 +117,16 @@ public class AuthService {
 //                    authProviderId = socialLoginUtils.getNaverInfo(accessToken);
                     break;
                 case "google":
-                    log.info("provider 인식했어");
+
                     json = socialLoginUtils.getGoogleInfo(accessToken);
-                    log.info("json : " + json);
+
                     break;
                 default:
-                    log.info("인식 못했어");
-                    log.info(provider);
+
                     throw new IllegalArgumentException("지원하지 않는 provieder" + provider);
             }
         }catch (Exception e){
-            log.error(e.getMessage());
+
         }
 
         return json;

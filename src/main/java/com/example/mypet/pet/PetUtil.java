@@ -5,10 +5,10 @@ import com.example.mypet.pet.domain.entity.Pets;
 import com.example.mypet.security.domain.users.Users;
 import com.example.mypet.security.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+
 import org.springframework.stereotype.Component;
 
-@Log4j2
+
 @Component
 @RequiredArgsConstructor
 public class PetUtil {
@@ -16,7 +16,7 @@ public class PetUtil {
     private final UsersRepository usersRepository;
 
     public Users findUserById(String userId) {
-        log.info("유저 정보 찾습니다 : " + userId);
+
         return usersRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("ID가 " + userId + "인 사용자를 찾을 수 없습니다."));
     }

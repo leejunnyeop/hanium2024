@@ -8,7 +8,7 @@ import com.example.mypet.pet.service.PetService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-@Log4j2
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/pets")
@@ -31,10 +31,9 @@ public class PetController {
     @PostMapping
     @Operation(summary = "새 펫 생성", description = "새로운 펫을 생성합니다.")
     public ResponseEntity<PetDto> createPet(@AuthenticationPrincipal User user, @RequestBody PetDto petDto) {
-        log.info("새 펫 생성 = " + petDto);
+
         String userID = user.getUsername(); // id
-        log.info("userID =  " + userID);
-        log.info("userId = " );
+
         PetDto savedPet = petService.savePet(userID, petDto);
         return ResponseEntity.ok(savedPet);
     }
