@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -31,10 +32,33 @@ public class StatusController {
         return ResponseEntity.ok(savedPet);
     }
 
+    // 특정 날짜에 대한 상태를 조회하는 엔드포인트
+    @Operation(summary = "펫 상태 조회 ", description = "펫에 특정 날을 조회 합니다.")
     @GetMapping("/{petId}/{date}")
-    public ResponseEntity<Optional<HealthStatusDto>> getHealthStatus(@AuthenticationPrincipal Users user, @PathVariable String petId, @PathVariable String date) {
+    public ResponseEntity<Optional<HealthStatusDto>> getHealthStatus(@AuthenticationPrincipal User user, @PathVariable String petId, @PathVariable String date) {
         LocalDate localDate = LocalDate.parse(date);
-        Optional<HealthStatusDto> status = statusService.statusGet(user.getId(), petId, localDate);
+        String userID = user.getUsername(); // id
+        Optional<HealthStatusDto> status = statusService.statusGet(userID, petId, localDate);
         return ResponseEntity.ok(status);
+    }
+
+    // 주간 상태 목록을 조회하는 엔드포인트 (일요일부터 토요일까지)
+    @Operation(summary = "펫 주간 상태 조회 ", description = "펫 주간 상태 조회를 합니다.")
+    @GetMapping("/{petId}/weekly")
+    public ResponseEntity<List<HealthStatusDto>> getWeeklyHealthStatuses(@AuthenticationPrincipal User user, @PathVariable String petId, @RequestParam String date) {
+        LocalDate localDate = LocalDate.parse(date);
+        String userID = user.getUsername(); // id
+        List<HealthStatusDto> statuses = statusService.getWeeklyHealthStatuses(userID, petId, localDate);
+        return ResponseEntity.ok(statuses);
+    }
+
+    // 월간 상태 목록을 조회하는 엔드포인트
+    @Operation(summary = "펫 월간 상태 조회 ", description = "펫을 월간 상태를 조회를 합니다.")
+    @GetMapping("/{petId}/monthly")
+    public ResponseEntity<List<HealthStatusDto>> getMonthlyHealthStatuses(@AuthenticationPrincipal User user, @PathVariable String petId, @RequestParam String date) {
+        LocalDate localDate = LocalDate.parse(date);
+        String userID = user.getUsername(); // id
+        List<HealthStatusDto> statuses = statusService.getMonthlyHealthStatuses(userID, petId, localDate);
+        return ResponseEntity.ok(statuses);
     }
 }

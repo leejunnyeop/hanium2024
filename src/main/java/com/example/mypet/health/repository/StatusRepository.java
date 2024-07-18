@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.time.LocalDate;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface StatusRepository extends MongoRepository<HealthStatus, String> {
@@ -15,4 +16,7 @@ public interface StatusRepository extends MongoRepository<HealthStatus, String> 
  Optional<HealthStatus> findByUsersIdAndDate(String userId, LocalDate date);
 
 
+
+
+    List<HealthStatus> findByUsersIdAndPetIdAndDateBetween(String userId, String petId, LocalDate startOfWeek, LocalDate endOfWeek);
 }
