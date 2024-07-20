@@ -49,6 +49,8 @@ public class Users {
     @Schema(example = "강아지 연관관계", description = "강아지 관련 정보")
     private List<Pets> pets = new ArrayList<>();
 
+    private String location;
+
     public void setTermsOfServiceAgreement(){
         this.termsOfServiceAgreement = true;
     }
