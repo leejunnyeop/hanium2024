@@ -65,4 +65,12 @@ public class UserService {
         usersRepository.save(user);
         return user;
     }
+
+    @Transactional(readOnly = true)
+    public String decodeToken(String userId){
+        var user = usersRepository.findById(userId).orElseThrow(
+                () -> new RuntimeException("User not found")
+        );
+        return kmsService.decrypt(user.getEncryptedPrivateKey());
+    }
 }

@@ -32,6 +32,7 @@ public class KmsService {
         return Base64.getEncoder().encodeToString(ciphertextBuffer.array());
     }
     public String decrypt(String ciphertext) {
+
         try {
             ByteBuffer ciphertextBuffer = ByteBuffer.wrap(Base64.getDecoder().decode(ciphertext));
             DecryptRequest req = new DecryptRequest().withCiphertextBlob(ciphertextBuffer);
