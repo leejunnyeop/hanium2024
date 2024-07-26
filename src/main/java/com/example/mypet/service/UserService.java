@@ -1,6 +1,8 @@
 package com.example.mypet.service;
 
 import com.example.mypet.enums.Role;
+
+import com.example.mypet.security.domain.users.UserProfileRequest;
 import com.example.mypet.security.domain.users.Users;
 import com.example.mypet.security.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
@@ -72,5 +74,16 @@ public class UserService {
                 () -> new RuntimeException("User not found")
         );
         return kmsService.decrypt(user.getEncryptedPrivateKey());
+    }
+
+    @Transactional
+    public void updateUserProfile(String userId, UserProfileRequest userProfileRequest) {
+        try {
+            Users users = usersRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("유저 정보를 확인 해주세요"));
+            users.userProfileUpdate(userProfileRequest);
+            usersRepository.save(users);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("유저 정보가 확인 안됩니다 " + e.getMessage());
+        }
     }
 }

@@ -1,5 +1,7 @@
 package com.example.mypet.controller;
 
+
+import com.example.mypet.security.domain.users.UserProfileRequest;
 import com.example.mypet.security.domain.users.Users;
 import com.example.mypet.service.KmsService;
 import com.example.mypet.service.UserService;
@@ -11,10 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -39,4 +38,12 @@ public class UserController {
     public ResponseEntity<String> getDecodedPrivateKey(@AuthenticationPrincipal User user) {
         return new ResponseEntity<>(userService.decodeToken(user.getUsername()), HttpStatus.OK);
     }
+
+    @PutMapping("/profile")
+    public ResponseEntity<Void> updateUserProfile(@AuthenticationPrincipal User user, @RequestBody UserProfileRequest userProfileRequest) {
+        userService.updateUserProfile(user.getUsername(), userProfileRequest);
+        return ResponseEntity.ok().build();
+    }
+
+
 }

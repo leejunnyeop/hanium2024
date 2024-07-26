@@ -1,6 +1,7 @@
 package com.example.mypet.security.domain.users;
 
 import com.example.mypet.pet.domain.entity.Pets;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -48,6 +49,27 @@ public class Users {
     @DBRef
     @Schema(example = "강아지 연관관계", description = "강아지 관련 정보")
     private List<Pets> pets = new ArrayList<>();
+
+    @Schema(description = "지역(구)", example = "동작구")
+    private String location;
+
+    @Schema(description = "소개(자랑)", example = "우리 퍼피를 사랑하는 주인")
+    private String description;
+
+    private String profileUrl;
+
+    public void userProfileUpdate(UserProfileRequest userProfileRequest){
+        if (userProfileRequest.getLocation() != null){
+            this.location = userProfileRequest.getLocation();
+        }
+        if (userProfileRequest.getDescription() != null){
+            this.description = userProfileRequest.getDescription();
+        }
+        if (userProfileRequest.getProfileUrl() != null){
+            this.profileUrl = userProfileRequest.getProfileUrl();;
+        }
+    }
+
 
     public void setTermsOfServiceAgreement(){
         this.termsOfServiceAgreement = true;
