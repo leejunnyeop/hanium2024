@@ -1,4 +1,4 @@
-package com.example.mypet.find.LostAndFoundPetsBoardRepository;
+package com.example.mypet.find.repository;
 
 import com.example.mypet.find.domain.entity.LostAndFoundPetsBoard;
 import com.example.mypet.find.domain.entity.PostType;
