@@ -12,6 +12,7 @@ import nonapi.io.github.classgraph.json.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 @Document(collection = "pets")
 @Getter
@@ -44,6 +45,22 @@ public class Pets {
     @Schema(description = "이미지 URL", example = "http://example.com/image.jpg")
     private String imageUrl;
 
+    @Schema(description = "강아지 외형", example = "털이 부드럽고, 귀가 큰 강아지")
+    private String appearance; // 외형 추가
+
+    private String noseImgUrl;
+
+
+    public boolean getHasNoseImg() {
+        return this.noseImgUrl != null;
+    }
+
+    public int getAge() {
+        if (this.birthDate == null) {
+            return 0;
+        }
+        return Period.between(this.birthDate, LocalDate.now()).getYears();
+    }
 
     public void updateFromDto(PetDto petDto) {
         if (petDto.getName() != null) {
