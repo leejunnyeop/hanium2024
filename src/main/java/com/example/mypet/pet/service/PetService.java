@@ -7,15 +7,15 @@ import java.util.Optional;
 
 public interface PetService {
 
-    public PetDto savePet(String userId, PetDto petDto);
+    PetDto savePet(String userId, PetDto petDto);
 
-    public Optional<PetDto> getPetById(String userId, String petId);
+    Optional<PetDto> getPetById(String userId, String petId);
 
-    public List<PetDto> getPetsByUser(String userId);
+    List<PetDto> getPetsByUser(String userId);
 
-    public PetDto updatePet(String userId, String petId, PetDto petDto);
+    PetDto updatePet(String userId, String petId, PetDto petDto);
 
-    public void deletePet(String userId,String petId);
+    void deletePet(String userId, String petId);
 
 
 }

@@ -15,6 +15,7 @@ public class PetMapper {
                 .description(petDto.getDescription())
                 .neutered(petDto.getNeutered())
                 .imageUrl(petDto.getImageUrl())
+                .noseImgUrl(petDto.getNoseImgUrl())
                 .build();
     }
 
@@ -28,6 +29,7 @@ public class PetMapper {
                 .description(pets.getDescription())
                 .neutered(pets.getNeutered())
                 .imageUrl(pets.getImageUrl())
+                .noseImgUrl(pets.getNoseImgUrl())
                 .build();
     }
 
