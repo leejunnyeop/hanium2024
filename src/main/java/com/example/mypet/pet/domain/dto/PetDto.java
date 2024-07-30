@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Builder
 @Getter
@@ -40,4 +41,6 @@ public class PetDto {
     @Schema(description = "이미지 URL", example = "http://example.com/image.jpg")
     private String imageUrl;
 
+    @Schema(description = "비문 데이터 URL", example = "['http://example.com/image.jpg', 'http://example.com/image.jpg', 'http://example.com/image.jpg', ...]")
+    private List<String> noseImgUrl;
 }

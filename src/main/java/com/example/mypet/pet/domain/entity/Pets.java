@@ -13,6 +13,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
 
 @Document(collection = "pets")
 @Getter
@@ -48,7 +50,7 @@ public class Pets {
     @Schema(description = "강아지 외형", example = "털이 부드럽고, 귀가 큰 강아지")
     private String appearance; // 외형 추가
 
-    private String noseImgUrl;
+    private List<String> noseImgUrl;
 
 
     public boolean getHasNoseImg() {
