@@ -6,6 +6,7 @@ import com.example.mypet.find.domain.dto.response.LostAndFoundPetsBoardDetailRes
 import com.example.mypet.find.domain.dto.response.LostAndFoundPetsBoardResponseDto;
 import com.example.mypet.find.domain.entity.PostType;
 import com.example.mypet.find.service.LostAndFoundPetsBoardService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/board")
 @RequiredArgsConstructor
+@Tag(name = "lost and found", description = "실종 신고 게시판 API" )
 public class LostAndFoundPetsBoardController {
 
     private final LostAndFoundPetsBoardService boardService;

@@ -28,17 +28,21 @@ public class UserController {
     public ResponseEntity<Users> getUserInfo(@AuthenticationPrincipal User user) {
         return new ResponseEntity<>(userService.getUserInfo(user.getUsername()), HttpStatus.OK) ;
     }
-
+    
+    @Operation(summary = "동의", description = "서비스 사용 동의하기.")
     @PatchMapping("/agree")
     public ResponseEntity<Users> changeTermsOfServiceAgreement(@AuthenticationPrincipal User user) {
         return new ResponseEntity<>(userService.changeTermsOfServiceAgreement(user.getUsername()), HttpStatus.OK);
     }
 
+    @Operation(summary = "decode", description = "암호화 되었던 private key 반환.")
     @GetMapping("/decode")
     public ResponseEntity<String> getDecodedPrivateKey(@AuthenticationPrincipal User user) {
         return new ResponseEntity<>(userService.decodeToken(user.getUsername()), HttpStatus.OK);
     }
 
+
+    @Operation(summary = "update profile", description = "사용자 정보 업데이트")
     @PutMapping("/profile")
     public ResponseEntity<Void> updateUserProfile(@AuthenticationPrincipal User user, @RequestBody UserProfileRequest userProfileRequest) {
         userService.updateUserProfile(user.getUsername(), userProfileRequest);
