@@ -8,6 +8,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +22,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class S3Service  {
 
     private final AmazonS3 s3Client;
@@ -48,6 +50,8 @@ public class S3Service  {
                 throw new RuntimeException("이미지 업로드 에러");
             }
         }
+
+//        log.info(imgUrlList);
         return imgUrlList;
     }
 
