@@ -2,6 +2,7 @@ package com.example.mypet.service;
 
 import com.example.mypet.enums.Role;
 
+import com.example.mypet.global.util.EncryptionUtil;
 import com.example.mypet.security.domain.users.UserProfileRequest;
 import com.example.mypet.security.domain.users.Users;
 import com.example.mypet.security.repository.UsersRepository;
@@ -19,6 +20,7 @@ public class UserService {
     private final UsersRepository usersRepository;
     private final KmsService kmsService;
     private final WalletService walletService;
+    private final EncryptionUtil encryptionUtil;
 
 
     @Transactional(readOnly = true)
@@ -79,11 +81,15 @@ public class UserService {
     @Transactional
     public void updateUserProfile(String userId, UserProfileRequest userProfileRequest) {
         try {
-            Users users = usersRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("유저 정보를 확인 해주세요"));
-            users.userProfileUpdate(userProfileRequest);
-            usersRepository.save(users);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("유저 정보가 확인 안됩니다 " + e.getMessage());
+                    Users users = usersRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("유저 정보를 확인 해주세요"));
+                    users.userProfileUpdate(userProfileRequest, encryptionUtil);
+                    usersRepository.save(users);
+                } catch (Exception e) {
+                    throw new IllegalArgumentException("유저 정보가 확인 안됩니다 " + e.getMessage());
+                }
+            }
         }
-    }
-}
+
+
+
+

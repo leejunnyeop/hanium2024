@@ -14,4 +14,6 @@ public class UserProfileRequest {
 
     private String profileUrl;
 
+    @Schema(description = "본명", example = "주인 등록할 사용")
+    private String nickName;
 }

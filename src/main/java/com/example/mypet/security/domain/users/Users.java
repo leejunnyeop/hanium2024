@@ -1,5 +1,6 @@
 package com.example.mypet.security.domain.users;
 
+import com.example.mypet.global.util.EncryptionUtil;
 import com.example.mypet.pet.domain.entity.Pets;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -58,17 +59,25 @@ public class Users {
 
     private String profileUrl;
 
-    public void userProfileUpdate(UserProfileRequest userProfileRequest){
-        if (userProfileRequest.getLocation() != null){
+    @Schema(description = "암호화된 사용자 이름", example = "암호화된 이름")
+    private String encryptedName;
+
+    public void userProfileUpdate(UserProfileRequest userProfileRequest, EncryptionUtil encryptionUtil) {
+        if (userProfileRequest.getNickName() != null) {
+            this.name = userProfileRequest.getNickName();
+            this.encryptedName = encryptionUtil.encrypt(userProfileRequest.getNickName());
+        }
+        if (userProfileRequest.getLocation() != null) {
             this.location = userProfileRequest.getLocation();
         }
-        if (userProfileRequest.getDescription() != null){
+        if (userProfileRequest.getDescription() != null) {
             this.description = userProfileRequest.getDescription();
         }
-        if (userProfileRequest.getProfileUrl() != null){
-            this.profileUrl = userProfileRequest.getProfileUrl();;
+        if (userProfileRequest.getProfileUrl() != null) {
+            this.profileUrl = userProfileRequest.getProfileUrl();
         }
     }
+
 
 
     public void setTermsOfServiceAgreement(){
