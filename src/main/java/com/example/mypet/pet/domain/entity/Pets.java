@@ -1,14 +1,13 @@
 package com.example.mypet.pet.domain.entity;
 
 import com.example.mypet.pet.domain.Gender;
-import com.example.mypet.pet.domain.dto.PetDto;
+import com.example.mypet.pet.domain.dto.PetRequestDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
 import lombok.NoArgsConstructor;
-import nonapi.io.github.classgraph.json.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
@@ -62,26 +61,26 @@ public class Pets {
         return Period.between(this.birthDate, LocalDate.now()).getYears();
     }
 
-    public void updateFromDto(PetDto petDto) {
-        if (petDto.getName() != null) {
-            this.name = petDto.getName();
+    public void updateFromDto(PetRequestDto petRequestDto) {
+        if (petRequestDto.getName() != null) {
+            this.name = petRequestDto.getName();
         }
-        if (petDto.getGender() != null) {
-            this.gender = petDto.getGender();
+        if (petRequestDto.getGender() != null) {
+            this.gender = petRequestDto.getGender();
         }
-        if (petDto.getBirthDate() != null) {
-            this.birthDate = petDto.getBirthDate();
+        if (petRequestDto.getBirthDate() != null) {
+            this.birthDate = petRequestDto.getBirthDate();
         }
-        if (petDto.getBreed() != null) {
-            this.breed = petDto.getBreed();
+        if (petRequestDto.getBreed() != null) {
+            this.breed = petRequestDto.getBreed();
         }
-        if (petDto.getDescription() != null) {
-            this.description = petDto.getDescription();
+        if (petRequestDto.getDescription() != null) {
+            this.description = petRequestDto.getDescription();
         }
-        if (petDto.getImageUrl() != null) {
-            this.imageUrl = petDto.getImageUrl();
+        if (petRequestDto.getImageUrl() != null) {
+            this.imageUrl = petRequestDto.getImageUrl();
         }
-        this.neutered = petDto.getNeutered();
+        this.neutered = petRequestDto.getNeutered();
     }
 
 

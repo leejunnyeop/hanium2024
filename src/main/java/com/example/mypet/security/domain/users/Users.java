@@ -53,8 +53,6 @@ public class Users {
     @Schema(description = "지역(구)", example = "동작구")
     private String location;
 
-    @Schema(description = "소개(자랑)", example = "우리 퍼피를 사랑하는 주인")
-    private String description;
 
     private String profileUrl;
 
@@ -62,9 +60,7 @@ public class Users {
         if (userProfileRequest.getLocation() != null){
             this.location = userProfileRequest.getLocation();
         }
-        if (userProfileRequest.getDescription() != null){
-            this.description = userProfileRequest.getDescription();
-        }
+
         if (userProfileRequest.getProfileUrl() != null){
             this.profileUrl = userProfileRequest.getProfileUrl();;
         }

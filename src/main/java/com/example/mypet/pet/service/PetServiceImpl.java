@@ -1,13 +1,17 @@
 package com.example.mypet.pet.service;
 
 import com.amazonaws.services.directory.model.ServiceException;
+import com.example.mypet.global.ex.PetNotFoundException;
+import com.example.mypet.global.ex.UserNotFoundException;
 import com.example.mypet.pet.PetUtil;
 import com.example.mypet.pet.domain.PetMapper;
-import com.example.mypet.pet.domain.dto.PetDto;
+import com.example.mypet.pet.domain.dto.PetRequestDto;
+import com.example.mypet.pet.domain.dto.PetResponseDto;
 import com.example.mypet.pet.domain.entity.Pets;
 import com.example.mypet.pet.repository.PetRepository;
 import com.example.mypet.security.domain.users.Users;
 import com.example.mypet.security.repository.UsersRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -31,47 +35,63 @@ public class PetServiceImpl implements PetService {
 
     @Transactional
     @Override
-    public PetDto savePet(String userId, PetDto petDto) {
+    public void savePet(String userId,@Valid PetRequestDto petRequestDto) {
         try {
-            Pets pets = PetMapper.toEntity(petDto);
+            Users userById = petUtil.findUserById(userId);
+            if (userById == null) {
+                throw new UserNotFoundException("사용자를 찾을 수 없습니다.");
+            }
+
+            Pets pets = PetMapper.toPetEntity(petRequestDto);
             Pets savedPets = petRepository.save(pets);
 
-            Users userById = petUtil.findUserById(userId);
-
-
             // 사용자의 펫 리스트에 새로 저장된 펫 추가
-             userById.getPets().add(savedPets);
-
-
+            userById.getPets().add(savedPets);
 
             petUtil.saveUser(userById);
-            return PetMapper.toDto(savedPets);
+        } catch (UserNotFoundException | PetNotFoundException e) {
+            throw e;
         } catch (Exception e) {
             throw new ServiceException("펫 저장 중 오류가 발생했습니다: " + e.getMessage());
         }
     }
 
-    // ID로 PetDto 조회
     @Override
     @Transactional(readOnly = true)
-    public Optional<PetDto> getPetById(String userId, String petId) {
+    public Optional<PetResponseDto> getPetById(String userId, String petId) {
         try {
             Users userById = petUtil.findUserById(userId);
+            if (userById == null) {
+                throw new UserNotFoundException("사용자를 찾을 수 없습니다.");
+            }
+
             Pets pets = petUtil.findPetById(userById, petId);
-            return Optional.of(PetMapper.toDto(pets));
+            if (pets == null) {
+                throw new PetNotFoundException("펫을 찾을 수 없습니다.");
+            }
+
+            return Optional.of(PetMapper.toPetResponseDto(pets));
+        } catch (UserNotFoundException | PetNotFoundException e) {
+            throw e;
         } catch (Exception e) {
             throw new ServiceException("펫 조회 중 오류가 발생했습니다: " + e.getMessage());
         }
     }
 
-    // 사용자 ID로 사용자의 모든 PetDto 조회
     @Override
     @Transactional(readOnly = true)
-    public List<PetDto> getPetsByUser(String userId) {
+    public List<PetResponseDto> getPetsByUser(String userId) {
         try {
             Users userById = petUtil.findUserById(userId);
+            if (userById == null) {
+                throw new UserNotFoundException("사용자를 찾을 수 없습니다.");
+            }
 
-            return userById.getPets().stream().map(PetMapper::toDto).collect(Collectors.toList());
+            return userById.getPets().stream()
+                    .map(PetMapper::toPetResponseDto)
+                    .collect(Collectors.toList());
+        } catch (UserNotFoundException e) {
+            throw e;
         } catch (Exception e) {
             throw new ServiceException("사용자의 펫 조회 중 오류가 발생했습니다: " + e.getMessage());
         }
@@ -79,33 +99,48 @@ public class PetServiceImpl implements PetService {
 
     @Override
     @Transactional
-    public PetDto updatePet(String userId, String petId, PetDto petDto) {
+    public void updatePet(String userId, String petId, PetRequestDto petRequestDto) {
         try {
             Users userById = petUtil.findUserById(userId);
+            if (userById == null) {
+                throw new UserNotFoundException("사용자를 찾을 수 없습니다.");
+            }
+
             Pets existingPets = petUtil.findPetById(userById, petId);
-            existingPets.updateFromDto(petDto);
-            Pets updatedPets = petRepository.save(existingPets);
-            return PetMapper.toDto(updatedPets);
+            if (existingPets == null) {
+                throw new PetNotFoundException("펫을 찾을 수 없습니다.");
+            }
+
+            existingPets.updateFromDto(petRequestDto);
+            petRepository.save(existingPets);
+        } catch (UserNotFoundException | PetNotFoundException e) {
+            throw e;
         } catch (Exception e) {
             throw new ServiceException("펫 업데이트 중 오류가 발생했습니다: " + e.getMessage());
         }
     }
 
-
-    // Pets 삭제
     @Override
     @Transactional
     public void deletePet(String userId, String petId) {
         try {
             Users userById = petUtil.findUserById(userId);
+            if (userById == null) {
+                throw new UserNotFoundException("사용자를 찾을 수 없습니다.");
+            }
+
             Pets pets = petUtil.findPetById(userById, petId);
+            if (pets == null) {
+                throw new PetNotFoundException("펫을 찾을 수 없습니다.");
+            }
+
             userById.getPets().remove(pets);
             petUtil.saveUser(userById);
             petRepository.delete(pets);
+        } catch (UserNotFoundException | PetNotFoundException e) {
+            throw e;
         } catch (Exception e) {
             throw new ServiceException("펫 삭제 중 오류가 발생했습니다: " + e.getMessage());
         }
     }
-
-
 }
