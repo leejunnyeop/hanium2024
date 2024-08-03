@@ -7,16 +7,17 @@ import com.example.mypet.pet.domain.entity.Pets;
 public class PetMapper {
 
     // PetRequestDto를 Pets 엔티티로 변환
-    public static Pets toPetEntity(PetRequestDto petRequestDto) {
+    public static Pets toPetEntity(PetRequestDto petDto) {
         return Pets.builder()
-                .id(petRequestDto.getId())
-                .name(petRequestDto.getName())
-                .gender(petRequestDto.getGender())
-                .birthDate(petRequestDto.getBirthDate())
-                .breed(petRequestDto.getBreed())
-                .description(petRequestDto.getDescription())
-                .neutered(petRequestDto.getNeutered())
-                .imageUrl(petRequestDto.getImageUrl())
+                .id(petDto.getId())
+                .name(petDto.getName())
+                .gender(petDto.getGender())
+                .birthDate(petDto.getBirthDate())
+                .breed(petDto.getBreed())
+                .description(petDto.getDescription())
+                .neutered(petDto.getNeutered())
+                .imageUrl(petDto.getImageUrl())
+                .noseImgUrl(petDto.getNoseImgUrl())
                 .build();
     }
 
@@ -31,6 +32,7 @@ public class PetMapper {
                 .description(pets.getDescription())
                 .neutered(pets.getNeutered())
                 .imageUrl(pets.getImageUrl())
+                .noseImgUrl(pets.getNoseImgUrl())
                 .build();
     }
 
