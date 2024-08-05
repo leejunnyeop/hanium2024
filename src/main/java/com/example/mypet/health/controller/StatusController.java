@@ -1,37 +1,35 @@
 package com.example.mypet.health.controller;
 
-
 import com.example.mypet.health.domain.dto.HealthStatusDto;
+
 import com.example.mypet.health.service.StatusService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
-
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/status")
-@Tag(name = "status", description = "사용자 펫 상태 API" )
+@Tag(name = "Status", description = "사용자 펫 상태 API")
 public class StatusController {
 
     private final StatusService statusService;
 
-    @PostMapping
-    @Operation(summary = "펫 상태 등록 ", description = "펫을 상태를 등록합니다.")
-    @Parameter(description = "팻 상태 등록 할때 날짜 형식 ", example = "2023-07-20")
-    public ResponseEntity<HealthStatusDto> createPet(@AuthenticationPrincipal User user, @RequestBody HealthStatusDto healthStatusDto) {
-
+    @PostMapping()
+    @Operation(summary = "펫 상태 등록", description = "펫의 상태를 등록합니다.")
+    @Parameter(description = "펫 상태 등록 날짜 형식", example = "2023-07-20")
+    public ResponseEntity<HealthStatusDto> createPet(@AuthenticationPrincipal User user, @Valid @RequestBody HealthStatusDto healthStatusDto) {
         String userID = user.getUsername(); // id
         HealthStatusDto savedPet = statusService.statusSave(userID, healthStatusDto);
         return ResponseEntity.ok(savedPet);
@@ -44,7 +42,6 @@ public class StatusController {
     public ResponseEntity<Optional<HealthStatusDto>> getHealthStatus(@AuthenticationPrincipal User user, @PathVariable(name = "petId") String petId, @PathVariable(name = "date") String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         LocalDate localDate = LocalDate.parse(date, formatter);
-
         String userID = user.getUsername(); // id
         Optional<HealthStatusDto> status = statusService.statusGet(userID, petId, localDate);
         return ResponseEntity.ok(status);

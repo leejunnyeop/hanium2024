@@ -5,11 +5,14 @@ import com.example.mypet.pet.domain.Gender;
 import lombok.Builder;
 import lombok.Getter;
 
+
+
 @Getter
 @Builder
 public class LostAndFoundPetsBoardDetailResponseDto {
 
     private String id; // 게시물 ID
+    private String title; // 게시물 제목
     private String content; // 게시물 내용
     private String imageUrl; // 강아지 이미지 URL
     private String location; // 발견/분실 장소
@@ -22,6 +25,7 @@ public class LostAndFoundPetsBoardDetailResponseDto {
     private String description; // 강아지 특징 및 특이사항
     private boolean hasNoseImg; // 비문 등록 여부
     private int age; // 나이
+    private String petDescription; // 강아지 외형
 
 
 }

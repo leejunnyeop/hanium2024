@@ -3,6 +3,7 @@ package com.example.mypet.pet.domain.dto;
 import com.example.mypet.pet.domain.Gender;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,7 +16,8 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PetDto {
+public class PetRequestDto {
+
 
     @Schema(description = "반려동물 ID", example = "123456")
     private String id;
@@ -31,9 +33,6 @@ public class PetDto {
 
     @Schema(description = "반려동물 품종", example = "시베리안 허스키")
     private String breed;
-
-    @Schema(description = "반려동물 설명", example = "활발하고 친근한 강아지")
-    private String description;
 
     @Schema(description = "중성화 여부", example = "true")
     private Boolean neutered;
