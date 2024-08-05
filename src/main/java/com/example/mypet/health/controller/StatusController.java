@@ -21,7 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/status")
-@Tag(name = "Status Controller", description = "사용자 펫 상태 API")
+@Tag(name = "Status", description = "사용자 펫 상태 API")
 public class StatusController {
 
     private final StatusService statusService;

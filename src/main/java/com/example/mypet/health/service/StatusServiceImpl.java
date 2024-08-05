@@ -7,6 +7,7 @@ import com.example.mypet.health.domain.dto.HealthStatusDto;
 import com.example.mypet.health.domain.entity.HealthStatus;
 import com.example.mypet.health.repository.StatusRepository;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,10 +21,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class StatusServiceImpl implements StatusService {
 
-    @Autowired
-    private StatusRepository statusRepository;
+    private final StatusRepository statusRepository;
 
     @Transactional
     @Override

@@ -54,16 +54,11 @@ public class Users {
     private String location;
 
 
-    private String profileUrl;
-
     public void userProfileUpdate(UserProfileRequest userProfileRequest){
         if (userProfileRequest.getLocation() != null){
             this.location = userProfileRequest.getLocation();
         }
 
-        if (userProfileRequest.getProfileUrl() != null){
-            this.profileUrl = userProfileRequest.getProfileUrl();;
-        }
     }
 
 

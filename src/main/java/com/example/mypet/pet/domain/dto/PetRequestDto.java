@@ -34,9 +34,6 @@ public class PetRequestDto {
     @Schema(description = "반려동물 품종", example = "시베리안 허스키")
     private String breed;
 
-    @Schema(description = "반려동물 설명", example = "활발하고 친근한 강아지")
-    private String description;
-
     @Schema(description = "중성화 여부", example = "true")
     private Boolean neutered;
 

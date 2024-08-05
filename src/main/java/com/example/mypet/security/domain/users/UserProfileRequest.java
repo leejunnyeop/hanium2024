@@ -10,6 +10,4 @@ public class UserProfileRequest {
     private String location;
 
 
-    private String profileUrl;
-
 }
