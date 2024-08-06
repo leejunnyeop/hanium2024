@@ -20,8 +20,8 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/status")
-@Tag(name = "Status", description = "사용자 펫 상태 API")
+@RequestMapping("/status")
+@Tag(name = "status", description = "사용자 펫 상태 API")
 public class StatusController {
 
     private final StatusService statusService;

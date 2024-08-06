@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/board")
+@RequestMapping("/board")
 @RequiredArgsConstructor
 @Tag(name = "lost and found", description = "실종 신고 게시판 API" )
 public class LostAndFoundPetsBoardController {
@@ -37,12 +37,14 @@ public class LostAndFoundPetsBoardController {
     }
 
     @PostMapping("/create/owner-found")
+    @Operation(summary = "펫 실종 신고", description = "펫 실종 신고를 합니다.")
     public ResponseEntity<String> createOwnerFoundBoard(@RequestBody OwnerFoundBoardRequestDto requestDto) {
         boardService.createOwnerFoundBoard(requestDto);
         return ResponseEntity.ok("주인을 찾습니다 가 접수 되었습니다");
     }
 
     @GetMapping
+    @Operation(summary = "게시판 보여주기", description = "postType에 따라 게시판 종류가 달라집니다. page, size를 입력 받아야 합니다")
     public ResponseEntity<Page<LostAndFoundPetsBoardResponseDto>> getAllBoards(
             @RequestParam(name = "postType") PostType postType,
             @RequestParam(name = "page") int page,
@@ -52,6 +54,7 @@ public class LostAndFoundPetsBoardController {
     }
 
     @GetMapping("/{boardId}")
+    @Operation(summary = "상세 게시판 보여주기", description = "")
     public ResponseEntity<LostAndFoundPetsBoardDetailResponseDto> getBoardDetailById(@PathVariable(name = "boardId") String boardId, @RequestParam(name = "postType") PostType postType) {
         LostAndFoundPetsBoardDetailResponseDto board = boardService.getBoardDetailById(boardId);
         return ResponseEntity.ok(board);
