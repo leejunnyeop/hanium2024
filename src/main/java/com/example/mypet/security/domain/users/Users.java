@@ -64,22 +64,19 @@ public class Users {
         if (userProfileRequest.getLocation() != null){
             this.location = userProfileRequest.getLocation();
         }
-        if (userProfileRequest.getDescription() != null){
+        if (userProfileRequest.getDescription() != null && !userProfileRequest.getDescription().isEmpty()){
             this.description = userProfileRequest.getDescription();
         }
-        if (userProfileRequest.getUsername() != null) {
+        if (userProfileRequest.getUsername() != null && !userProfileRequest.getUsername().isEmpty()) {
             this.name = userProfileRequest.getUsername();
         }
 
-        if (userProfileRequest.getProfileImageUrl() != null){
+        if (userProfileRequest.getProfileImageUrl() != null && !userProfileRequest.getProfileImageUrl().isEmpty()){
             this.profileImageUrl = userProfileRequest.getProfileImageUrl();
         }
         else {
-            // Random 객체 생성
             Random random = new Random();
-            // 1부터 8까지의 랜덤한 숫자 생성
             int randomNumber = random.nextInt(8) + 1;
-            // 랜덤하게 선택된 숫자를 파일명에 대입
             this.profileImageUrl = "https://happymaru-bucket.s3.ap-northeast-2.amazonaws.com/random-person/person-" + randomNumber + ".svg";
         }
 
