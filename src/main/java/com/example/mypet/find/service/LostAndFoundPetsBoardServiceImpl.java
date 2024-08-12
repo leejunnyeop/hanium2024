@@ -33,18 +33,13 @@ public class LostAndFoundPetsBoardServiceImpl implements LostAndFoundPetsBoardSe
 
     @Override
     @Transactional
-    public void createPetLostBoard(String userId, PetLostBoardRequestDto requestDto,boolean useExistingPet) {
+    public void createPetLostBoard(String userId, PetLostBoardRequestDto requestDto) {
         Users users = usersRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("ID가 " + userId + "인 사용자를 찾을 수 없습니다."));
         LostAndFoundPetsBoard board;
-        if (useExistingPet) {
-            Pets pet = users.getPets().stream()
-                    .findFirst() // 가장 첫 번째 Pet을 선택
-                    .orElseThrow(() -> new PetNotFoundException("사용자에게 등록된 강아지가 없습니다."));
-             board = LostAndFoundPetsBoardMapper.toLostAndFoundPetsBoardAuto(requestDto, pet);
-        } else {
-             board = LostAndFoundPetsBoardMapper.toLostAndFoundPetsBoardManual(requestDto);
-        }
+
+         board = LostAndFoundPetsBoardMapper.toLostAndFoundPetsBoardManual(requestDto);
+
         board.calculateAge();
         LostAndFoundPetsBoard createdBoard = boardRepository.save(board);
     }

@@ -12,12 +12,12 @@ import java.util.List;
 
 public interface LostAndFoundPetsBoardService {
 
-      void createPetLostBoard(String userId, PetLostBoardRequestDto requestDto,boolean  useExistingPet);
-     void createOwnerFoundBoard(OwnerFoundBoardRequestDto requestDto);
-    Page<LostAndFoundPetsBoardResponseDto> getAllBoards(PostType postType, Pageable pageable); // 페이징 처리된 게시판 목록 반환
-    LostAndFoundPetsBoardDetailResponseDto getBoardDetailById(String boardId); // 게시판 상세 정보 반환
+  void createPetLostBoard(String userId, PetLostBoardRequestDto requestDto);
+  void createOwnerFoundBoard(OwnerFoundBoardRequestDto requestDto);
+  Page<LostAndFoundPetsBoardResponseDto> getAllBoards(PostType postType, Pageable pageable); // 페이징 처리된 게시판 목록 반환
+  LostAndFoundPetsBoardDetailResponseDto getBoardDetailById(String boardId); // 게시판 상세 정보 반환
 
-    void deletePetLostBoard(String boardId);
+  void deletePetLostBoard(String boardId);
 
-    void deleteOwnerFoundBoard(String boardId);
+  void deleteOwnerFoundBoard(String boardId);
 }

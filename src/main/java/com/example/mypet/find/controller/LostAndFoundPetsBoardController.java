@@ -29,10 +29,9 @@ public class LostAndFoundPetsBoardController {
     @PostMapping("/create/pet-lost")
     @Operation(summary = "펫 실종 신고", description = "펫 실종 신고를 합니다.")
     public ResponseEntity<String> createPetLostBoard(@AuthenticationPrincipal User user,
-                                                                               @Valid @RequestBody PetLostBoardRequestDto requestDto,
-                                                                               @RequestParam boolean useExistingPet) {
+                                                                               @Valid @RequestBody PetLostBoardRequestDto requestDto) {
         String userId = user.getUsername(); // 사용자 ID
-         boardService.createPetLostBoard(userId, requestDto, useExistingPet);
+         boardService.createPetLostBoard(userId, requestDto);
         return ResponseEntity.ok("분실 신고가 접수 되었습니다");
     }
 
@@ -55,7 +54,7 @@ public class LostAndFoundPetsBoardController {
 
     @GetMapping("/{boardId}")
     @Operation(summary = "상세 게시판 보여주기", description = "")
-    public ResponseEntity<LostAndFoundPetsBoardDetailResponseDto> getBoardDetailById(@PathVariable(name = "boardId") String boardId, @RequestParam(name = "postType") PostType postType) {
+    public ResponseEntity<LostAndFoundPetsBoardDetailResponseDto> getBoardDetailById(@PathVariable(name = "boardId") String boardId) {
         LostAndFoundPetsBoardDetailResponseDto board = boardService.getBoardDetailById(boardId);
         return ResponseEntity.ok(board);
     }
