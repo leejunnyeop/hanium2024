@@ -22,8 +22,8 @@ import java.util.List;
 @Builder
 public class Pets {
 
-    @Schema(description = "반려동물 ID", example = "123456")
-    private String id;
+//    @Schema(description = "반려동물 ID", example = "123456")
+//    private String id;
 
     @Schema(description = "반려동물 이름", example = "코코")
     private String name;
