@@ -11,12 +11,19 @@ import com.example.mypet.pet.domain.entity.Pets;
 import com.example.mypet.pet.repository.PetRepository;
 import com.example.mypet.security.domain.users.Users;
 import com.example.mypet.security.repository.UsersRepository;
+import com.example.mypet.service.S3Service;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import java.util.UUID;
 
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,18 +37,30 @@ public class PetServiceImpl implements PetService {
     private final PetRepository petRepository;
 
     private final UsersRepository usersRepository;
+    private final S3Service s3Service;
 
     private final PetUtil petUtil;
 
     @Transactional
     @Override
-    public void savePet(String userId,@Valid PetRequestDto petRequestDto) {
+    public void savePet(String userId,@Valid PetRequestDto petRequestDto) throws IOException {
+        String imageUrl = "";
+        if (petRequestDto.getBase64Image() != null && !petRequestDto.getBase64Image().isEmpty()){
+            // UUID 생성
+            String uuidFileName = UUID.randomUUID().toString();
+            var multipartFile = convertBase64ToMultipartFile(petRequestDto.getBase64Image(), uuidFileName);
+            imageUrl = s3Service.upload(multipartFile);
+        }
+
         try {
             Users userById = petUtil.findUserById(userId);
             if (userById == null) {
                 throw new UserNotFoundException("사용자를 찾을 수 없습니다.");
             }
-
+            // todo 함수로 분리 image upload
+            if (imageUrl != null && !imageUrl.isEmpty() ){
+                petRequestDto.setImageUrl(imageUrl);
+            }
             Pets pets = PetMapper.toPetEntity(petRequestDto);
             Pets savedPets = petRepository.save(pets);
 
@@ -142,5 +161,18 @@ public class PetServiceImpl implements PetService {
         } catch (Exception e) {
             throw new ServiceException("펫 삭제 중 오류가 발생했습니다: " + e.getMessage());
         }
+    }
+
+    public MultipartFile convertBase64ToMultipartFile(String base64String, String fileName) throws IOException {
+        // Base64 문자열을 디코딩하여 바이트 배열로 변환
+        byte[] decodedBytes = Base64.getDecoder().decode(base64String);
+
+        // MultipartFile 생성
+        return new MockMultipartFile(
+                fileName,                          // 파일 이름
+                fileName,                          // 원래 파일 이름
+                "application/octet-stream",        // MIME 타입 (필요에 따라 변경 가능)
+                new ByteArrayInputStream(decodedBytes) // 바이트 배열을 InputStream으로 변환
+        );
     }
 }

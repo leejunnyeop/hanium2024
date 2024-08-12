@@ -77,7 +77,7 @@ public class Users {
         else {
             Random random = new Random();
             int randomNumber = random.nextInt(8) + 1;
-            this.profileImageUrl = "https://happymaru-bucket.s3.ap-northeast-2.amazonaws.com/random-person/person-" + randomNumber + ".svg";
+            this.profileImageUrl = "https://happymaru-bucket.s3.ap-northeast-2.amazonaws.com/random-person/person-" + randomNumber + ".png";
         }
 
     }

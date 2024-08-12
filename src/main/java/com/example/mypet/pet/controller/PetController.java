@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -32,7 +33,7 @@ public class PetController {
 
     @PostMapping
     @Operation(summary = "펫 등록", description = "새로운 반려동물을 등록합니다.")
-    public ResponseEntity<String> createPet(@AuthenticationPrincipal User user, @Valid @RequestBody PetRequestDto petRequestDto) {
+    public ResponseEntity<String> createPet(@AuthenticationPrincipal User user, @Valid @RequestBody PetRequestDto petRequestDto) throws IOException {
         String userId = user.getUsername(); // 사용자 ID
         petService.savePet(userId, petRequestDto);
         return ResponseEntity.ok("강아지 등록이 완료되었습니다.");

@@ -4,10 +4,7 @@ import com.example.mypet.pet.domain.Gender;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -37,6 +34,10 @@ public class PetRequestDto {
     @Schema(description = "중성화 여부", example = "true")
     private Boolean neutered;
 
+    @Schema(description = "base64Image", example = "/abaseasffa/")
+    private String base64Image;
+
+    @Setter
     @Schema(description = "이미지 URL", example = "http://example.com/image.jpg")
     private String imageUrl;
 
