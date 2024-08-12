@@ -8,47 +8,42 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
 public class PetLostBoardRequestDto {
 
 
-    @Schema(description = "제목", example = "퍼리를 찾아주세요", required = true)
+    @Schema(description = "제목", example = "마루를 찾아주세요", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "제목은 필수 값입니다.")
     private String title;
 
-    @Schema(description = "지역(시)", example = "서울특별시", required = true)
-    @NotNull(message = "지역(시)은 필수 값입니다.")
-    private String city;
+    @Schema(description = "강아지 사진, base64로 된 이미지", example = "/asfsacasdewahstrjuru/", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+    private String base64Image;
 
-    @Schema(description = "지역(구)", example = "강남구", required = true)
-    @NotNull(message = "지역(구)은 필수 값입니다.")
-    private String district;
 
-    @Schema(description = "구체적인 실종 장소", example = "삼성동 코엑스 근처", required = true)
-    @NotNull(message = "구체적인 실종 장소는 필수 값입니다.")
-    private String specificLocation;
 
-    @Schema(description = "실종 일시", example = "2023-08-03T10:15:30", required = true)
-    @NotNull(message = "실종 일시는 필수 값입니다.")
-    private String missingDateTime;
+    @Schema(description = "강아지 이름 (직접 입력할 때 사용)", example = "코코", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+    private String petName;
 
-    @Schema(description = "실종 경위", example = "산책 중 잠깐 놓쳤습니다.", required = true)
-    @NotNull(message = "실종 경위는 필수 값입니다.")
-    private String missingSituation;
-
-    @Schema(description = "신고자 이름", example = "홍길동", required = true)
-    @NotNull(message = "신고자 이름은 필수 값입니다.")
-    private String reporterName;
-
-    @Schema(description = "신고자 연락처", example = "010-1234-5678", required = true)
+    @Schema(description = "연락 수단", example = "010-1234-5678", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "신고자 연락처는 필수 값입니다.")
     private String reporterContact;
 
-    @Schema(description = "강아지 이름 (직접 입력할 때 사용)", example = "코코", required = false)
-    private String petName;
+    @Schema(description = "발견 위치", example = "삼성동 코엑스 근처", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotNull(message = "구체적인 실종 장소는 필수 값입니다.")
+    private String specificLocation;
+
+    @Schema(description = "발견 일시", example = "2023-08-03T10:15:30", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotNull(message = "실종 일시는 필수 값입니다.")
+    private String missingDateTime;
+
+    @Schema(description = "발견 경위", example = "산책 중 잠깐 놓쳤습니다.", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotNull(message = "실종 경위는 필수 값입니다.")
+    private String missingSituation;
+
+
+
 
     @Schema(description = "강아지 성별 (직접 입력할 때 사용)", example = "MALE", required = false)
     private Gender petGender;
@@ -68,18 +63,16 @@ public class PetLostBoardRequestDto {
     @Schema(description = "중성화 여부 (직접 입력할 때 사용)", example = "true", required = false)
     private Boolean petNeutered;
 
-    @Schema(description = "이미지 URL (직접 입력할 때 사용)", example = "http://example.com/image.jpg", required = false)
+    @Schema(description = "이미지 URL (직접 입력할 때 사용)", example = "http://example.com/image.jpg", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private String petImageUrl;
 
     @Builder
     public PetLostBoardRequestDto(String content, String city, String district, String specificLocation, String missingDateTime, String missingSituation, String reporterName, String reporterContact, String petName, Gender petGender, LocalDate petBirthDate, String petBreed, String petDescription, Boolean petNeutered, String petImageUrl) {
         this.content = content;
-        this.city = city;
-        this.district = district;
+
         this.specificLocation = specificLocation;
         this.missingDateTime = missingDateTime;
         this.missingSituation = missingSituation;
-        this.reporterName = reporterName;
         this.reporterContact = reporterContact;
         this.petName = petName;
         this.petGender = petGender;

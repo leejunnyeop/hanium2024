@@ -2,16 +2,13 @@ package com.example.mypet.find.service;
 
 import com.example.mypet.find.repository.LostAndFoundPetsBoardRepository;
 import com.example.mypet.find.domain.LostAndFoundPetsBoardMapper;
-import com.example.mypet.find.domain.dto.request.OwnerFoundBoardRequestDto;
+import com.example.mypet.find.domain.dto.request.OwnerSearchBoardRequestDto;
 import com.example.mypet.find.domain.dto.request.PetLostBoardRequestDto;
 import com.example.mypet.find.domain.dto.response.LostAndFoundPetsBoardDetailResponseDto;
 import com.example.mypet.find.domain.dto.response.LostAndFoundPetsBoardResponseDto;
 import com.example.mypet.find.domain.entity.LostAndFoundPetsBoard;
 import com.example.mypet.find.domain.entity.PostType;
-import com.example.mypet.global.ex.PetNotFoundException;
 import com.example.mypet.global.ex.ServiceException;
-import com.example.mypet.global.ex.UserNotFoundException;
-import com.example.mypet.pet.domain.entity.Pets;
 import com.example.mypet.security.domain.users.Users;
 import com.example.mypet.security.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,17 +35,17 @@ public class LostAndFoundPetsBoardServiceImpl implements LostAndFoundPetsBoardSe
                 .orElseThrow(() -> new RuntimeException("ID가 " + userId + "인 사용자를 찾을 수 없습니다."));
         LostAndFoundPetsBoard board;
 
-         board = LostAndFoundPetsBoardMapper.toLostAndFoundPetsBoardManual(requestDto);
+//         board = LostAndFoundPetsBoardMapper.toLostAndFoundPetsBoardManual(requestDto);
 
-        board.calculateAge();
-        LostAndFoundPetsBoard createdBoard = boardRepository.save(board);
+//        board.calculateAge();
+//        LostAndFoundPetsBoard createdBoard = boardRepository.save(board);
     }
 
     @Override
     @Transactional
-    public void createOwnerFoundBoard(OwnerFoundBoardRequestDto requestDto) {
-        LostAndFoundPetsBoard board = LostAndFoundPetsBoardMapper.toOwnerFoundBoard(requestDto);
-        LostAndFoundPetsBoard createdBoard = boardRepository.save(board);
+    public void createOwnerFoundBoard(OwnerSearchBoardRequestDto requestDto) {
+//        LostAndFoundPetsBoard board = LostAndFoundPetsBoardMapper.toOwnerFoundBoard(requestDto);
+//        LostAndFoundPetsBoard createdBoard = boardRepository.save(board);
     }
 
     @Transactional(readOnly = true)
@@ -66,13 +63,14 @@ public class LostAndFoundPetsBoardServiceImpl implements LostAndFoundPetsBoardSe
 
     @Transactional(readOnly = true)
     public LostAndFoundPetsBoardDetailResponseDto getBoardDetailById(String boardId) {
-        LostAndFoundPetsBoard board = boardRepository.findById(boardId)
-                .orElseThrow(() -> new ServiceException("ID가 " + boardId + "인 게시글을 찾을 수 없습니다."));
-        if (board.getPostType() == PostType.PET) {
-            return LostAndFoundPetsBoardMapper.toLostAndFoundPetsBoardDetailResponseDto(board);
-        } else {
-            return LostAndFoundPetsBoardMapper.toOwnerFoundBoardDetailResponseDto(board);
-        }
+//        LostAndFoundPetsBoard board = boardRepository.findById(boardId)
+//                .orElseThrow(() -> new ServiceException("ID가 " + boardId + "인 게시글을 찾을 수 없습니다."));
+//        if (board.getPostType() == PostType.PET) {
+//            return LostAndFoundPetsBoardMapper.toLostAndFoundPetsBoardDetailResponseDto(board);
+//        } else {
+//            return LostAndFoundPetsBoardMapper.toOwnerFoundBoardDetailResponseDto(board);
+//        }
+        return null;
     }
 
     @Override

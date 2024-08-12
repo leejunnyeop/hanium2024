@@ -1,14 +1,14 @@
 package com.example.mypet.security.domain.users;
 
+import com.example.mypet.find.domain.entity.LostAndFoundPetsBoard;
+import com.example.mypet.find.domain.entity.OwnerSearchBoard;
 import com.example.mypet.pet.domain.entity.Pets;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
