@@ -47,6 +47,9 @@ public class Users {
     @Schema(example = "true", description = "이용 약관 동의 여부")
     private Boolean termsOfServiceAgreement = false;
 
+    @Schema(example = "사용자 소개", description = "저는 마루를 키우는 착한 사람이에요")
+    private String description;
+
     @DBRef
     @Schema(example = "강아지 연관관계", description = "강아지 관련 정보")
     private List<Pets> pets = new ArrayList<>();
@@ -61,20 +64,25 @@ public class Users {
         if (userProfileRequest.getLocation() != null){
             this.location = userProfileRequest.getLocation();
         }
+        if (userProfileRequest.getDescription() != null){
+            this.description = userProfileRequest.getDescription();
+        }
+        if (userProfileRequest.getUsername() != null) {
+            this.name = userProfileRequest.getUsername();
+        }
+
         if (userProfileRequest.getProfileImageUrl() != null){
             this.profileImageUrl = userProfileRequest.getProfileImageUrl();
         }
         else {
-            // todo random 으로 바꾸기
             // Random 객체 생성
             Random random = new Random();
-
             // 1부터 8까지의 랜덤한 숫자 생성
             int randomNumber = random.nextInt(8) + 1;
-
             // 랜덤하게 선택된 숫자를 파일명에 대입
             this.profileImageUrl = "https://happymaru-bucket.s3.ap-northeast-2.amazonaws.com/random-person/person-" + randomNumber + ".svg";
         }
+
     }
 
 
