@@ -24,7 +24,7 @@ import java.io.IOException;
 public class UserController {
 
     private final UserService userService;
-    private final KmsService kmsService;
+
     @Operation(summary = "사용자 정보 조회", description = "사용자 정보를 조회합니다.")
     @GetMapping
     public ResponseEntity<Users> getUserInfo(@AuthenticationPrincipal User user) {
