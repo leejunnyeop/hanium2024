@@ -50,9 +50,8 @@ public class Users {
     @Schema(example = "사용자 소개", description = "저는 마루를 키우는 착한 사람이에요")
     private String description;
 
-    @DBRef
     @Schema(example = "강아지 연관관계", description = "강아지 관련 정보")
-    private List<Pets> pets = new ArrayList<>();
+    private List<Pets> pets;
 
     @Schema(description = "지역(구)", example = "동작구")
     private String location;
