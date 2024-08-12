@@ -85,7 +85,7 @@ public class UserService {
         MultipartFile multipartFile;
         String imageUrl = null;
         if (userProfileRequest.getBase64ProfileImage() != null && !userProfileRequest.getBase64ProfileImage().isEmpty()) {
-            multipartFile = convertBase64ToMultipartFile(userProfileRequest.getBase64ProfileImage(), userId);
+            multipartFile = convertBase64ToMultipartFile(userProfileRequest.getBase64ProfileImage(), userId+".png");
             imageUrl = s3Service.upload(multipartFile);
 
         }
