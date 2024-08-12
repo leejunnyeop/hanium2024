@@ -35,7 +35,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         String username = null;
         String jwtToken = null;
-
+        System.out.println(requestTokenHeader);
         // JWT 토큰은 "Bearer " 문자열로 시작하는지 확인
         if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
             jwtToken = requestTokenHeader.substring(7);
@@ -51,7 +51,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             catch (MalformedJwtException e) {
                 handleException(response, HttpServletResponse.SC_BAD_REQUEST, "JWT 형식이 잘못되었습니다.");
             }
-        } else {
+        }
+        else {
             logger.warn("JWT Token does not begin with Bearer String");
         }
 

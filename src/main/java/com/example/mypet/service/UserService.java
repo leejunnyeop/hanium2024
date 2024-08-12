@@ -85,8 +85,13 @@ public class UserService {
 
     @Transactional
     public void updateUserProfile(String userId, UserProfileRequest userProfileRequest) throws IOException {
-        var multipartFile = convertBase64ToMultipartFile(userProfileRequest.getBase64ProfileImage(), userId);
-        var imageUrl = s3Service.upload(multipartFile);
+        MultipartFile multipartFile;
+        String imageUrl = null;
+        if (userProfileRequest.getBase64ProfileImage() != null && !userProfileRequest.getBase64ProfileImage().isEmpty()) {
+            multipartFile = convertBase64ToMultipartFile(userProfileRequest.getBase64ProfileImage(), userId);
+            imageUrl = s3Service.upload(multipartFile);
+
+        }
         try {
             Users users = usersRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("유저 정보를 확인 해주세요"));
             userProfileRequest.setProfileImageUrl(imageUrl);
