@@ -6,7 +6,6 @@ import com.example.mypet.global.ex.UserNotFoundException;
 import com.example.mypet.pet.PetUtil;
 import com.example.mypet.pet.domain.PetMapper;
 import com.example.mypet.pet.domain.dto.PetRequestDto;
-import com.example.mypet.pet.domain.dto.PetResponseDto;
 import com.example.mypet.pet.domain.entity.Pets;
 import com.example.mypet.pet.repository.PetRepository;
 import com.example.mypet.security.domain.users.Users;
@@ -26,7 +25,6 @@ import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 
@@ -77,7 +75,7 @@ public class PetServiceImpl implements PetService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<PetResponseDto> getPetById(String userId, String petId) {
+    public Optional<Pets> getPetById(String userId, String petId) {
         try {
             Users userById = petUtil.findUserById(userId);
             if (userById == null) {
@@ -89,7 +87,7 @@ public class PetServiceImpl implements PetService {
                 throw new PetNotFoundException("펫을 찾을 수 없습니다.");
             }
 
-            return Optional.of(PetMapper.toPetResponseDto(pets));
+            return Optional.of(pets);
         } catch (UserNotFoundException | PetNotFoundException e) {
             throw e;
         } catch (Exception e) {
@@ -99,16 +97,14 @@ public class PetServiceImpl implements PetService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<PetResponseDto> getPetsByUser(String userId) {
+    public List<Pets> getPetsByUser(String userId) {
         try {
             Users userById = petUtil.findUserById(userId);
             if (userById == null) {
                 throw new UserNotFoundException("사용자를 찾을 수 없습니다.");
             }
 
-            return userById.getPets().stream()
-                    .map(PetMapper::toPetResponseDto)
-                    .collect(Collectors.toList());
+            return userById.getPets();
         } catch (UserNotFoundException e) {
             throw e;
         } catch (Exception e) {
