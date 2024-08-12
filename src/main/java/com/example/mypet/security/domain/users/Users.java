@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * MongoDB에 저장되는 사용자 정보를 담는 엔티티 클래스.
@@ -53,12 +54,27 @@ public class Users {
     @Schema(description = "지역(구)", example = "동작구")
     private String location;
 
+    @Schema(description = "사용자 프로필 이미지 url", example = "user profile image")
+    private String profileImageUrl;
 
     public void userProfileUpdate(UserProfileRequest userProfileRequest){
         if (userProfileRequest.getLocation() != null){
             this.location = userProfileRequest.getLocation();
         }
+        if (userProfileRequest.getProfileImageUrl() != null){
+            this.profileImageUrl = userProfileRequest.getProfileImageUrl();
+        }
+        else {
+            // todo random 으로 바꾸기
+            // Random 객체 생성
+            Random random = new Random();
 
+            // 1부터 8까지의 랜덤한 숫자 생성
+            int randomNumber = random.nextInt(8) + 1;
+
+            // 랜덤하게 선택된 숫자를 파일명에 대입
+            this.profileImageUrl = "https://happymaru-bucket.s3.ap-northeast-2.amazonaws.com/random-person/person-" + randomNumber + ".svg";
+        }
     }
 
 
