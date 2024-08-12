@@ -9,7 +9,7 @@ public class PetMapper {
     // PetRequestDto를 Pets 엔티티로 변환
     public static Pets toPetEntity(PetRequestDto petDto) {
         return Pets.builder()
-                .id(petDto.getId())
+//                .id(petDto.getId())
                 .name(petDto.getName())
                 .gender(petDto.getGender())
                 .birthDate(petDto.getBirthDate())
@@ -23,7 +23,7 @@ public class PetMapper {
     // Pets 엔티티를 PetRequestDto로 변환
     public static PetRequestDto toPetRequestDto(Pets pets) {
         return PetRequestDto.builder()
-                .id(pets.getId())
+//                .id(pets.getId())
                 .name(pets.getName())
                 .gender(pets.getGender())
                 .birthDate(pets.getBirthDate())

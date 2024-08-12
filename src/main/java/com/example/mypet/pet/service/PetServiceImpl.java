@@ -45,7 +45,7 @@ public class PetServiceImpl implements PetService {
         String imageUrl = "";
         if (petRequestDto.getBase64Image() != null && !petRequestDto.getBase64Image().isEmpty()){
             // UUID 생성
-            String uuidFileName = UUID.randomUUID().toString() + ".png";
+            String uuidFileName = UUID.randomUUID() + ".png";
             var multipartFile = convertBase64ToMultipartFile(petRequestDto.getBase64Image(), uuidFileName);
             imageUrl = s3Service.upload(multipartFile);
         }
@@ -55,7 +55,7 @@ public class PetServiceImpl implements PetService {
             if (userById == null) {
                 throw new UserNotFoundException("사용자를 찾을 수 없습니다.");
             }
-            // todo 함수로 분리 image upload
+            // todo: 함수로 분리 image upload
             if (imageUrl != null && !imageUrl.isEmpty() ){
                 petRequestDto.setImageUrl(imageUrl);
             }
@@ -73,27 +73,27 @@ public class PetServiceImpl implements PetService {
         }
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<Pets> getPetById(String userId, String petId) {
-        try {
-            Users userById = petUtil.findUserById(userId);
-            if (userById == null) {
-                throw new UserNotFoundException("사용자를 찾을 수 없습니다.");
-            }
-
-            Pets pets = petUtil.findPetById(userById, petId);
-            if (pets == null) {
-                throw new PetNotFoundException("펫을 찾을 수 없습니다.");
-            }
-
-            return Optional.of(pets);
-        } catch (UserNotFoundException | PetNotFoundException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new ServiceException("펫 조회 중 오류가 발생했습니다: " + e.getMessage());
-        }
-    }
+//    @Override
+//    @Transactional(readOnly = true)
+//    public Optional<Pets> getPetById(String userId, String petId) {
+//        try {
+//            Users userById = petUtil.findUserById(userId);
+//            if (userById == null) {
+//                throw new UserNotFoundException("사용자를 찾을 수 없습니다.");
+//            }
+//
+//            Pets pets = petUtil.findPetById(userById, petId);
+//            if (pets == null) {
+//                throw new PetNotFoundException("펫을 찾을 수 없습니다.");
+//            }
+//
+//            return Optional.of(pets);
+//        } catch (UserNotFoundException | PetNotFoundException e) {
+//            throw e;
+//        } catch (Exception e) {
+//            throw new ServiceException("펫 조회 중 오류가 발생했습니다: " + e.getMessage());
+//        }
+//    }
 
     @Override
     @Transactional(readOnly = true)
@@ -112,52 +112,53 @@ public class PetServiceImpl implements PetService {
         }
     }
 
-    @Override
-    @Transactional
-    public void updatePet(String userId, String petId, PetRequestDto petRequestDto) {
-        try {
-            Users userById = petUtil.findUserById(userId);
-            if (userById == null) {
-                throw new UserNotFoundException("사용자를 찾을 수 없습니다.");
-            }
+    // todo: pet update할 때 index로 update
+//    @Transactional
+//    public void updatePet(String userId, PetRequestDto petRequestDto) {
+//        try {
+//            Users userById = petUtil.findUserById(userId);
+//            if (userById == null) {
+//                throw new UserNotFoundException("사용자를 찾을 수 없습니다.");
+//            }
+//
+//            Pets existingPets = petUtil.findPetById(userById, petId);
+//            if (existingPets == null) {
+//                throw new PetNotFoundException("펫을 찾을 수 없습니다.");
+//            }
+//
+//            existingPets.updateFromDto(petRequestDto);
+//            petRepository.save(existingPets);
+//        } catch (UserNotFoundException | PetNotFoundException e) {
+//            throw e;
+//        } catch (Exception e) {
+//            throw new ServiceException("펫 업데이트 중 오류가 발생했습니다: " + e.getMessage());
+//        }
+//    }
 
-            Pets existingPets = petUtil.findPetById(userById, petId);
-            if (existingPets == null) {
-                throw new PetNotFoundException("펫을 찾을 수 없습니다.");
-            }
-
-            existingPets.updateFromDto(petRequestDto);
-            petRepository.save(existingPets);
-        } catch (UserNotFoundException | PetNotFoundException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new ServiceException("펫 업데이트 중 오류가 발생했습니다: " + e.getMessage());
-        }
-    }
-
-    @Override
-    @Transactional
-    public void deletePet(String userId, String petId) {
-        try {
-            Users userById = petUtil.findUserById(userId);
-            if (userById == null) {
-                throw new UserNotFoundException("사용자를 찾을 수 없습니다.");
-            }
-
-            Pets pets = petUtil.findPetById(userById, petId);
-            if (pets == null) {
-                throw new PetNotFoundException("펫을 찾을 수 없습니다.");
-            }
-
-            userById.getPets().remove(pets);
-            petUtil.saveUser(userById);
-            petRepository.delete(pets);
-        } catch (UserNotFoundException | PetNotFoundException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new ServiceException("펫 삭제 중 오류가 발생했습니다: " + e.getMessage());
-        }
-    }
+    // todo: pet 지울 때 index로 지우기
+//    @Override
+//    @Transactional
+//    public void deletePet(String userId, String petId) {
+//        try {
+//            Users userById = petUtil.findUserById(userId);
+//            if (userById == null) {
+//                throw new UserNotFoundException("사용자를 찾을 수 없습니다.");
+//            }
+//
+//            Pets pets = petUtil.findPetById(userById, petId);
+//            if (pets == null) {
+//                throw new PetNotFoundException("펫을 찾을 수 없습니다.");
+//            }
+//
+//            userById.getPets().remove(pets);
+//            petUtil.saveUser(userById);
+//            petRepository.delete(pets);
+//        } catch (UserNotFoundException | PetNotFoundException e) {
+//            throw e;
+//        } catch (Exception e) {
+//            throw new ServiceException("펫 삭제 중 오류가 발생했습니다: " + e.getMessage());
+//        }
+//    }
 
     public MultipartFile convertBase64ToMultipartFile(String base64String, String fileName) throws IOException {
         // Base64 문자열을 디코딩하여 바이트 배열로 변환

@@ -55,7 +55,6 @@ public class UserService {
     }
 
 
-
     @Transactional(readOnly = true)
     public Users getUserInfo(String userId){
         // dto 고려
