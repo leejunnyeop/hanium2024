@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 
@@ -30,29 +29,23 @@ public class S3Service  {
     @Value("${cloud.aws.s3.bucketName}")
     private String bucketName;
 
-    public List<String> upload(List<MultipartFile> multipartFile) {
-        List<String> imgUrlList = new ArrayList<>();
+    public String upload(MultipartFile multipartFile) {
+        String imageUrl;
 
-        // forEach 구문을 통해 multipartFile로 넘어온 파일들 하나씩 fileNameList에 추가
-        for (MultipartFile file : multipartFile) {
-            String fileName = createFileName(file.getOriginalFilename());
-            ObjectMetadata objectMetadata = new ObjectMetadata();
-            objectMetadata.setContentLength(file.getSize());
-            objectMetadata.setContentType(file.getContentType());
-
-            //S3로 putObject 할 때 사용할 요청 객체
-            //생성자 : bucket 이름, 파일 명, byteInputStream, metadata
-            try(InputStream inputStream = file.getInputStream()) {
-                s3Client.putObject(new PutObjectRequest(bucketName, fileName, inputStream, objectMetadata)
-                        .withCannedAcl(CannedAccessControlList.PublicRead));
-                imgUrlList.add(s3Client.getUrl(bucketName, fileName).toString());
-            } catch(IOException e) {
-                throw new RuntimeException("이미지 업로드 에러");
-            }
+        var fileName = createFileName(multipartFile.getOriginalFilename());
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentLength(multipartFile.getSize());
+        objectMetadata.setContentType(multipartFile.getContentType());
+        try(InputStream inputStream = multipartFile.getInputStream()) {
+            s3Client.putObject(new PutObjectRequest(bucketName, fileName, inputStream, objectMetadata)
+                    .withCannedAcl(CannedAccessControlList.PublicRead));
+            imageUrl = s3Client.getUrl(bucketName, fileName).toString();
+        } catch(IOException e) {
+            throw new RuntimeException("이미지 업로드 에러");
         }
 
 //        log.info(imgUrlList);
-        return imgUrlList;
+        return imageUrl;
     }
 
     // 이미지파일명 중복 방지
