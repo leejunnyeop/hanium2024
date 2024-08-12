@@ -7,8 +7,6 @@ import com.example.mypet.security.domain.users.Users;
 import com.example.mypet.security.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.http.fileupload.FileItem;
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.json.JSONObject;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;

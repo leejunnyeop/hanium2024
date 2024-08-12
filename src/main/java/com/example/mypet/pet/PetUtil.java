@@ -1,7 +1,6 @@
 package com.example.mypet.pet;
 
 import com.amazonaws.services.accessanalyzer.model.ResourceNotFoundException;
-import com.example.mypet.pet.domain.entity.Pets;
 import com.example.mypet.security.domain.users.Users;
 import com.example.mypet.security.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
