@@ -1,13 +1,10 @@
 package com.example.mypet.find.service;
 
 
-import com.example.mypet.find.domain.LostAndFoundPetsBoardMapper;
 import com.example.mypet.find.domain.OwnerSearchBoardMapper;
 import com.example.mypet.find.domain.dto.request.OwnerSearchBoardRequestDto;
-import com.example.mypet.find.domain.dto.response.LostAndFoundPetsBoardResponseDto;
-import com.example.mypet.find.domain.entity.LostAndFoundPetsBoard;
+import com.example.mypet.find.domain.dto.response.OwnerSearchBoardResponseDto;
 import com.example.mypet.find.domain.entity.OwnerSearchBoard;
-import com.example.mypet.find.domain.entity.PostType;
 import com.example.mypet.find.repository.OwnerSearchBoardRepository;
 import com.example.mypet.security.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -47,15 +42,9 @@ public class OwnerSearchBoardService {
     }
 
     @Transactional(readOnly = true)
-    public Page<OwnerSearchBoard> getAllBoards(PostType postType, Pageable pageable) {
-        Page<LostAndFoundPetsBoard> boardsPage = boardRepository.findAllByPostType(postType, pageable);
-        List<LostAndFoundPetsBoardResponseDto> boards = boardsPage.getContent().stream().map(board -> {
-            if (postType == PostType.PET) {
-                return LostAndFoundPetsBoardMapper.toPetLostBoardResponseDto(board);
-            } else {
-                return LostAndFoundPetsBoardMapper.toOwnerFoundBoardResponseDto(board);
-            }
-        }).collect(Collectors.toList());
-        return new PageImpl<>(boards, pageable, boardsPage.getTotalElements());
+    public Page<OwnerSearchBoardResponseDto> getPageableOwnerSearchBoard(Pageable pageable) {
+        var ownerSearchBoardPage = ownerSearchBoardRepository.findAll(pageable);
+        var boards = ownerSearchBoardPage.map(ownerSearchBoardMapper::toOwnerSearchBoardResponseDto).stream().toList();
+        return new PageImpl<>(boards, pageable, ownerSearchBoardPage.getTotalElements());
     }
 }

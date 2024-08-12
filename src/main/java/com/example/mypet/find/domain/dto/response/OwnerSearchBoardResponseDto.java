@@ -11,12 +11,15 @@ import java.util.List;
 
 @Builder
 public class OwnerSearchBoardResponseDto {
+    @Schema(description = "id", example = "게시판 id", requiredMode = Schema.RequiredMode.REQUIRED)
+    private String id;
+
     @Schema(description = "제목", example = "주인을 찾아요", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "제목은 필수 값입니다.")
     private String title;
 
     @Schema(description = "강아지 사진", example = "https://happyimage.co/1", requiredMode = Schema.RequiredMode.REQUIRED)
-    private List<String> imageList;
+    private List<String> imageUrlList;
 
     @Schema(description = "이름", example = "홍길동", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private String name;

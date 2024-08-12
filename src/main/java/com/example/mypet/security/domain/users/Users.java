@@ -1,6 +1,7 @@
 package com.example.mypet.security.domain.users;
 
 import com.example.mypet.find.domain.entity.LostAndFoundPetsBoard;
+import com.example.mypet.find.domain.entity.OwnerSearchBoard;
 import com.example.mypet.pet.domain.entity.Pets;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -51,9 +52,6 @@ public class Users {
 
     @Schema(example = "강아지 연관관계", description = "강아지 관련 정보")
     private List<Pets> pets;
-
-    @Schema(example = "실종 게시판 작성 글", description = "게시판 작성 글")
-    private List<LostAndFoundPetsBoard> lostAndFoundPetsBoards;
 
     @Schema(description = "지역(구)", example = "동작구")
     private String location;

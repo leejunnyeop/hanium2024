@@ -1,9 +1,11 @@
 package com.example.mypet.find.controller;
 
+import com.amazonaws.waiters.HttpSuccessStatusAcceptor;
 import com.example.mypet.find.domain.dto.request.OwnerSearchBoardRequestDto;
 import com.example.mypet.find.domain.dto.request.PetLostBoardRequestDto;
 import com.example.mypet.find.domain.dto.response.LostAndFoundPetsBoardDetailResponseDto;
 import com.example.mypet.find.domain.dto.response.LostAndFoundPetsBoardResponseDto;
+import com.example.mypet.find.domain.dto.response.OwnerSearchBoardResponseDto;
 import com.example.mypet.find.domain.entity.OwnerSearchBoard;
 import com.example.mypet.find.domain.entity.PostType;
 import com.example.mypet.find.service.LostAndFoundPetsBoardService;
@@ -13,6 +15,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
@@ -55,10 +58,10 @@ public class LostAndFoundPetsBoardController {
 
     @GetMapping("/owner-search")
     @Operation(summary = "<주인을 찾아요> 게시판 전체 조회", description = "주인을 찾아요 게시판을 전체 조회합니다.")
-    public ResponseEntity<Page<LostAndFoundPetsBoardResponseDto>> getAllBoards(
+    public ResponseEntity<Page<OwnerSearchBoardResponseDto>> getAllBoards(
             @RequestParam(name = "page") int page,
             @RequestParam(name = "size") int size) {
-        Page<LostAndFoundPetsBoardResponseDto> boards = boardService.getAllBoards(PageRequest.of(page, size));
+        Page<OwnerSearchBoardResponseDto> boards = ownerSearchBoardService.getPageableOwnerSearchBoard(PageRequest.of(page, size));
         return ResponseEntity.ok(boards);
     }
 
@@ -66,7 +69,7 @@ public class LostAndFoundPetsBoardController {
     @Operation(summary = "<주인을 찾아요> 게시판 등록", description = "<주인을 찾습니다> 게시판에 등록을 합니다.")
     public ResponseEntity<OwnerSearchBoard> createOwnerSearchBoard(@AuthenticationPrincipal User user, @RequestBody OwnerSearchBoardRequestDto requestDto) throws IOException {
         var res = ownerSearchBoardService.createOwnerSearchBoard(user.getUsername(), requestDto);
-        return ResponseEntity.ok(res);
+        return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
 
 
