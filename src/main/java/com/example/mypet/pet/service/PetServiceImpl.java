@@ -45,7 +45,7 @@ public class PetServiceImpl implements PetService {
         String imageUrl = "";
         if (petRequestDto.getBase64Image() != null && !petRequestDto.getBase64Image().isEmpty()){
             // UUID 생성
-            String uuidFileName = UUID.randomUUID().toString();
+            String uuidFileName = UUID.randomUUID().toString() + ".png";
             var multipartFile = convertBase64ToMultipartFile(petRequestDto.getBase64Image(), uuidFileName);
             imageUrl = s3Service.upload(multipartFile);
         }

@@ -3,7 +3,6 @@ package com.example.mypet.pet.controller;
 
 import com.example.mypet.global.ex.PetNotFoundException;
 import com.example.mypet.pet.domain.dto.PetRequestDto;
-import com.example.mypet.pet.domain.dto.PetResponseDto;
 import com.example.mypet.pet.domain.entity.Pets;
 import com.example.mypet.pet.service.PetService;
 
