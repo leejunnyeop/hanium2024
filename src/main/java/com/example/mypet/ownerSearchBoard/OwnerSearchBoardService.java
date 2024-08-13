@@ -51,4 +51,11 @@ public class OwnerSearchBoardService {
     public List<OwnerSearchBoardResponseDto> getUserBoards(String userId) {
         return ownerSearchBoardRepository.findByUser_Id(userId).stream().map(ownerSearchBoardMapper::toOwnerSearchBoardResponseDto).toList();
     }
+
+    @Transactional(readOnly = true)
+    public Page<OwnerSearchBoardResponseDto> getPageableOwnerSearchBoardExceptUser(String userId,Pageable pageable) {
+        var ownerSearchBoardExceptUserPage = ownerSearchBoardRepository.findByUser_IdNot(userId, pageable);
+        var boards = ownerSearchBoardExceptUserPage.map(ownerSearchBoardMapper::toOwnerSearchBoardResponseDto).stream().toList();
+        return new PageImpl<>(boards, pageable, ownerSearchBoardExceptUserPage.getTotalElements());
+    }
 }
