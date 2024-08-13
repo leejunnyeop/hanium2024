@@ -1,8 +1,5 @@
-package com.example.mypet.find.domain;
+package com.example.mypet.ownerSearchBoard;
 
-import com.example.mypet.find.domain.dto.request.OwnerSearchBoardRequestDto;
-import com.example.mypet.find.domain.dto.response.OwnerSearchBoardResponseDto;
-import com.example.mypet.find.domain.entity.OwnerSearchBoard;
 import com.example.mypet.security.domain.users.Users;
 import com.example.mypet.security.repository.UsersRepository;
 import com.example.mypet.service.S3Service;

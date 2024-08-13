@@ -1,4 +1,4 @@
-package com.example.mypet.find.domain.dto.response;
+package com.example.mypet.ownerSearchBoard;
 
 import com.example.mypet.pet.domain.Gender;
 import io.swagger.v3.oas.annotations.media.Schema;

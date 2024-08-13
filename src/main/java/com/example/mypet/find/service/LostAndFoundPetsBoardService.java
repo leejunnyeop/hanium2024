@@ -1,6 +1,6 @@
 package com.example.mypet.find.service;
 
-import com.example.mypet.find.domain.dto.request.OwnerSearchBoardRequestDto;
+import com.example.mypet.ownerSearchBoard.OwnerSearchBoardRequestDto;
 import com.example.mypet.find.domain.dto.request.PetLostBoardRequestDto;
 import com.example.mypet.find.domain.dto.response.LostAndFoundPetsBoardDetailResponseDto;
 import com.example.mypet.find.domain.dto.response.LostAndFoundPetsBoardResponseDto;

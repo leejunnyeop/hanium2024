@@ -1,11 +1,6 @@
-package com.example.mypet.find.service;
+package com.example.mypet.ownerSearchBoard;
 
 
-import com.example.mypet.find.domain.OwnerSearchBoardMapper;
-import com.example.mypet.find.domain.dto.request.OwnerSearchBoardRequestDto;
-import com.example.mypet.find.domain.dto.response.OwnerSearchBoardResponseDto;
-import com.example.mypet.find.domain.entity.OwnerSearchBoard;
-import com.example.mypet.find.repository.OwnerSearchBoardRepository;
 import com.example.mypet.security.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

@@ -1,4 +1,4 @@
-package com.example.mypet.find.domain.entity;
+package com.example.mypet.ownerSearchBoard;
 
 import com.example.mypet.pet.domain.Gender;
 import com.example.mypet.security.domain.users.Users;
