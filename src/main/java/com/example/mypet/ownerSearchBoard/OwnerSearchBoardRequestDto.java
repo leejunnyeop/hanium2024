@@ -19,7 +19,7 @@ public class OwnerSearchBoardRequestDto {
     @NotNull(message = "제목은 필수 값입니다.")
     private String title;
 
-    @Schema(description = "강아지 사진, base64로 된 이미지", example = "/asfsacasdewahstrjuru/", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "강아지 사진, base64로 된 이미지", example = "[\"/asfsacasdewahstrjuru/\"]", requiredMode = Schema.RequiredMode.REQUIRED)
     private List<String> base64ImageList;
 
     @Schema(description = "이름", example = "홍길동", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
