@@ -3,12 +3,16 @@ package com.example.mypet.petSearchBoard;
 import com.example.mypet.pet.domain.Gender;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
+import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Builder
+@Getter
 public class PetSearchBoardResponseDto {
     @Schema(description = "id", example = "게시판 id", requiredMode = Schema.RequiredMode.REQUIRED)
     private String id;
@@ -34,7 +38,7 @@ public class PetSearchBoardResponseDto {
     @Schema(description = "실종 일시", example = "2023-08-03T10:15", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "실종 일시는 필수 값입니다.")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime foundDateTime;
+    private LocalDateTime lostDateTime;
 
     @Schema(description = "실종 경위", example = "산책 중 줄을 놓치게 되어 잃어버렸습니다.", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "실종 상황은 필수 값입니다.")

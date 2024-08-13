@@ -35,7 +35,7 @@ public class PetSearchBoardRequestDto {
     @Schema(description = "실종 일시", example = "2023-08-03T10:15", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "실종 일시는 필수 값입니다.")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime foundDateTime;
+    private LocalDateTime lostDateTime;
 
     @Schema(description = "실종 경위", example = "산책 중 줄을 놓치게 되어 잃어버렸습니다.", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "실종 상황은 필수 값입니다.")
