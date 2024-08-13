@@ -18,10 +18,9 @@ public class PetLostBoardRequestDto {
     @NotNull(message = "제목은 필수 값입니다.")
     private String title;
 
-    @Schema(description = "강아지 사진, base64로 된 이미지", example = "/asfsacasdewahstrjuru/", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+    @Schema(description = "강아지 사진, base64로 된 이미지", example = "[\"/asfsacasdewahstrjuru/\"]", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+    // 필수 값인가?
     private String base64Image;
-
-
 
     @Schema(description = "강아지 이름 (직접 입력할 때 사용)", example = "코코", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private String petName;
