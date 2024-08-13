@@ -1,9 +1,8 @@
-package com.example.mypet.find.domain.dto.request;
+package com.example.mypet.ownerSearchBoard;
 
 import com.example.mypet.pet.domain.Gender;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;

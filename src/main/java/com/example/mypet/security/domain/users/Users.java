@@ -1,7 +1,5 @@
 package com.example.mypet.security.domain.users;
 
-import com.example.mypet.find.domain.entity.LostAndFoundPetsBoard;
-import com.example.mypet.find.domain.entity.OwnerSearchBoard;
 import com.example.mypet.pet.domain.entity.Pets;
 
 import io.swagger.v3.oas.annotations.media.Schema;

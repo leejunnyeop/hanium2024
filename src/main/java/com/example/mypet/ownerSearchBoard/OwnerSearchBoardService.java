@@ -1,11 +1,6 @@
-package com.example.mypet.find.service;
+package com.example.mypet.ownerSearchBoard;
 
 
-import com.example.mypet.find.domain.OwnerSearchBoardMapper;
-import com.example.mypet.find.domain.dto.request.OwnerSearchBoardRequestDto;
-import com.example.mypet.find.domain.dto.response.OwnerSearchBoardResponseDto;
-import com.example.mypet.find.domain.entity.OwnerSearchBoard;
-import com.example.mypet.find.repository.OwnerSearchBoardRepository;
 import com.example.mypet.security.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -13,9 +8,11 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.w3c.dom.stylesheets.LinkStyle;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -35,10 +32,12 @@ public class OwnerSearchBoardService {
     }
 
     @Transactional(readOnly = true)
-    public OwnerSearchBoard getDetailOwnerSearchBoard(String ownerSearchBoardId) {
-        return ownerSearchBoardRepository.findById(ownerSearchBoardId).orElseThrow(
+    public OwnerSearchBoardResponseDto getDetailOwnerSearchBoard(String ownerSearchBoardId) {
+
+        var detailedOwnerBoard = ownerSearchBoardRepository.findById(ownerSearchBoardId).orElseThrow(
                 () -> new IllegalArgumentException("Board not found")
         );
+        return ownerSearchBoardMapper.toOwnerSearchBoardResponseDto(detailedOwnerBoard);
     }
 
     @Transactional(readOnly = true)
@@ -46,5 +45,17 @@ public class OwnerSearchBoardService {
         var ownerSearchBoardPage = ownerSearchBoardRepository.findAll(pageable);
         var boards = ownerSearchBoardPage.map(ownerSearchBoardMapper::toOwnerSearchBoardResponseDto).stream().toList();
         return new PageImpl<>(boards, pageable, ownerSearchBoardPage.getTotalElements());
+    }
+
+    @Transactional(readOnly = true)
+    public List<OwnerSearchBoardResponseDto> getUserBoards(String userId) {
+        return ownerSearchBoardRepository.findByUser_Id(userId).stream().map(ownerSearchBoardMapper::toOwnerSearchBoardResponseDto).toList();
+    }
+
+    @Transactional(readOnly = true)
+    public Page<OwnerSearchBoardResponseDto> getPageableOwnerSearchBoardExceptUser(String userId,Pageable pageable) {
+        var ownerSearchBoardExceptUserPage = ownerSearchBoardRepository.findByUser_IdNot(userId, pageable);
+        var boards = ownerSearchBoardExceptUserPage.map(ownerSearchBoardMapper::toOwnerSearchBoardResponseDto).stream().toList();
+        return new PageImpl<>(boards, pageable, ownerSearchBoardExceptUserPage.getTotalElements());
     }
 }
