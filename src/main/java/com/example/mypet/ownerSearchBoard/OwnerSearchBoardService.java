@@ -30,10 +30,12 @@ public class OwnerSearchBoardService {
     }
 
     @Transactional(readOnly = true)
-    public OwnerSearchBoard getDetailOwnerSearchBoard(String ownerSearchBoardId) {
-        return ownerSearchBoardRepository.findById(ownerSearchBoardId).orElseThrow(
+    public OwnerSearchBoardResponseDto getDetailOwnerSearchBoard(String ownerSearchBoardId) {
+
+        var detailedOwnerBoard = ownerSearchBoardRepository.findById(ownerSearchBoardId).orElseThrow(
                 () -> new IllegalArgumentException("Board not found")
         );
+        return ownerSearchBoardMapper.toOwnerSearchBoardResponseDto(detailedOwnerBoard);
     }
 
     @Transactional(readOnly = true)

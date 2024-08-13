@@ -20,7 +20,7 @@ public class OwnerSearchBoardController {
 
     @GetMapping("/owner-search/{ownerSearchBoardId}")
     @Operation(summary = "<주인을 찾아요> 게시판 상세 조회", description = "주인을 찾아요 게시판을 상세 조회합니다.")
-    public ResponseEntity<OwnerSearchBoard> getDetailOwnerSearchBoard(@PathVariable String ownerSearchBoardId) {
+    public ResponseEntity<OwnerSearchBoardResponseDto> getDetailOwnerSearchBoard(@PathVariable String ownerSearchBoardId) {
         return ResponseEntity.ok(ownerSearchBoardService.getDetailOwnerSearchBoard(ownerSearchBoardId));
     }
 
