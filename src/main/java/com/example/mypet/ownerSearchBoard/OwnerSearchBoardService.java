@@ -1,6 +1,8 @@
 package com.example.mypet.ownerSearchBoard;
 
 
+import com.example.mypet.exception.UnAuthorizedException;
+import com.example.mypet.global.ex.ResourceNotFoundException;
 import com.example.mypet.security.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -57,5 +59,16 @@ public class OwnerSearchBoardService {
         var ownerSearchBoardExceptUserPage = ownerSearchBoardRepository.findByUser_IdNot(userId, pageable);
         var boards = ownerSearchBoardExceptUserPage.map(ownerSearchBoardMapper::toOwnerSearchBoardResponseDto).stream().toList();
         return new PageImpl<>(boards, pageable, ownerSearchBoardExceptUserPage.getTotalElements());
+    }
+
+    @Transactional
+    public void deleteOwnerSearchBoard(String userId, String ownerSearchBoardId) {
+        var ownerSearchBoard = ownerSearchBoardRepository.findById(ownerSearchBoardId).orElseThrow(
+                () -> new ResourceNotFoundException("Board not found with id: " + ownerSearchBoardId)
+        );
+        if (!ownerSearchBoard.getUser().getId().equals(userId)){
+            throw new UnAuthorizedException("User is not authorized to delete this board");
+        }
+        ownerSearchBoardRepository.delete(ownerSearchBoard);
     }
 }

@@ -58,4 +58,12 @@ public class OwnerSearchBoardController {
         var res = ownerSearchBoardService.createOwnerSearchBoard(user.getUsername(), requestDto);
         return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/{ownerSearchBoardId}")
+    @Operation(summary = "<주인을 찾아요> 게시판 삭제", description = "<주인을 찾습니다> 게시판에 삭제를 합니다.")
+    public ResponseEntity<Void> deleteOwnerSearchBoard(@AuthenticationPrincipal User user, @PathVariable String ownerSearchBoardId) {
+        ownerSearchBoardService.deleteOwnerSearchBoard(user.getUsername(), ownerSearchBoardId);
+        return ResponseEntity.noContent().build();
+    }
+
 }

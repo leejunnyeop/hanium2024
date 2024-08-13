@@ -57,4 +57,11 @@ public class PetSearchBoardController {
         var res = petSearchBoardService.createPetSearchBoard(user.getUsername(), requestDto);
         return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/{petSearchBoardId}")
+    @Operation(summary = "<강아지를 찾아요> 게시판 삭제", description = "<강아지를 찾습니다> 게시판에 삭제를 합니다.")
+    public ResponseEntity<Void> deletePetSearchBoard(@AuthenticationPrincipal User user, @PathVariable String petSearchBoardId) {
+        petSearchBoardService.deletePetSearchBoard(user.getUsername(), petSearchBoardId);
+        return ResponseEntity.noContent().build();
+    }
 }
