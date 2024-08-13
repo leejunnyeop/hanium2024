@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @RequestMapping("/board")
 @RestController
@@ -33,6 +34,12 @@ public class OwnerSearchBoardController {
         return ResponseEntity.ok(boards);
     }
 
+    @GetMapping("/owner-search/user")
+    @Operation(summary = "<주인을 찾아요> 사용자가 작성한 게시글", description = "사용자가 작성한 게시글을 List형태로 반환합니다.")
+    public ResponseEntity<List<OwnerSearchBoardResponseDto>> getUserBoards(@AuthenticationPrincipal User user){
+        var boards = ownerSearchBoardService.getUserBoards(user.getUsername());
+        return ResponseEntity.ok(boards);
+    }
     @PostMapping("/owner-search")
     @Operation(summary = "<주인을 찾아요> 게시판 등록", description = "<주인을 찾습니다> 게시판에 등록을 합니다.")
     public ResponseEntity<OwnerSearchBoard> createOwnerSearchBoard(@AuthenticationPrincipal User user, @RequestBody OwnerSearchBoardRequestDto requestDto) throws IOException {
