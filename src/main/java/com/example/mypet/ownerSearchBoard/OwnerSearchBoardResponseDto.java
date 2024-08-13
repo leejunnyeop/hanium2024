@@ -4,12 +4,14 @@ import com.example.mypet.pet.domain.Gender;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
+import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Builder
+@Getter
 public class OwnerSearchBoardResponseDto {
     @Schema(description = "id", example = "게시판 id", requiredMode = Schema.RequiredMode.REQUIRED)
     private String id;
