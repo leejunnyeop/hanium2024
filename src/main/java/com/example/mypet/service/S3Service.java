@@ -27,7 +27,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Log4j2
 public class S3Service  {
-
+    // todo util 로 변경
     private final AmazonS3 s3Client;
 
     @Value("${cloud.aws.s3.bucketName}")
@@ -51,6 +51,24 @@ public class S3Service  {
 //        log.info(imgUrlList);
         return imageUrl;
     }
+
+    public String upload(String base64String) throws IOException {
+        String imageUrl;
+        var multipartFile = convertBase64ToMultipartFile(base64String);
+        var fileName = createFileName(multipartFile.getOriginalFilename());
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentLength(multipartFile.getSize());
+        objectMetadata.setContentType(multipartFile.getContentType());
+        try(InputStream inputStream = multipartFile.getInputStream()) {
+            s3Client.putObject(new PutObjectRequest(bucketName, fileName, inputStream, objectMetadata)
+                    .withCannedAcl(CannedAccessControlList.PublicRead));
+            imageUrl = s3Client.getUrl(bucketName, fileName).toString();
+        } catch(IOException e) {
+            throw new RuntimeException("이미지 업로드 에러");
+        }
+        return imageUrl;
+    }
+
 
     public List<String> upload(List<String> base64Strings) throws IOException {
         List<String> imgUrlList = new ArrayList<>();
@@ -131,9 +149,12 @@ public class S3Service  {
         return multipartFiles;
     }
 
-    private MultipartFile convertBase64ToMultipartFile(String base64String, String fileName) throws IOException {
+    private MultipartFile convertBase64ToMultipartFile(String base64String) throws IOException {
         // Base64 문자열을 디코딩하여 바이트 배열로 변환
         byte[] decodedBytes = Base64.getDecoder().decode(base64String);
+
+        // UUID로 파일 이름 생성하고 확장자 추가
+        String fileName = UUID.randomUUID().toString() + ".png";
 
         // MultipartFile 생성
         return new MockMultipartFile(
