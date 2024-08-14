@@ -10,20 +10,13 @@ import com.example.mypet.pet.domain.dto.PetResponseDto;
 import com.example.mypet.pet.domain.entity.Pets;
 import com.example.mypet.pet.repository.PetRepository;
 import com.example.mypet.security.domain.users.Users;
-import com.example.mypet.security.repository.UsersRepository;
-import com.example.mypet.service.S3Service;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import java.util.UUID;
 
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.Base64;
 import java.util.List;
 
 
@@ -121,41 +114,26 @@ public class PetServiceImpl implements PetService {
 //        }
 //    }
 
-    // todo: pet 지울 때 index로 지우기
-//    @Override
-//    @Transactional
-//    public void deletePet(String userId, String petId) {
-//        try {
-//            Users userById = petUtil.findUserById(userId);
-//            if (userById == null) {
-//                throw new UserNotFoundException("사용자를 찾을 수 없습니다.");
-//            }
-//
-//            Pets pets = petUtil.findPetById(userById, petId);
-//            if (pets == null) {
-//                throw new PetNotFoundException("펫을 찾을 수 없습니다.");
-//            }
-//
-//            userById.getPets().remove(pets);
-//            petUtil.saveUser(userById);
-//            petRepository.delete(pets);
-//        } catch (UserNotFoundException | PetNotFoundException e) {
-//            throw e;
-//        } catch (Exception e) {
-//            throw new ServiceException("펫 삭제 중 오류가 발생했습니다: " + e.getMessage());
-//        }
-//    }
-
-    public MultipartFile convertBase64ToMultipartFile(String base64String, String fileName) throws IOException {
-        // Base64 문자열을 디코딩하여 바이트 배열로 변환
-        byte[] decodedBytes = Base64.getDecoder().decode(base64String);
-
-        // MultipartFile 생성
-        return new MockMultipartFile(
-                fileName,                          // 파일 이름
-                fileName,                          // 원래 파일 이름
-                "application/octet-stream",        // MIME 타입 (필요에 따라 변경 가능)
-                new ByteArrayInputStream(decodedBytes) // 바이트 배열을 InputStream으로 변환
-        );
+    @Override
+    @Transactional
+    public void deletePet(String userId, Integer petId) {
+        try {
+            Users user = petUtil.findUserById(userId);
+            if (user == null) {
+                throw new UserNotFoundException("사용자를 찾을 수 없습니다.");
+            }
+            if (user.getPets().size() < petId){
+                throw new PetNotFoundException("펫을 찾을 수 없습니다.");
+            }
+            var pet = user.getPets().get(petId);
+            user.getPets().remove(pet);
+            petUtil.saveUser(user);
+        } catch (UserNotFoundException | PetNotFoundException e) {
+            throw e;
+        } catch (Exception e) {
+            // ? 왜 serviceException 을 호출하는지
+            throw new ServiceException("펫 삭제 중 오류가 발생했습니다: " + e.getMessage());
+        }
     }
+
 }

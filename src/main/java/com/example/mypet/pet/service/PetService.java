@@ -17,6 +17,6 @@ public interface PetService {
 
 //    void updatePet(String userId, String petId, PetRequestDto petRequestDto);
 
-//    void deletePet(String userId, String petId);
+    void deletePet(String userId, Integer petId);
 
 }

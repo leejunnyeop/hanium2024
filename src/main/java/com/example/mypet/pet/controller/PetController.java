@@ -65,9 +65,9 @@ public class PetController {
 
     @DeleteMapping("/{petId}")
     @Operation(summary = "펫 삭제", description = "특정 반려동물을 삭제합니다. 현재 사용불가능한 API")
-    public ResponseEntity<String> deletePet(@AuthenticationPrincipal User user, @PathVariable String petId) {
+    public ResponseEntity<Void> deletePet(@AuthenticationPrincipal User user, @PathVariable Integer petId) {
         String userId = user.getUsername(); // 사용자 ID
-//        petService.deletePet(userId, petId);
-        return ResponseEntity.ok("펫 삭제가 완료되었습니다.");
+        petService.deletePet(userId, petId);
+        return ResponseEntity.noContent().build();
     }
 }
