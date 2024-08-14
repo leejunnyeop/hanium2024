@@ -9,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.List;
 
 @Builder
@@ -65,4 +66,12 @@ public class PetSearchBoardResponseDto {
     @Schema(description = "작성자", example = "ba12839", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "작성자는 필수 값입니다.")
     private String userId;
+
+    @Schema(description = "나이", example = "12", requiredMode = Schema.RequiredMode.REQUIRED)
+    public int getAge() {
+        if (this.birthDate == null) {
+            return 0;
+        }
+        return Period.between(this.birthDate, LocalDate.now()).getYears();
+    }
 }
