@@ -36,10 +36,6 @@ public class PetRequestDto {
     @Schema(description = "base64Image", example = "/abaseasffa/")
     private String base64Image;
 
-    @Setter
-    @Schema(description = "이미지 URL", example = "http://example.com/image.jpg")
-    private String imageUrl;
-
     @Schema(description = "비문 데이터 URL", example = "['http://example.com/image.jpg', 'http://example.com/image.jpg', 'http://example.com/image.jpg', ...]")
     private List<String> noseImgUrl;
 }

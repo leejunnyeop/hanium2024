@@ -76,10 +76,6 @@ public class Pets {
         if (petRequestDto.getBreed() != null) {
             this.breed = petRequestDto.getBreed();
         }
-
-        if (petRequestDto.getImageUrl() != null) {
-            this.imageUrl = petRequestDto.getImageUrl();
-        }
         this.neutered = petRequestDto.getNeutered();
     }
 
