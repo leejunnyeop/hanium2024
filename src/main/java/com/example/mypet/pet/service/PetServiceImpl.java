@@ -6,6 +6,7 @@ import com.example.mypet.global.ex.UserNotFoundException;
 import com.example.mypet.pet.PetUtil;
 import com.example.mypet.pet.domain.PetMapper;
 import com.example.mypet.pet.domain.dto.PetRequestDto;
+import com.example.mypet.pet.domain.dto.PetResponseDto;
 import com.example.mypet.pet.domain.entity.Pets;
 import com.example.mypet.pet.repository.PetRepository;
 import com.example.mypet.security.domain.users.Users;
@@ -32,39 +33,26 @@ import java.util.List;
 public class PetServiceImpl implements PetService {
 
     private final PetRepository petRepository;
-
-    private final UsersRepository usersRepository;
-    private final S3Service s3Service;
-
+    private final PetMapper petMapper;
     private final PetUtil petUtil;
 
     @Transactional
     @Override
     public void savePet(String userId,@Valid PetRequestDto petRequestDto) throws IOException {
-        String imageUrl = "";
-        if (petRequestDto.getBase64Image() != null && !petRequestDto.getBase64Image().isEmpty()){
-            // UUID 생성
-            String uuidFileName = UUID.randomUUID() + ".png";
-            var multipartFile = convertBase64ToMultipartFile(petRequestDto.getBase64Image(), uuidFileName);
-            imageUrl = s3Service.upload(multipartFile);
-        }
 
         try {
-            Users userById = petUtil.findUserById(userId);
-            if (userById == null) {
+            Users user = petUtil.findUserById(userId);
+            if (user == null) {
                 throw new UserNotFoundException("사용자를 찾을 수 없습니다.");
             }
-            // todo: 함수로 분리 image upload
-            if (imageUrl != null && !imageUrl.isEmpty() ){
-                petRequestDto.setImageUrl(imageUrl);
-            }
-            Pets pets = PetMapper.toPetEntity(petRequestDto);
+
+            Pets pets = petMapper.toPetEntity(petRequestDto);
             Pets savedPets = petRepository.save(pets);
 
             // 사용자의 펫 리스트에 새로 저장된 펫 추가
-            userById.getPets().add(savedPets);
+            user.getPets().add(savedPets);
 
-            petUtil.saveUser(userById);
+            petUtil.saveUser(user);
         } catch (UserNotFoundException | PetNotFoundException e) {
             throw e;
         } catch (Exception e) {
@@ -96,14 +84,13 @@ public class PetServiceImpl implements PetService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Pets> getPetsByUser(String userId) {
+    public List<PetResponseDto> getPetsByUser(String userId) {
         try {
             Users userById = petUtil.findUserById(userId);
             if (userById == null) {
                 throw new UserNotFoundException("사용자를 찾을 수 없습니다.");
             }
-
-            return userById.getPets();
+            return userById.getPets().stream().map(petMapper::toPetResponseDto).toList();
         } catch (UserNotFoundException e) {
             throw e;
         } catch (Exception e) {

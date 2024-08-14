@@ -1,6 +1,7 @@
 package com.example.mypet.pet.service;
 
 import com.example.mypet.pet.domain.dto.PetRequestDto;
+import com.example.mypet.pet.domain.dto.PetResponseDto;
 import com.example.mypet.pet.domain.entity.Pets;
 
 import java.io.IOException;
@@ -12,7 +13,7 @@ public interface PetService {
 
 //    Optional<Pets> getPetById(String userId, String petId);
 
-    List<Pets> getPetsByUser(String userId);
+    List<PetResponseDto> getPetsByUser(String userId);
 
 //    void updatePet(String userId, String petId, PetRequestDto petRequestDto);
 

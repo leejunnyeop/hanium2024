@@ -2,6 +2,7 @@ package com.example.mypet.pet.controller;
 
 
 import com.example.mypet.pet.domain.dto.PetRequestDto;
+import com.example.mypet.pet.domain.dto.PetResponseDto;
 import com.example.mypet.pet.domain.entity.Pets;
 import com.example.mypet.pet.service.PetService;
 
@@ -44,15 +45,13 @@ public class PetController {
     @Operation(summary = "펫 조회", description = "첫번째 반려 동물 조회")
     public ResponseEntity<Pets> getPetById(@AuthenticationPrincipal User user, @PathVariable String petId) {
         return ResponseEntity.ok(userService.getUserInfo(user.getUsername()).getPets().get(0)) ;
-//        Pets pet = petService.getPetById(userId, petId).orElseThrow(() -> new PetNotFoundException("펫을 찾을 수 없습니다."));
-//        return ResponseEntity.ok(pet);
     }
 
     @GetMapping
     @Operation(summary = "사용자의 모든 펫 조회", description = "사용자의 모든 반려동물의 정보를 조회합니다.")
-    public ResponseEntity<List<Pets>> getPetsByUser(@AuthenticationPrincipal User user) {
+    public ResponseEntity<List<PetResponseDto>> getPetsByUser(@AuthenticationPrincipal User user) {
         String userId = user.getUsername(); // 사용자 ID
-        List<Pets> pets = petService.getPetsByUser(userId);
+        var pets = petService.getPetsByUser(userId);
         return ResponseEntity.ok(pets);
     }
 
