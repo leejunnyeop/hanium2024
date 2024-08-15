@@ -41,7 +41,7 @@ public class PetSearchBoardRequestDto {
     @NotNull(message = "경도는 필수 값입니다.")
     private String longitude;
 
-    @Schema(description = "실종 일시", example = "2023-08-03T10:15", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "실종 일시", example = "2023-08-03 10:15", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "실종 일시는 필수 값입니다.")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime lostDateTime;

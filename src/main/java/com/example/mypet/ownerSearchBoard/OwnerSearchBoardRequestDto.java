@@ -34,7 +34,7 @@ public class OwnerSearchBoardRequestDto {
     @NotNull(message = "구체적인 발견 장소는 필수 값입니다.")
     private String specificLocation;
 
-    @Schema(description = "발견 일시", example = "2023-08-03T10:15", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "발견 일시", example = "2023-08-03 10:15", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "발견 일시는 필수 값입니다.")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime foundDateTime;
