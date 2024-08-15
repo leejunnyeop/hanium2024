@@ -1,7 +1,6 @@
 package com.example.mypet.ownerSearchBoard;
 
 import com.example.mypet.security.domain.users.Users;
-import com.example.mypet.security.repository.UsersRepository;
 import com.example.mypet.service.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -13,7 +12,6 @@ import java.util.List;
 @Component
 public class OwnerSearchBoardMapper {
     private final S3Service s3Service;
-    private final UsersRepository usersRepository;
 
 
     public OwnerSearchBoard toOwnerSearchBoard(OwnerSearchBoardRequestDto requestDto, Users user) throws IOException {
@@ -24,6 +22,8 @@ public class OwnerSearchBoardMapper {
                 .name(requestDto.getName())
                 .reporterContact(requestDto.getReporterContact())
                 .specificLocation(requestDto.getSpecificLocation())
+                .longitude(requestDto.getLongitude())
+                .latitude(requestDto.getLatitude())
                 .foundDateTime(requestDto.getFoundDateTime())
                 .situation(requestDto.getSituation())
                 .petGender(requestDto.getPetGender())
@@ -42,6 +42,8 @@ public class OwnerSearchBoardMapper {
                 .name(ownerSearchBoard.getName())
                 .reporterContact(ownerSearchBoard.getReporterContact())
                 .specificLocation(ownerSearchBoard.getSpecificLocation())
+                .longitude(ownerSearchBoard.getLongitude())
+                .latitude(ownerSearchBoard.getLatitude())
                 .foundDateTime(ownerSearchBoard.getFoundDateTime())
                 .situation(ownerSearchBoard.getSituation())
                 .petGender(ownerSearchBoard.getPetGender())

@@ -35,11 +35,11 @@ public class PetSearchBoardRequestDto {
 
     @Schema(description = "위도", example = "37.413294", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "위도는 필수 값입니다.")
-    private String latitude;
+    private Double latitude;
 
     @Schema(description = "경도", example = "126.734086", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "경도는 필수 값입니다.")
-    private String longitude;
+    private Double longitude;
 
     @Schema(description = "실종 일시", example = "2023-08-03 10:15", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "실종 일시는 필수 값입니다.")

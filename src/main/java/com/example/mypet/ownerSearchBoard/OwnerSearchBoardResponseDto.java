@@ -34,6 +34,14 @@ public class OwnerSearchBoardResponseDto {
     @NotNull(message = "구체적인 발견 장소는 필수 값입니다.")
     private String specificLocation;
 
+    @Schema(description = "위도", example = "37.413294", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotNull(message = "위도는 필수 값입니다.")
+    private Double latitude;
+
+    @Schema(description = "경도", example = "126.734086", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotNull(message = "경도는 필수 값입니다.")
+    private Double longitude;
+
     @Schema(description = "발견 일시", example = "2023-08-03T10:15", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "발견 일시는 필수 값입니다.")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
