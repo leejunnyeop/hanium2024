@@ -23,6 +23,8 @@ public class OwnerSearchBoard {
     private String name;
     private String reporterContact;
     private String specificLocation;
+    private Double latitude;
+    private Double longitude;
     private LocalDateTime foundDateTime;
     private String situation;
     private Gender petGender;

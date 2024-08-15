@@ -23,6 +23,8 @@ public class PetSearchBoard {
     private String name;
     private String contact;
     private String specificLocation;
+    private Double latitude;
+    private Double longitude;
     private LocalDateTime lostDateTime;
     private String situation;
     private Gender petGender;

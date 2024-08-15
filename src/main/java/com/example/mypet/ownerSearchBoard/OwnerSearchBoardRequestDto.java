@@ -1,6 +1,7 @@
 package com.example.mypet.ownerSearchBoard;
 
 import com.example.mypet.pet.domain.Gender;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -33,9 +34,17 @@ public class OwnerSearchBoardRequestDto {
     @NotNull(message = "구체적인 발견 장소는 필수 값입니다.")
     private String specificLocation;
 
-    @Schema(description = "발견 일시", example = "2023-08-03T10:15", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "위도", example = "37.413294", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotNull(message = "위도는 필수 값입니다.")
+    private Double latitude;
+
+    @Schema(description = "경도", example = "126.734086", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotNull(message = "경도는 필수 값입니다.")
+    private Double longitude;
+
+    @Schema(description = "발견 일시", example = "2023-08-03 10:15", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "발견 일시는 필수 값입니다.")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime foundDateTime;
 
     @Schema(description = "발견 경위", example = "산책 중 발견했습니다.", requiredMode = Schema.RequiredMode.REQUIRED)
