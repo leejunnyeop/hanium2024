@@ -3,11 +3,7 @@ package com.example.mypet.pet.domain.dto;
 import com.example.mypet.pet.domain.Gender;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,8 +15,8 @@ import java.util.List;
 public class PetRequestDto {
 
 
-    @Schema(description = "반려동물 ID", example = "123456")
-    private String id;
+//    @Schema(description = "반려동물 ID", example = "123456")
+//    private String id;
 
     @Schema(description = "반려동물 이름", example = "코코")
     private String name;
@@ -37,8 +33,8 @@ public class PetRequestDto {
     @Schema(description = "중성화 여부", example = "true")
     private Boolean neutered;
 
-    @Schema(description = "이미지 URL", example = "http://example.com/image.jpg")
-    private String imageUrl;
+    @Schema(description = "base64Image", example = "/abaseasffa/")
+    private String base64Image;
 
     @Schema(description = "비문 데이터 URL", example = "['http://example.com/image.jpg', 'http://example.com/image.jpg', 'http://example.com/image.jpg', ...]")
     private List<String> noseImgUrl;
