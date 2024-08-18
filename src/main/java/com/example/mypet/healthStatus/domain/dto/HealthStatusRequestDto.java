@@ -17,7 +17,7 @@ public class HealthStatusRequestDto {
 
     @NotNull
     @Schema(description = "기록 날짜", example = "2023-07-20")
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate date;
 
     @Schema(description = "증상 리스트")

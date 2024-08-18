@@ -43,7 +43,7 @@ public class PetSearchBoardRequestDto {
 
     @Schema(description = "실종 일시", example = "2023-08-03 10:15", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "실종 일시는 필수 값입니다.")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime lostDateTime;
 
     @Schema(description = "실종 경위", example = "산책 중 줄을 놓치게 되어 잃어버렸습니다.", requiredMode = Schema.RequiredMode.REQUIRED)
@@ -58,7 +58,7 @@ public class PetSearchBoardRequestDto {
     @Schema(description = "강아지 품종", example = "시베리안 허스키", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private String petBreed;
     @Schema(description = "강아지 생일", example = "2023-08-03", requiredMode = Schema.RequiredMode.REQUIRED)
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate birthDate;
 
     @Schema(description = "강아지 외형 설명", example = "사람을 잘 따르고 배에 상처가 있어요.",  requiredMode = Schema.RequiredMode.REQUIRED)
