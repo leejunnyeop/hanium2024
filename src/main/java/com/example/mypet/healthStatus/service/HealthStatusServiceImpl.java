@@ -1,12 +1,12 @@
-package com.example.mypet.health.service;
+package com.example.mypet.healthStatus.service;
 
 import com.example.mypet.global.ex.ServiceException;
 import com.example.mypet.global.ex.UserNotFoundException;
-import com.example.mypet.health.domain.StatusMapper;
-import com.example.mypet.health.domain.dto.HealthStatusDto;
-import com.example.mypet.health.domain.dto.HealthStatusResponseDto;
-import com.example.mypet.health.domain.entity.HealthStatus;
-import com.example.mypet.health.repository.StatusRepository;
+import com.example.mypet.healthStatus.domain.HealthStatusMapper;
+import com.example.mypet.healthStatus.domain.dto.HealthStatusDto;
+import com.example.mypet.healthStatus.domain.dto.HealthStatusResponseDto;
+import com.example.mypet.healthStatus.domain.entity.HealthStatus;
+import com.example.mypet.healthStatus.repository.HealthStatusRepository;
 import com.example.mypet.security.repository.UsersRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,35 +21,35 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class StatusServiceImpl implements StatusService {
+public class HealthStatusServiceImpl implements HealthStatusService {
 
-    private final StatusRepository statusRepository;
+    private final HealthStatusRepository healthStatusRepository;
     private final UsersRepository usersRepository;
     @Transactional
     @Override
     public HealthStatusResponseDto statusSave(String userId, @Valid HealthStatusDto healthStatusDto) {
         var user = usersRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("사용자를 찾을 수 없습니다"));
-        HealthStatus healthStatus = statusRepository.findByUser_IdAndDate(userId, healthStatusDto.getDate()).orElse(null);
+        HealthStatus healthStatus = healthStatusRepository.findByUser_IdAndDate(userId, healthStatusDto.getDate()).orElse(null);
 
         // 새로 등록
         if (healthStatus == null){
-            var status = StatusMapper.toHealthStatus(user,  healthStatusDto);
-            var savedStatus = statusRepository.save(status);
-            return StatusMapper.toHealthStatusResponseDto(savedStatus);
+            var status = HealthStatusMapper.toHealthStatus(user, healthStatusDto);
+            var savedStatus = healthStatusRepository.save(status);
+            return HealthStatusMapper.toHealthStatusResponseDto(savedStatus);
         }
         // update
         healthStatus.updateSymptoms(healthStatusDto.getSymptoms());
-        var savedStatus = statusRepository.save(healthStatus);
-        return StatusMapper.toHealthStatusResponseDto(savedStatus);
+        var savedStatus = healthStatusRepository.save(healthStatus);
+        return HealthStatusMapper.toHealthStatusResponseDto(savedStatus);
     }
 
     @Transactional(readOnly = true)
     @Override
     public HealthStatusResponseDto statusGet(String userId, LocalDate date) {
 
-        var status = statusRepository.findByUser_IdAndDate(userId, date).orElse(null);
+        var status = healthStatusRepository.findByUser_IdAndDate(userId, date).orElse(null);
         if (status == null) return null;
-        return StatusMapper.toHealthStatusResponseDto(status);
+        return HealthStatusMapper.toHealthStatusResponseDto(status);
 
     }
 
@@ -60,9 +60,9 @@ public class StatusServiceImpl implements StatusService {
         try {
             LocalDate startOfWeek = date.with(TemporalAdjusters.previousOrSame(DayOfWeek.SATURDAY));
             LocalDate endOfWeek = date.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
-            List<HealthStatus> statuses = statusRepository.findByUser_IdAndDateBetweenOrderByDate(userId, startOfWeek, endOfWeek);
+            List<HealthStatus> statuses = healthStatusRepository.findByUser_IdAndDateBetweenOrderByDate(userId, startOfWeek, endOfWeek);
             return statuses.stream()
-                    .map(StatusMapper::toHealthStatusResponseDto)
+                    .map(HealthStatusMapper::toHealthStatusResponseDto)
                     .collect(Collectors.toList());
         } catch (Exception e) {
 
@@ -76,9 +76,9 @@ public class StatusServiceImpl implements StatusService {
         try {
             LocalDate startOfMonth = date.with(TemporalAdjusters.firstDayOfMonth());
             LocalDate endOfMonth = date.with(TemporalAdjusters.lastDayOfMonth());
-            List<HealthStatus> statuses = statusRepository.findByUser_IdAndDateBetweenOrderByDate(userId, startOfMonth, endOfMonth);
+            List<HealthStatus> statuses = healthStatusRepository.findByUser_IdAndDateBetweenOrderByDate(userId, startOfMonth, endOfMonth);
             return statuses.stream()
-                    .map(StatusMapper::toHealthStatusResponseDto)
+                    .map(HealthStatusMapper::toHealthStatusResponseDto)
                     .collect(Collectors.toList());
         } catch (Exception e) {
 

@@ -1,4 +1,4 @@
-package com.example.mypet.health.domain;
+package com.example.mypet.healthStatus.enums;
 
 public enum Symptom {
     POOR_APPETITE("음식을 잘 못먹음"),
