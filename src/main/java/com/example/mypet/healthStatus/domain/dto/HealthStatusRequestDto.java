@@ -16,7 +16,7 @@ import java.util.Set;
 public class HealthStatusRequestDto {
 
     @NotNull
-    @Schema(description = "기록 날짜", example = "2023-07-20")
+    @Schema(description = "기록 날짜", example = "2023-07-20", type = "string")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate date;
 

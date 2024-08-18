@@ -16,7 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class HealthStatusResponseDto {
     @NotNull
-    @Schema(description = "기록 날짜", example = "2023-07-20")
+    @Schema(description = "기록 날짜", example = "2023-07-20", type = "string")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate date;
 

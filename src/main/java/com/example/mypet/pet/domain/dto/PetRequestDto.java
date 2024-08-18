@@ -15,9 +15,6 @@ import java.util.List;
 public class PetRequestDto {
 
 
-//    @Schema(description = "반려동물 ID", example = "123456")
-//    private String id;
-
     @Schema(description = "반려동물 이름", example = "코코")
     private String name;
 
@@ -36,6 +33,6 @@ public class PetRequestDto {
     @Schema(description = "base64Image", example = "/abaseasffa/")
     private String base64Image;
 
-    @Schema(description = "비문 데이터 URL", example = "['http://example.com/image.jpg', 'http://example.com/image.jpg', 'http://example.com/image.jpg', ...]")
+    @Schema(description = "비문 데이터 URL", example = "['http://example.com/image.jpg', 'http://example.com/image.jpg', 'http://example.com/image.jpg']", type = "array")
     private List<String> noseImgUrl;
 }

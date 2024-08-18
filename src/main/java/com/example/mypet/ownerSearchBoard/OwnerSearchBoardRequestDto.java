@@ -20,7 +20,7 @@ public class OwnerSearchBoardRequestDto {
     @NotNull(message = "제목은 필수 값입니다.")
     private String title;
 
-    @Schema(description = "강아지 사진, base64로 된 이미지", example = "[\"/asfsacasdewahstrjuru/\"]", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "강아지 사진, base64로 된 이미지", example = "[]", requiredMode = Schema.RequiredMode.REQUIRED, type = "array")
     private List<String> base64ImageList;
 
     @Schema(description = "이름", example = "홍길동", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
@@ -42,16 +42,17 @@ public class OwnerSearchBoardRequestDto {
     @NotNull(message = "경도는 필수 값입니다.")
     private Double longitude;
 
-    @Schema(description = "발견 일시", example = "2023-08-03 10:15", requiredMode = Schema.RequiredMode.REQUIRED)
+
+    @Schema(description = "발견 일시", example = "2023-08-03 10:15", requiredMode = Schema.RequiredMode.REQUIRED, type = "string")
     @NotNull(message = "발견 일시는 필수 값입니다.")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime foundDateTime;
 
     @Schema(description = "발견 경위", example = "산책 중 발견했습니다.", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "발견 상황은 필수 값입니다.")
     private String situation;
 
-    @Schema(description = "강아지 성별", example = "MALE, FEMALE, NOT_SURE", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "강아지 성별", example = "MALE", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "강아지 성별 입력은 필수 값 입니다.")
     private Gender petGender;
 

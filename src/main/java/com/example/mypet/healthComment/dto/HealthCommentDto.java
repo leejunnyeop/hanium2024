@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Getter
 @Builder
 public class HealthCommentDto {
-    @Schema(description = "기록 날짜", example = "2025-08-20")
+    @Schema(description = "기록 날짜", example = "2025-08-20", type = "string")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate date;
 
