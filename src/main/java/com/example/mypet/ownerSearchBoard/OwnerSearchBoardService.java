@@ -24,13 +24,13 @@ public class OwnerSearchBoardService {
     private final OwnerSearchBoardRepository ownerSearchBoardRepository;
 
     @Transactional
-    public OwnerSearchBoard createOwnerSearchBoard(String userId, @Valid OwnerSearchBoardRequestDto requestDto) throws IOException {
+    public OwnerSearchBoardResponseDto createOwnerSearchBoard(String userId, @Valid OwnerSearchBoardRequestDto requestDto) throws IOException {
         var user = usersRepository.findById(userId).orElseThrow(
                 () -> new IllegalArgumentException("User not found")
         );
         // mapper
         var ownerSearchBoard = ownerSearchBoardMapper.toOwnerSearchBoard(requestDto, user);
-        return ownerSearchBoardRepository.save(ownerSearchBoard);
+        return ownerSearchBoardMapper.toOwnerSearchBoardResponseDto(ownerSearchBoardRepository.save(ownerSearchBoard));
     }
 
     @Transactional(readOnly = true)
