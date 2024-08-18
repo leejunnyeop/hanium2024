@@ -57,6 +57,10 @@ public class Users {
     @Schema(description = "사용자 프로필 이미지 url", example = "user profile image")
     private String profileImageUrl;
 
+    @Schema(description = "fcm token", example = "fcm token")
+    @Setter
+    private String fcmToken;
+
     public void userProfileUpdate(UserProfileRequest userProfileRequest){
         if (userProfileRequest.getLocation() != null){
             this.location = userProfileRequest.getLocation();
