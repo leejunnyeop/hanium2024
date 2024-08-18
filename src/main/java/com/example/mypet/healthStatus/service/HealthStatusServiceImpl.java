@@ -48,7 +48,8 @@ public class HealthStatusServiceImpl implements HealthStatusService {
     @Transactional(readOnly = true)
     @Override
     public HealthStatusResponseDto statusGet(String userId, LocalDate date) {
-
+        System.out.println(date);
+        System.out.println(LocalDate.now());
         var status = healthStatusRepository.findByUser_IdAndDate(userId, date).orElse(null);
         if (status == null) return null;
         return HealthStatusMapper.toHealthStatusResponseDto(status);
@@ -63,10 +64,10 @@ public class HealthStatusServiceImpl implements HealthStatusService {
 
             LocalDate startOfWeek = date.minusDays(6).with(DayOfWeek.SUNDAY);
             LocalDate endOfWeek = startOfWeek.plusDays(1).with(DayOfWeek.SATURDAY);
-            System.out.println(startOfWeek);
-            System.out.println(endOfWeek);
-
-            List<HealthStatus> statuses = healthStatusRepository.findByUser_IdAndDateBetweenOrderByDate(userId, startOfWeek, endOfWeek);
+            log.info(startOfWeek);
+            log.info(endOfWeek);
+            // timezone problem
+            List<HealthStatus> statuses = healthStatusRepository.findByUser_IdAndDateBetweenOrderByDate(userId, startOfWeek.minusDays(1), endOfWeek.plusDays(1));
             return statuses.stream()
                     .map(HealthStatusMapper::toHealthStatusResponseDto)
                     .collect(Collectors.toList());
