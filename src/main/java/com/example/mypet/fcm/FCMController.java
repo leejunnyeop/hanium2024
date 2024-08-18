@@ -1,6 +1,5 @@
-package com.example.mypet.fcm.domain;
+package com.example.mypet.fcm;
 
-import com.example.mypet.fcm.FCMService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -16,7 +15,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/notifications")
+@RequestMapping("/notifications")
 @Tag(name = "Notification API", description = "푸시 알림을 전송하는 API")
 @RequiredArgsConstructor
 public class FCMController {
