@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
@@ -19,6 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/status")
+@Log4j2
 @Tag(name = "status", description = "사용자 펫 상태 API")
 public class HealthStatusController {
 
@@ -27,6 +29,9 @@ public class HealthStatusController {
     @PostMapping()
     @Operation(summary = "펫 상태 등록", description = "펫의 상태를 등록 및 업데이트합니다.")
     public ResponseEntity<HealthStatusResponseDto> createPet(@AuthenticationPrincipal User user, @Valid @RequestBody HealthStatusRequestDto healthStatusRequestDto) {
+        log.info("createPet Call");
+        log.info("healthStatusRequestDto: {}", healthStatusRequestDto);
+        log.info("user: {}", user.getUsername());
         String userID = user.getUsername(); // id
         var savedPet = healthStatusService.statusSave(userID, healthStatusRequestDto);
         return ResponseEntity.ok(savedPet);
