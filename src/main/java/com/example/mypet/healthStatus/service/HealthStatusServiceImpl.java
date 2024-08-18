@@ -58,8 +58,13 @@ public class HealthStatusServiceImpl implements HealthStatusService {
     @Override
     public List<HealthStatusResponseDto> getWeeklyHealthStatuses(String userId, LocalDate date) {
         try {
-            LocalDate startOfWeek = date.with(TemporalAdjusters.previousOrSame(DayOfWeek.SATURDAY));
-            LocalDate endOfWeek = date.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+
+            LocalDate startOfWeek = date.minusDays(6).with(DayOfWeek.SUNDAY);
+            LocalDate endOfWeek = startOfWeek.plusDays(1).with(DayOfWeek.SATURDAY);
+//            System.out.println(startOfWeek);
+//            System.out.println(endOfWeek);
+//            LocalDate startOfWeek = date.with(TemporalAdjusters.previousOrSame(DayOfWeek.SATURDAY));
+//            LocalDate endOfWeek = date.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
             List<HealthStatus> statuses = healthStatusRepository.findByUser_IdAndDateBetweenOrderByDate(userId, startOfWeek, endOfWeek);
             return statuses.stream()
                     .map(HealthStatusMapper::toHealthStatusResponseDto)
