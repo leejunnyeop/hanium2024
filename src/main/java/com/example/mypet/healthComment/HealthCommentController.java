@@ -1,27 +1,34 @@
 package com.example.mypet.healthComment;
 
 
+import com.example.mypet.healthComment.dto.HealthCommentDto;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
 @RequestMapping("/comment")
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "comment", description = "사용자 펫 커멘트 API")
+@Tag(name = "comment", description = "사용자 펫 코멘트 API")
 public class HealthCommentController {
     private final HealthCommentService healthCommentService;
 
+    @Operation(summary = "펫 코멘트 등록", description = "펫의 코멘트를 등록 및 업데이트합니다.")
+    @PostMapping
+    public ResponseEntity<?> saveHealthComment(
+            @AuthenticationPrincipal User user,
+            @RequestBody HealthCommentDto healthCommentDto) {
+        return ResponseEntity.ok().body(healthCommentService.saveHealthComment(user.getUsername(), healthCommentDto));
+    }
+
+    @Operation(summary = "펫 코멘트 조회", description = "펫의 코멘트를 조회합니다.")
     @GetMapping("/{date}")
     public ResponseEntity<?> getHealthComment(
             @AuthenticationPrincipal User user,

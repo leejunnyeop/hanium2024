@@ -20,4 +20,8 @@ public class HealthComment {
 
     @DBRef
     private Users user;
+
+    public void updateComment(String comment) {
+        this.comment = comment;
+    }
 }
