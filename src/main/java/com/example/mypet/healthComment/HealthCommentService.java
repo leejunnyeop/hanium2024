@@ -18,8 +18,15 @@ public class HealthCommentService {
     public HealthCommentDto saveHealthComment(String userId, HealthCommentDto healthCommentDto) {
 
         var user = usersRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("사용자를 찾을 수 없습니다"));
-
-        var comment = HealthCommentMapper.toHealthComment(healthCommentDto, user);
+        var comment = healthCommentRepository.findFirstByUser_IdAndDate(userId, healthCommentDto.getDate()).orElse(null);
+        // 새로운 comment 저장
+        if (comment == null) {
+            var newHealthComment = HealthCommentMapper.toHealthComment(healthCommentDto ,user);
+            var savedComment = healthCommentRepository.save(newHealthComment);
+            return HealthCommentMapper.toHealthCommentDto(savedComment);
+        }
+        // update 진행
+        comment.updateComment(healthCommentDto.getComment());
         var savedComment = healthCommentRepository.save(comment);
         return HealthCommentMapper.toHealthCommentDto(savedComment);
     }
