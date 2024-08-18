@@ -2,6 +2,7 @@ package com.example.mypet.fcm;
 
 
 import com.example.mypet.fcm.domain.FCMMessageDto;
+import com.example.mypet.security.repository.UsersRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.GoogleCredentials;
@@ -15,6 +16,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,8 +27,7 @@ public class FCMService {
     private static final String API_URL = "https://fcm.googleapis.com/v1/projects/puppy-life-dc6ab/messages:send";
     private final ObjectMapper objectMapper;
     private final RestTemplate restTemplate;
-
-
+    private final UsersRepository usersRepository;
 
     private String getAccessToken() throws IOException {
         String firebaseConfigPath = "firebase/puppy-life-dc6ab-firebase-adminsdk-2lrq2-8b68bc6b56.json";
@@ -65,10 +66,25 @@ public class FCMService {
         return objectMapper.writeValueAsString(fcmMessage);
     }
 
-    public void sendMessagesToTokens(List<String> tokens, String boardId) throws IOException {
-        String accessToken = getAccessToken();
+    public void updateFcmToken(String userId, String fcmToken) {
+        var user = usersRepository.findById(userId).orElseThrow(
+                () -> new IllegalArgumentException("사용자를 찾을 수 없습니다.")
+        );
+        user.setFcmToken(fcmToken);
+        usersRepository.save(user);
+    }
+    public void sendMessagesToAll(String boardId) throws IOException {
 
-        for (String token : tokens) {
+        String accessToken = getAccessToken();
+        var usersList = usersRepository.findAll();
+        var fcmTokenList = new ArrayList<String>();
+        for (var user : usersList){
+
+            if (user.getFcmToken() != null&& !user.getFcmToken().isEmpty()){
+                fcmTokenList.add(user.getFcmToken());
+            }
+        }
+        for (String token : fcmTokenList) {
             String message = makeMessage(token, boardId);
 
             HttpHeaders headers = new HttpHeaders();
