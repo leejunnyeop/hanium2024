@@ -10,6 +10,7 @@ import com.example.mypet.healthStatus.repository.HealthStatusRepository;
 import com.example.mypet.security.repository.UsersRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class HealthStatusServiceImpl implements HealthStatusService {
 
     private final HealthStatusRepository healthStatusRepository;
@@ -61,10 +63,9 @@ public class HealthStatusServiceImpl implements HealthStatusService {
 
             LocalDate startOfWeek = date.minusDays(6).with(DayOfWeek.SUNDAY);
             LocalDate endOfWeek = startOfWeek.plusDays(1).with(DayOfWeek.SATURDAY);
-//            System.out.println(startOfWeek);
-//            System.out.println(endOfWeek);
-//            LocalDate startOfWeek = date.with(TemporalAdjusters.previousOrSame(DayOfWeek.SATURDAY));
-//            LocalDate endOfWeek = date.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+            System.out.println(startOfWeek);
+            System.out.println(endOfWeek);
+
             List<HealthStatus> statuses = healthStatusRepository.findByUser_IdAndDateBetweenOrderByDate(userId, startOfWeek, endOfWeek);
             return statuses.stream()
                     .map(HealthStatusMapper::toHealthStatusResponseDto)
