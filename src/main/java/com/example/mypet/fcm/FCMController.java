@@ -1,5 +1,6 @@
 package com.example.mypet.fcm;
 
+import com.google.firebase.messaging.FirebaseMessagingException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -33,19 +34,20 @@ public class FCMController {
     @Parameters({
             @Parameter(name = "boardId", description = "게시물 ID", example = "board123")
     })
-    public ResponseEntity<Void> sendNotifications(
-            @PathVariable String boardId) {
+    public ResponseEntity<Void> sendNotifications(@PathVariable String boardId) {
         try {
             fcmService.sendMessagesToAll(boardId);
             return ResponseEntity.ok().build();
         } catch (IOException e) {
             return ResponseEntity.status(500).build();
+        } catch (FirebaseMessagingException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @PostMapping("/fcm-token")
-    public ResponseEntity<String> updateFcmToken(@AuthenticationPrincipal User user, @RequestBody String fcmToken) {
-        fcmService.updateFcmToken(user.getUsername(), fcmToken);
+    public ResponseEntity<String> updateFcmToken(@AuthenticationPrincipal User user, @RequestBody FcmTokenDto dto) {
+        fcmService.updateFcmToken(user.getUsername(), dto.getFcmToken());
         return ResponseEntity.ok("FCM Token updated successfully");
     }
 }
