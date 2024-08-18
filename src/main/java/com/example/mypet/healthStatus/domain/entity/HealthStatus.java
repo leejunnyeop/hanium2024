@@ -1,6 +1,6 @@
-package com.example.mypet.health.domain.entity;
+package com.example.mypet.healthStatus.domain.entity;
 
-import com.example.mypet.health.domain.Symptom;
+import com.example.mypet.healthStatus.enums.Symptom;
 import com.example.mypet.security.domain.users.Users;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;

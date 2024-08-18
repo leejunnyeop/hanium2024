@@ -1,8 +1,8 @@
-package com.example.mypet.health.controller;
+package com.example.mypet.healthStatus.controller;
 
-import com.example.mypet.health.domain.dto.HealthStatusDto;
-import com.example.mypet.health.domain.dto.HealthStatusResponseDto;
-import com.example.mypet.health.service.StatusService;
+import com.example.mypet.healthStatus.domain.dto.HealthStatusDto;
+import com.example.mypet.healthStatus.domain.dto.HealthStatusResponseDto;
+import com.example.mypet.healthStatus.service.HealthStatusService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,15 +20,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/status")
 @Tag(name = "status", description = "사용자 펫 상태 API")
-public class StatusController {
+public class HealthStatusController {
 
-    private final StatusService statusService;
+    private final HealthStatusService healthStatusService;
 
     @PostMapping()
     @Operation(summary = "펫 상태 등록", description = "펫의 상태를 등록 및 업데이트합니다.")
     public ResponseEntity<HealthStatusResponseDto> createPet(@AuthenticationPrincipal User user, @Valid @RequestBody HealthStatusDto healthStatusDto) {
         String userID = user.getUsername(); // id
-        var savedPet = statusService.statusSave(userID, healthStatusDto);
+        var savedPet = healthStatusService.statusSave(userID, healthStatusDto);
         return ResponseEntity.ok(savedPet);
     }
 
@@ -37,7 +37,7 @@ public class StatusController {
     @GetMapping("/{date}")
     public ResponseEntity<HealthStatusResponseDto> getHealthStatus(@AuthenticationPrincipal User user, @Parameter(description = "건강 상태를 조회할 날자 형식", example = "2023-07-20") @PathVariable LocalDate date) {
         String userID = user.getUsername(); // id
-        HealthStatusResponseDto healthStatus = statusService.statusGet(userID, date);
+        HealthStatusResponseDto healthStatus = healthStatusService.statusGet(userID, date);
         return ResponseEntity.ok(healthStatus);
     }
 
@@ -50,7 +50,7 @@ public class StatusController {
             @Parameter(description = "주간 건강 상태를 조회할 날자 형식", example = "2023-07-20") @PathVariable LocalDate date
     ) {
         String userID = user.getUsername(); // id
-        List<HealthStatusResponseDto> statuses = statusService.getWeeklyHealthStatuses(userID, date);
+        List<HealthStatusResponseDto> statuses = healthStatusService.getWeeklyHealthStatuses(userID, date);
         return ResponseEntity.ok(statuses);
     }
 
@@ -62,7 +62,7 @@ public class StatusController {
             @Parameter(description = "월간 건강 상태를 조회할 날자 형식", example = "2023-07-20") @PathVariable LocalDate date
     ) {
         String userID = user.getUsername(); // id
-        List<HealthStatusResponseDto> statuses = statusService.getMonthlyHealthStatuses(userID, date);
+        List<HealthStatusResponseDto> statuses = healthStatusService.getMonthlyHealthStatuses(userID, date);
         return ResponseEntity.ok(statuses);
     }
 

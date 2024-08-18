@@ -1,4 +1,4 @@
-package com.example.mypet.health.domain;
+package com.example.mypet.healthStatus.enums;
 
 public enum SymptomColor {
     NONE(0, 0, "#464FE5"),         // 0개

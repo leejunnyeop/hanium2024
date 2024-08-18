@@ -1,12 +1,12 @@
-package com.example.mypet.health.service;
+package com.example.mypet.healthStatus.service;
 
-import com.example.mypet.health.domain.dto.HealthStatusDto;
-import com.example.mypet.health.domain.dto.HealthStatusResponseDto;
+import com.example.mypet.healthStatus.domain.dto.HealthStatusDto;
+import com.example.mypet.healthStatus.domain.dto.HealthStatusResponseDto;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public interface StatusService {
+public interface HealthStatusService {
 
     HealthStatusResponseDto statusSave(String userId, HealthStatusDto healthStatusDto);
 
