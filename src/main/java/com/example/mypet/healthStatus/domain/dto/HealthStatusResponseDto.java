@@ -36,4 +36,9 @@ public class HealthStatusResponseDto {
         var color = SymptomColor.fromCount(symptoms.size());
         return color.getDiagnosis();
     }
+
+    public String getStatusLevel(){
+        var color = SymptomColor.fromCount(symptoms.size());
+        return color.getStatusLevel();
+    }
 }
