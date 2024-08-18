@@ -58,7 +58,7 @@ public class PetSearchBoardRequestDto {
     @Schema(description = "강아지 품종", example = "시베리안 허스키", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private String petBreed;
     @Schema(description = "강아지 생일", example = "2023-08-03", requiredMode = Schema.RequiredMode.REQUIRED)
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
     @Schema(description = "강아지 외형 설명", example = "사람을 잘 따르고 배에 상처가 있어요.",  requiredMode = Schema.RequiredMode.REQUIRED)

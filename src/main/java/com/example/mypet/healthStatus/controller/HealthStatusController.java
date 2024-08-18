@@ -1,6 +1,6 @@
 package com.example.mypet.healthStatus.controller;
 
-import com.example.mypet.healthStatus.domain.dto.HealthStatusDto;
+import com.example.mypet.healthStatus.domain.dto.HealthStatusRequestDto;
 import com.example.mypet.healthStatus.domain.dto.HealthStatusResponseDto;
 import com.example.mypet.healthStatus.service.HealthStatusService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,9 +26,9 @@ public class HealthStatusController {
 
     @PostMapping()
     @Operation(summary = "펫 상태 등록", description = "펫의 상태를 등록 및 업데이트합니다.")
-    public ResponseEntity<HealthStatusResponseDto> createPet(@AuthenticationPrincipal User user, @Valid @RequestBody HealthStatusDto healthStatusDto) {
+    public ResponseEntity<HealthStatusResponseDto> createPet(@AuthenticationPrincipal User user, @Valid @RequestBody HealthStatusRequestDto healthStatusRequestDto) {
         String userID = user.getUsername(); // id
-        var savedPet = healthStatusService.statusSave(userID, healthStatusDto);
+        var savedPet = healthStatusService.statusSave(userID, healthStatusRequestDto);
         return ResponseEntity.ok(savedPet);
     }
 

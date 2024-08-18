@@ -1,9 +1,9 @@
 package com.example.mypet.healthStatus.domain.dto;
 
 import com.example.mypet.healthStatus.enums.Symptom;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -13,11 +13,11 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public class HealthStatusDto {
+public class HealthStatusRequestDto {
 
     @NotNull
     @Schema(description = "기록 날짜", example = "2023-07-20")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
 
     @Schema(description = "증상 리스트")
