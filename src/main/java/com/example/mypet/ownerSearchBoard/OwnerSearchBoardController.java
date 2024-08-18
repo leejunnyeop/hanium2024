@@ -54,7 +54,7 @@ public class OwnerSearchBoardController {
 
     @PostMapping()
     @Operation(summary = "<주인을 찾아요> 게시판 등록", description = "<주인을 찾습니다> 게시판에 등록을 합니다.")
-    public ResponseEntity<OwnerSearchBoard> createOwnerSearchBoard(@AuthenticationPrincipal User user, @RequestBody OwnerSearchBoardRequestDto requestDto) throws IOException {
+    public ResponseEntity<OwnerSearchBoardResponseDto> createOwnerSearchBoard(@AuthenticationPrincipal User user, @RequestBody OwnerSearchBoardRequestDto requestDto) throws IOException {
         var res = ownerSearchBoardService.createOwnerSearchBoard(user.getUsername(), requestDto);
         return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
