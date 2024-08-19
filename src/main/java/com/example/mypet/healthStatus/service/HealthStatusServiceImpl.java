@@ -31,11 +31,13 @@ public class HealthStatusServiceImpl implements HealthStatusService {
     @Override
     public HealthStatusResponseDto statusSave(String userId, @Valid HealthStatusRequestDto healthStatusRequestDto) {
         var user = usersRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("사용자를 찾을 수 없습니다"));
-        HealthStatus healthStatus = healthStatusRepository.findByUser_IdAndDate(userId, healthStatusRequestDto.getDate()).orElse(null);
+        // timezone 문제 때문에 1을 빼줌
+        HealthStatus healthStatus = healthStatusRepository.findByUser_IdAndDate(userId, healthStatusRequestDto.getDate().minusDays(1)).orElse(null);
 
         // 새로 등록
         if (healthStatus == null){
             var status = HealthStatusMapper.toHealthStatus(user, healthStatusRequestDto);
+
             var savedStatus = healthStatusRepository.save(status);
             return HealthStatusMapper.toHealthStatusResponseDto(savedStatus);
         }
@@ -83,7 +85,9 @@ public class HealthStatusServiceImpl implements HealthStatusService {
         try {
             LocalDate startOfMonth = date.with(TemporalAdjusters.firstDayOfMonth());
             LocalDate endOfMonth = date.with(TemporalAdjusters.lastDayOfMonth());
-            List<HealthStatus> statuses = healthStatusRepository.findByUser_IdAndDateBetweenOrderByDate(userId, startOfMonth, endOfMonth);
+            log.info(startOfMonth);
+            log.info(endOfMonth);
+            List<HealthStatus> statuses = healthStatusRepository.findByUser_IdAndDateBetweenOrderByDate(userId, startOfMonth.minusDays(1), endOfMonth.plusDays(1));
             return statuses.stream()
                     .map(HealthStatusMapper::toHealthStatusResponseDto)
                     .collect(Collectors.toList());
