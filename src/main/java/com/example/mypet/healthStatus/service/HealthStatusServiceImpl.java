@@ -32,7 +32,7 @@ public class HealthStatusServiceImpl implements HealthStatusService {
     public HealthStatusResponseDto statusSave(String userId, @Valid HealthStatusRequestDto healthStatusRequestDto) {
         var user = usersRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("사용자를 찾을 수 없습니다"));
         // timezone 문제 때문에 1을 빼줌
-        HealthStatus healthStatus = healthStatusRepository.findByUser_IdAndDate(userId, healthStatusRequestDto.getDate().minusDays(1)).orElse(null);
+        HealthStatus healthStatus = healthStatusRepository.findByUser_IdAndDate(userId, healthStatusRequestDto.getDate()).orElse(null);
 
         // 새로 등록
         if (healthStatus == null){
