@@ -16,7 +16,6 @@ import java.io.InputStream;
 @Log4j2
 public class FirebaseConfig {
 
-
     @Value("${firebase.key-path}")
     private String firebaseKeyPath;
 
@@ -28,13 +27,12 @@ public class FirebaseConfig {
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                     .build();
             log.info("fcm setting completed");
-            if (FirebaseApp.getApps().isEmpty()){
+            if (FirebaseApp.getApps().isEmpty()) {
                 return FirebaseApp.initializeApp(options);
             } else {
                 return FirebaseApp.getInstance();
             }
-
-        }catch (IOException e){
+        } catch (IOException e) {
             log.error(e.getMessage());
             throw new IOException();
         }
