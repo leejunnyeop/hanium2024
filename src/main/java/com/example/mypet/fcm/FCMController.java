@@ -30,7 +30,7 @@ public class FCMController {
             @ApiResponse(responseCode = "200", description = "알림 전송 성공"),
             @ApiResponse(responseCode = "500", description = "알림 전송 실패", content = @Content(schema = @Schema(implementation = String.class)))
     })
-    @PostMapping("/send/{boardId}")
+    @PostMapping("/send/pet-search/{boardId}")
     @Parameters({
             @Parameter(name = "boardId", description = "게시물 ID", example = "board123")
     })
