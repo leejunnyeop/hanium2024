@@ -1,6 +1,9 @@
 package com.example.mypet.fcm;
 
 
+import com.example.mypet.global.ex.ResourceNotFoundException;
+import com.example.mypet.petSearchBoard.PetSearchBoard;
+import com.example.mypet.petSearchBoard.PetSearchBoardRepository;
 import com.example.mypet.security.repository.UsersRepository;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
@@ -19,6 +22,7 @@ import java.io.IOException;
 public class FCMService {
 
     private final UsersRepository usersRepository;
+    private final PetSearchBoardRepository petSearchBoardRepository;
 
     public void updateFcmToken(String userId, String fcmToken) {
         var user = usersRepository.findById(userId).orElseThrow(
@@ -27,24 +31,40 @@ public class FCMService {
         user.setFcmToken(fcmToken);
         usersRepository.save(user);
     }
+
     public void sendMessagesToAll(String boardId) throws IOException, FirebaseMessagingException {
         var usersList = usersRepository.findAll();
-        for (var user : usersList){
+        var petSearchBoard = petSearchBoardRepository.findById(boardId).orElseThrow(
+                () -> new ResourceNotFoundException("게시판을 찾을 수 없습니다")
+        );
+        for (var user : usersList) {
 
             String fcmToken = user.getFcmToken();
             if (fcmToken != null && !fcmToken.isEmpty()) {
-                Message message = Message.builder()
+                Message message;
+                if (petSearchBoard.getImageUrlList().size() > 0) {
+                    message = Message.builder()
                         .setToken(fcmToken)
                         .setNotification(
-                                Notification.builder()
-                                        .setTitle("해피 마루")
-                                        .setBody("근처에 도움이 필요한 유기견이 있습니다. 한 생명을 구해주세요!")
-                                        .build()
-                        )
-
-                        .build();
+                            Notification.builder()
+                                .setTitle(petSearchBoard.getSpecificLocation())
+                                .setBody("근처에 도움이 필요한 유기견이 있습니다. 한 생명을 구해주세요!")
+                                .setImage(petSearchBoard.getImageUrlList().get(0))
+                                .build()
+                        ).build();
+                } else {
+                    message = Message.builder()
+                        .setToken(fcmToken)
+                        .setNotification(
+                            Notification.builder()
+                                .setTitle(petSearchBoard.getSpecificLocation())
+                                .setBody("근처에 도움이 필요한 유기견이 있습니다. 한 생명을 구해주세요!")
+                                .build()
+                        ).build();
+                }
 
                 String response = FirebaseMessaging.getInstance().send(message);
+                System.out.println(response);
                 log.info("Successfully sent message to user: {}, response: {}", user.getId(), response);
             }
         }
