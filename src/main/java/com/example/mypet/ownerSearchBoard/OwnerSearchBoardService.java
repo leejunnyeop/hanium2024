@@ -5,12 +5,12 @@ import com.example.mypet.exception.UnAuthorizedException;
 import com.example.mypet.global.ex.ResourceNotFoundException;
 import com.example.mypet.security.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -56,7 +56,7 @@ public class OwnerSearchBoardService {
 
     @Transactional(readOnly = true)
     public Page<OwnerSearchBoardResponseDto> getPageableOwnerSearchBoardExceptUser(String userId,Pageable pageable) {
-        var ownerSearchBoardExceptUserPage = ownerSearchBoardRepository.findByUser_IdNot(userId, pageable);
+        var ownerSearchBoardExceptUserPage = ownerSearchBoardRepository.findByUserIdNot(new ObjectId(userId), pageable);
         var boards = ownerSearchBoardExceptUserPage.map(ownerSearchBoardMapper::toOwnerSearchBoardResponseDto).stream().toList();
         return new PageImpl<>(boards, pageable, ownerSearchBoardExceptUserPage.getTotalElements());
     }

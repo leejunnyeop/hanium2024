@@ -4,6 +4,7 @@ import com.example.mypet.exception.UnAuthorizedException;
 import com.example.mypet.global.ex.ResourceNotFoundException;
 import com.example.mypet.security.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -53,7 +54,8 @@ public class PetSearchBoardService {
 
     @Transactional(readOnly = true)
     public Page<PetSearchBoardResponseDto> getPageablePetSearchBoardExceptUser(String userId,Pageable pageable) {
-        var petSearchBoardExceptUserPage = petSearchBoardRepository.findByUser_IdNot(userId, pageable);
+        var petSearchBoardExceptUserPage = petSearchBoardRepository.findByUser_IdNot(new ObjectId(userId), pageable);
+
         var boards = petSearchBoardExceptUserPage.map(petSearchBoardMapper::toPetSearchBoardResponseDto).stream().toList();
         return new PageImpl<>(boards, pageable, petSearchBoardExceptUserPage.getTotalElements());
     }
