@@ -56,8 +56,8 @@ public class FCMService {
                             .setToken(fcmToken)
                             .setNotification(
                                     Notification.builder()
-                                            .setTitle("주인을 찾아요")
-                                            .setBody("근처에 도움이 필요한 유기견이 있습니다. 한 생명을 구해주세요!")
+                                            .setTitle("근처 유실견 알림")
+                                            .setBody("근처에 도움이 필요한 강아지가 있어요. 한 생명을 인근 보호소로 안전하게 인도해보세요")
                                             .setImage(petSearchBoard.getImageUrlList().get(0))
                                             .build()
                             ).build();
@@ -66,8 +66,8 @@ public class FCMService {
                             .setToken(fcmToken)
                             .setNotification(
                                     Notification.builder()
-                                            .setTitle(petSearchBoard.getSpecificLocation())
-                                            .setBody("근처에 도움이 필요한 유기견이 있습니다. 한 생명을 구해주세요!")
+                                            .setTitle("근처 유실견 알림")
+                                            .setBody("근처에 도움이 필요한 강아지가 있어요. 한 생명을 인근 보호소로 안전하게 인도해보세요")
                                             .build()
                             ).build();
                 }

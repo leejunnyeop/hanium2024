@@ -7,6 +7,7 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -49,7 +50,7 @@ public class Users {
     private String description;
 
     @Schema(example = "강아지 연관관계", description = "강아지 관련 정보")
-    private List<Pets> pets;
+    private List<Pets> pets = new ArrayList<>();
 
     @Schema(description = "지역(구)", example = "동작구")
     private String location;
